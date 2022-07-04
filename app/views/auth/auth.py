@@ -1,66 +1,76 @@
-from flask import Blueprint, redirect, render_template, url_for, flash, request
-from .forms import RegistrationForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm
-from ...models import User
-from app import db, bcrypt, mail, login_manager, app
-from flask_login import login_required, login_user, logout_user, current_user
 import pprint
-from flask_mail import Message
 from threading import Thread
+
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from flask_mail import Message
+
+from app import app, bcrypt, db, login_manager, mail
+
 from ...config import settings
+from ...models import User
+from .forms import (
+    LoginForm,
+    RegistrationForm,
+    ResetPasswordForm,
+    ResetPasswordRequestForm,
+)
 
 auth_bp = Blueprint(
-    "auth", 
-    __name__, 
-    url_prefix="/auth", 
+    "auth",
+    __name__,
+    url_prefix="/auth",
     template_folder="templates",
-    static_folder="static"
+    static_folder="static",
 )
+
 
 @auth_bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
         current_user.ping()
-        if not current_user.confirmed \
-                and request.endpoint \
-                and request.blueprint != 'auth' \
-                and request.endpoint != 'static':
-            return redirect(url_for('auth.unconfirmed'))
+        if (
+            not current_user.confirmed
+            and request.endpoint
+            and request.blueprint != "auth"
+            and request.endpoint != "static"
+        ):
+            return redirect(url_for("auth.unconfirmed"))
 
 
-@auth_bp.route('/unconfirmed/')
+@auth_bp.route("/unconfirmed/")
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
-        return redirect(url_for('home.home_view'))
-    return render_template('unconfirmed.html')
+        return redirect(url_for("home.home_view"))
+    return render_template("unconfirmed.html")
 
 
 @auth_bp.route("/login/", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home.home_view'))
+        return redirect(url_for("home.home_view"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)
-            next = request.args.get('next')
-            if next is None or not next.startswith('/'):
-                next = url_for('home.home_view')
+            next = request.args.get("next")
+            if next is None or not next.startswith("/"):
+                next = url_for("home.home_view")
             return redirect(next)
         flash(f"Error al loguearse", category="danger")
-    return render_template('login.html', form=form)
+    return render_template("login.html", form=form)
 
 
 def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
+
 def send_email_confirm(user):
     token = user.get_confirm_token()
     msg = Message(
-        subject="Confirme cuenta", 
-        recipients=[user.email],
-        sender="noreplay@test.com"
+        subject="Confirme cuenta", recipients=[user.email], sender="noreplay@test.com"
     )
     msg.html = f"""
     <head>
@@ -73,8 +83,11 @@ def send_email_confirm(user):
     """
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
-    pprint.PrettyPrinter().pprint(url_for("auth.reset_token", token=token, _external=True))
+    pprint.PrettyPrinter().pprint(
+        url_for("auth.reset_token", token=token, _external=True)
+    )
     return thr
+
 
 @auth_bp.route("/register/", methods=["GET", "POST"])
 def register():
@@ -83,8 +96,14 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         if form.email.data in settings.ADMIN_EMAIL:
-            encrypted_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-            user = User(username=form.username.data,email=form.email.data,password=encrypted_password)
+            encrypted_password = bcrypt.generate_password_hash(
+                form.password.data
+            ).decode("utf-8")
+            user = User(
+                username=form.username.data,
+                email=form.email.data,
+                password=encrypted_password,
+            )
             user.save()
             flash(f"Cuenta creada exitosamente", category="success")
             flash(f"Verifique su mail para confirmar cuenta", category="info")
@@ -101,18 +120,21 @@ def logout():
     logout_user()
     return redirect(url_for("home.home_view"))
 
+
 def send_email(user):
     token = user.get_token()
     msg = Message(
-        subject="Password Reset Request", 
+        subject="Password Reset Request",
         recipients=[user.email],
-        sender="noreplay@test.com"
+        sender="noreplay@test.com",
     )
 
-    msg.html =render_template("email.html", token=token)
+    msg.html = render_template("email.html", token=token)
     thr = Thread(target=send_async_email, args=[app, msg])
-    thr.start()    
-    pprint.PrettyPrinter().pprint(url_for("auth.reset_token", token=token, _external=True))
+    thr.start()
+    pprint.PrettyPrinter().pprint(
+        url_for("auth.reset_token", token=token, _external=True)
+    )
 
 
 @auth_bp.route("/reset_password/", methods=["GET", "POST"])
@@ -122,7 +144,10 @@ def reset_password():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             send_email(user)
-            flash("Solicitud de reseteo de password enviada, revise su email", category="success")
+            flash(
+                "Solicitud de reseteo de password enviada, revise su email",
+                category="success",
+            )
             return redirect(url_for("auth.login"))
         else:
             flash("Email no registrado, por favor registrese", category="danger")
@@ -139,12 +164,14 @@ def reset_token(token):
 
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        encrypted_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+        encrypted_password = bcrypt.generate_password_hash(form.password.data).decode(
+            "utf-8"
+        )
         user.password = encrypted_password
         user.update()
         flash("Password cambiado", category="success")
         return redirect(url_for("auth.login"))
-    
+
     return render_template("change_password.html", form=form)
 
 
@@ -152,7 +179,7 @@ def reset_token(token):
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        flash('La cuenta ya se encuentra confirmada', category="info")
+        flash("La cuenta ya se encuentra confirmada", category="info")
         return redirect(url_for("home.home_view"))
     if current_user.confirm(token):
         flash("Cuenta confirmada!!!", category="success")
@@ -162,7 +189,7 @@ def confirm(token):
     return redirect(url_for("home.home_view"))
 
 
-@auth_bp.route('/confirm')
+@auth_bp.route("/confirm")
 @login_required
 def resend_confirmation():
     token = current_user.get_confirm_token()

@@ -1,22 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, StringField, SelectMultipleField
+from wtforms import SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
-from ...models import Role, Permission
+
+from ...models import Permission, Role
+
 
 class CreateRoleForm(FlaskForm):
-    name = StringField(
-        "Name",
-        validators=[
-            DataRequired(),
-            Length(min=2, max=30)
-        ]
-    )
+    name = StringField("Name", validators=[DataRequired(), Length(min=2, max=30)])
     description = StringField(
-        "Description",
-        validators=[
-            DataRequired(),
-            Length(min=2, max=120)
-        ]
+        "Description", validators=[DataRequired(), Length(min=2, max=120)]
     )
     permissions = SelectMultipleField(
         "Permissions",
@@ -34,19 +26,9 @@ class CreateRoleForm(FlaskForm):
 
 
 class EditRoleForm(FlaskForm):
-    name = StringField(
-        "Name",
-        validators=[
-            DataRequired(),
-            Length(min=2, max=30)
-        ]
-    )
+    name = StringField("Name", validators=[DataRequired(), Length(min=2, max=30)])
     description = StringField(
-        "Description",
-        validators=[
-            DataRequired(),
-            Length(min=2, max=120)
-        ]
+        "Description", validators=[DataRequired(), Length(min=2, max=120)]
     )
     permissions = SelectMultipleField(
         "Permissions",

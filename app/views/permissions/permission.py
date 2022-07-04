@@ -1,17 +1,19 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, jsonify, redirect, render_template, request, url_for
 from flask_login import login_required
-from app.decorators import admin_required
-from ...models import Role, Permission
-from ...config import settings
-from .forms import PermissionForm, EditPermissionForm
 from sqlalchemy import or_
 
+from app.decorators import admin_required
+
+from ...config import settings
+from ...models import Permission, Role
+from .forms import EditPermissionForm, PermissionForm
+
 permission_bp = Blueprint(
-    "permissions", 
-    __name__, 
+    "permissions",
+    __name__,
     url_prefix="/permissions",
     template_folder="templates",
-    static_folder="static"
+    static_folder="static",
 )
 
 
@@ -32,12 +34,13 @@ def permissions_create():
         permission = Permission(
             name=form.name.data,
             description=form.description.data,
-            color=form.color.data
+            color=form.color.data,
         )
         permission.save()
         return redirect(url_for("permissions.permissions_view"))
 
     return render_template("permissions/create.html", form=form)
+
 
 @permission_bp.route("/edit/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -58,6 +61,7 @@ def edit_role(id):
     form.color.data = permission.color
     return render_template("permissions/edit.html", form=form)
 
+
 @permission_bp.route("/delete/<int:id>", methods=["GET", "POST"])
 @login_required
 @admin_required
@@ -74,24 +78,26 @@ def get_data_permission():
     query = Permission.query
 
     # search filter
-    search = request.args.get('search[value]')
+    search = request.args.get("search[value]")
     if search:
-        query = query.filter(or_(
-            Permission.name.like(f'%{search}%'),
-        ))
+        query = query.filter(
+            or_(
+                Permission.name.like(f"%{search}%"),
+            )
+        )
     total_filtered = query.count()
 
     # sorting
     order = []
     i = 0
     while True:
-        col_index = request.args.get(f'order[{i}][column]')
+        col_index = request.args.get(f"order[{i}][column]")
         if col_index is None:
             break
-        col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['name']:
-            col_name = 'name'
-        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col_name = request.args.get(f"columns[{col_index}][data]")
+        if col_name not in ["name"]:
+            col_name = "name"
+        descending = request.args.get(f"order[{i}][dir]") == "desc"
         col = getattr(Permission, col_name)
         if descending:
             col = col.desc()
@@ -101,14 +107,14 @@ def get_data_permission():
         query = query.order_by(*order)
 
     # pagination
-    start = request.args.get('start', type=int)
-    length = request.args.get('length', type=int)
+    start = request.args.get("start", type=int)
+    length = request.args.get("length", type=int)
     query = query.offset(start).limit(length)
 
     # response
     return {
-        'data': [user.to_dict() for user in query],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': Permission.query.count(),
-        'draw': request.args.get('draw', type=int),
+        "data": [user.to_dict() for user in query],
+        "recordsFiltered": total_filtered,
+        "recordsTotal": Permission.query.count(),
+        "draw": request.args.get("draw", type=int),
     }

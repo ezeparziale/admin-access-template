@@ -1,18 +1,21 @@
-from email.policy import default
-from flask import current_app, redirect, url_for
-from flask_login import current_user
-from app import app, db, login_manager
-from sqlalchemy import Column, Integer, String, BOOLEAN, ForeignKey, Table
-from sqlalchemy.sql.sqltypes import TIMESTAMP
-from sqlalchemy.sql.expression import text
-from flask_login import UserMixin
-import jwt
 from datetime import datetime, timedelta, timezone
+from email.policy import default
+
+import jwt
+from flask import current_app, redirect, url_for
+from flask_login import UserMixin, current_user
+from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
+from sqlalchemy.sql.expression import text
+from sqlalchemy.sql.sqltypes import TIMESTAMP
+
+from app import app, db, login_manager
 from app.config import settings
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
 
 @login_manager.unauthorized_handler
 def unauthorized():
@@ -25,12 +28,24 @@ class User(db.Model, UserMixin):
     username = Column(String(40), unique=True, nullable=False)
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(60), nullable=False)
-    created_at = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
-    updated_at = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
+    created_at = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
+    updated_at = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
     created_user = Column(Integer, ForeignKey("users.id"))
-    updated_user = Column(Integer, ForeignKey("users.id"))    
+    updated_user = Column(Integer, ForeignKey("users.id"))
     confirmed = Column(BOOLEAN, default=False)
-    last_seen = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
+    last_seen = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
 
     def __repr__(self) -> str:
         return f"{self.username} : {self.email} : {self.created_at}"
@@ -40,39 +55,47 @@ class User(db.Model, UserMixin):
         self.update()
 
     def get_token(self, expires_sec=300):
-        encoded = jwt.encode({
-            "user_id":self.id, 
-            "exp":datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec)}, 
-            current_app.config["SECRET_KEY"], 
-            algorithm="HS256")
+        encoded = jwt.encode(
+            {
+                "user_id": self.id,
+                "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec),
+            },
+            current_app.config["SECRET_KEY"],
+            algorithm="HS256",
+        )
         return encoded
 
     def get_confirm_token(self, expires_sec=300):
-        encoded = jwt.encode({
-            "comfirm":self.id, 
-            "exp":datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec)}, 
-            current_app.config["SECRET_KEY"], 
-            algorithm="HS256")
+        encoded = jwt.encode(
+            {
+                "comfirm": self.id,
+                "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec),
+            },
+            current_app.config["SECRET_KEY"],
+            algorithm="HS256",
+        )
         return encoded
 
     def confirm(self, token):
         try:
-            decode = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+            decode = jwt.decode(
+                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+            )
             if decode.get("comfirm") != self.id:
                 return False
             self.confirmed = True
             self.update()
             return True
-        except: 
+        except:
             return None
 
     def to_dict(self):
         return {
-            "id":self.id,
-            "username":self.username,
-            "email":self.email,
-            "created_at":self.created_at,
-            "roles":[(role.id, role.name) for role in self.roles],
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "created_at": self.created_at,
+            "roles": [(role.id, role.name) for role in self.roles],
         }
 
     def save(self):
@@ -109,49 +132,60 @@ class User(db.Model, UserMixin):
                         return True
         return False
 
-    
     def is_admin(self):
         return self.has_role("admin")
 
     @staticmethod
     def verify_token(token):
         try:
-            decode = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+            decode = jwt.decode(
+                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+            )
             user_id = decode.get("user_id")
-        except: 
+        except:
             return None
-        return User.query.get(user_id) 
+        return User.query.get(user_id)
 
 
 role_permission = Table(
     "role_permission",
     db.Model.metadata,
     Column("role_id", Integer, ForeignKey("roles.id")),
-    Column("permission_id", Integer, ForeignKey("permissions.id"))
+    Column("permission_id", Integer, ForeignKey("permissions.id")),
 )
 
 user_role = Table(
     "user_role",
     db.Model.metadata,
     Column("user_id", Integer, ForeignKey("users.id")),
-    Column("role_id", Integer, ForeignKey("roles.id"))
+    Column("role_id", Integer, ForeignKey("roles.id")),
 )
+
 
 class Role(db.Model):
     __tablename__ = "roles"
     id = Column(Integer, primary_key=True)
     name = Column(String(40), unique=True, nullable=False)
     description = Column(String(120), nullable=False)
-    created_at = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
-    updated_at = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
+    created_at = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
+    updated_at = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
     created_user = Column(Integer, ForeignKey("users.id"))
     updated_user = Column(Integer, ForeignKey("users.id"))
-    permissions = db.relationship("Permission", secondary=role_permission, backref="roles")
+    permissions = db.relationship(
+        "Permission", secondary=role_permission, backref="roles"
+    )
     users = db.relationship("User", secondary=user_role, backref="roles")
 
-
     def __repr__(self) -> str:
-        return f"{self.name} : {self.permissions} : {self.users}" 
+        return f"{self.name} : {self.permissions} : {self.users}"
 
     def save(self):
         self.created_user = current_user.id
@@ -170,12 +204,15 @@ class Role(db.Model):
 
     def to_dict(self):
         return {
-            "id":self.id,
-            "name":self.name,
-            "description":self.description,
-            "permissions":[(permission.name, permission.color) for permission in self.permissions],
-            "created_at":self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "permissions": [
+                (permission.name, permission.color) for permission in self.permissions
+            ],
+            "created_at": self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
         }
+
 
 class Permission(db.Model):
     __tablename__ = "permissions"
@@ -183,8 +220,16 @@ class Permission(db.Model):
     name = Column(String(40), unique=True, nullable=False)
     description = Column(String(120), nullable=False)
     color = Column(String(40), nullable=False, default="ffffff")
-    created_at = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
-    updated_at = Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
+    created_at = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
+    updated_at = Column(
+        TIMESTAMP(timezone=True),
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
     created_user = Column(Integer, ForeignKey("users.id"))
     updated_user = Column(Integer, ForeignKey("users.id"))
 
@@ -208,9 +253,9 @@ class Permission(db.Model):
 
     def to_dict(self):
         return {
-            "id":self.id,
-            "name":self.name,
-            "description":self.description,
-            "color":self.color,
-            "created_at":self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "color": self.color,
+            "created_at": self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
         }
