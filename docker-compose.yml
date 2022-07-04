@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:14.2
+    hostname: postgres_db_2
+    container_name: postgres_db_2
+    restart: always
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_USER=flaskuser
+      - POSTGRES_PASSWORD=flaskpassword
+      - POSTGRES_DB=flaskdb
+    # volumes:
+    #   - postgres-db-dev:/var/lib/postgresql/data
+    networks:
+      - flask_net-2
+
+  # adminer:
+  #   image: adminer:4.8.1
+  #   hostname: adminer
+  #   container_name: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - flask_net-2
+
+volumes:
+  postgres-db-dev-2:
+
+networks:
+  flask_net-2:
+    name: flask_net-2
