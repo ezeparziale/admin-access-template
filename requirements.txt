@@ -1,0 +1,11 @@
+flask
+Flask-WTF
+email_validator
+Flask-SQLAlchemy
+psycopg2
+Flask-Bcrypt
+Flask-Login
+PyJWT
+Flask-Mail
+Flask-Moment
+pydantic[dotenv]
