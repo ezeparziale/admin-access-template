@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "macro_pagination.html" as widget %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Admin</li>
+            </ol>
+        </nav>
+
+        <h3>{% block title %} Admin {% endblock %}</h3>
+
+        <div class="row">
+            <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Users</h5>
+                  <p class="card-text">All users info.</p>
+                  <a href="{{ url_for('users.users_view') }}" class="btn btn-primary">Go to Users</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Roles</h5>
+                  <p class="card-text">All about users roles.</p>
+                  <a href="{{ url_for('roles.roles_view') }}" class="btn btn-primary">Go to Roles</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Permissions</h5>
+                    <p class="card-text">All about permissions views.</p>
+                    <a href="{{ url_for('permissions.permissions_view') }}" class="btn btn-primary">Go to Permission</a>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+    </div>
+
+{% endblock %}

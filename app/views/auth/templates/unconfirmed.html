@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+    {% include "navbar.html" %}
+
+    <h1>{% block title %} Login {% endblock %}</h1>
+
+    <div class="container w-50">
+        <h1>
+            Hola, {{ current_user.username }}!
+        </h1>
+        <h3>Tu cuenta no esta verificada</h3>
+        <p>
+            Necesitas otro mail de verificacion?
+            <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+        </p>
+    </div>
+
+{% endblock %}

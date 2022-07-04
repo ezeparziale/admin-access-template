@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% import "macro_pagination.html" as widget %}
+{% import "macro_modal.html" as modals %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap5.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css"/>
+{% endblock %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Users</li>
+            </ol>
+        </nav>
+
+        <h3>{% block title %} Users {% endblock %}</h3>
+
+        <div class="card mt-3 shadow-sm">
+            <div class="card-body">   
+                <table id="data" class="table dt-responsive nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Created date</th>
+                            <th>Roles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap5.js"></script>
+  
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        ajax: '/users/get_data',
+        serverSide: true,
+        responsive: {
+            details: {
+                display: $.fn.dataTable.Responsive.display.modal( {
+                    header: function ( row ) {
+                        var data = row.data();
+                        return 'Detalle del rol: '+data.name;
+                    }
+                } ),
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                    tableClass: 'table'
+                } )
+            }
+        },
+        columns: [
+            { data: "username" },
+            { data: "email" },
+            { data: "created_at" },
+            { data: "roles" },
+
+        ],      
+        columnDefs: [
+            {
+                "defaultContent": "-",
+                "targets": "_all"
+            },
+            {
+                targets: 0,
+                orderable: true,
+                searchable: true,
+                title: 'Username',
+                render: function (data, type, row, meta) {
+                    return data;
+                }
+            },
+            {
+                targets: 1,
+                orderable: true,
+                searchable: true,
+                title: 'Email',
+                render: function (data, type, row, meta) {
+                    return data;
+                }
+            },
+            {
+                targets: 2,
+                orderable: true,
+                searchable: true,
+                title: 'Created date',
+                render: function (data, type, row, meta) {
+                    return data;
+                }
+            },
+            {
+                targets: 3,
+                orderable: true,
+                searchable: true,
+                title: 'Roles',
+                render: function (data, type, row, meta) {
+                    for (var i = 0, r="<h5>"; i < data.length; i++) {
+                        r += '<a href="/roles/view/' + data[i][0] + '"><span class="badge bg-secondary">' + data[i][1] + '</span></a> ';
+                    }
+                    r += '</h5>';
+                    return r;
+                }
+            },
+        ],
+      });
+    });
+  </script>
+
+{% endblock %}

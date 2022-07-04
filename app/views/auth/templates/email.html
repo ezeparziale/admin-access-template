@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            color: #546170;
+            background-color: #f5f5f5;
+        }
+        .button {
+            background-color: #7db27d;
+            border-color: #7db27d;
+            box-shadow: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration:none;
+        }
+        .button a:link {
+            color: white;
+        }
+        .button:hover, .button:focus, .button:active, .button.active, .open>.dropdown-toggle.button {
+            background-color: #529852;
+            border-color: #529852;
+        }
+        a:hover {
+            color: white !important;
+        }
+        a:link {
+            color: white !important;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <p>Ingrese al siguiente link para resetear la password:</p>
+    <a class="button" href="{{ url_for('auth.reset_token', token=token, _external=True) }}">Resetear Password</a>
+</body>
+</html>

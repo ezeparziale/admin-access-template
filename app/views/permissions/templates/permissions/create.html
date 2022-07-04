@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% import "macro_pagination.html" as widget %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('permissions.permissions_view') }}">Permissions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create</li>
+            </ol>
+        </nav>
+    
+        <h3>{% block title %} Create new permission {% endblock %}</h3>
+
+        <form method="post" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <fieldset>
+                <div class="form-group">
+                    {{ form.name.label(class="form-control-label") }}
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor%}
+                    {% else %}
+                        {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-control-label") }}
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor%}
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.color.label(class="form-control-label") }}
+                    {% if form.color.errors %}
+                        {{ form.color(class="form-control form-control-color form-control-lg is-invalid", type="color") }}
+                            {% for error in form.color.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor%}
+                    {% else %}
+                        {{ form.color(class="form-control form-control-color form-control-lg", type="color") }}
+                    {% endif %}
+                </div>
+
+            </fieldset>
+            <div class="float-end mt-3">
+                <a href="{{ url_for('permissions.permissions_view') }}" class="btn btn-secondary">Cancel</a>
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}

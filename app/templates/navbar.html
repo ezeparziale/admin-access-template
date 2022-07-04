@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand fixed-top navbar-dark bg-primary">
+  <div class="container-xl">
+    <a class="navbar-brand" href="#"><i class="bi bi-stack"></i> Navbar</a>
+      
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('home.home_view') }}">
+            Home
+          </a>
+        </li>
+        {% if current_user.is_authenticated and current_user.is_admin() %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" aria-current="page" href="{{ url_for('users.users_view') }}">
+                Users
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" aria-current="page" href="{{ url_for('roles.roles_view') }}">
+                Roles
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" aria-current="page" href="{{ url_for('permissions.permissions_view') }}">
+                Permissions
+              </a>
+            </li>
+          </ul>
+        </li>
+        {% endif %}  
+      </ul>
+
+      <ul class="navbar-nav justify-content-end">
+      {% if current_user.is_authenticated %}
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="{{ url_for('static', filename='img/avatars/avatar.png') }}" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownUser">
+          <li>
+            <a class="dropdown-item" aria-current="page" href="#">
+              <i class="bi bi-person"></i> Perfil
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" aria-current="page" href="#">
+              <i class="bi bi-gear"></i> Configuración
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" aria-current="page" href="#">
+              <i class="bi bi-info-circle"></i> About
+            </a>
+          </li>
+          <li><hr class="dropdown-divider"></li>             
+          <li>
+            <a class="dropdown-item dropdown-item-danger" aria-current="page" href="{{ url_for('auth.logout') }}">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+      {% else %}
+        <li class="nav-item">
+          <a class="btn btn-outline-light me-1" href="{{ url_for('auth.login') }}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary me-1" aria-current="page" href="{{ url_for('auth.register') }}">Sign Up</a>
+        </li>
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

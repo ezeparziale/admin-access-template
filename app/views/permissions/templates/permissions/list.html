@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% import "macro_pagination.html" as widget %}
+{% import "macro_modal.html" as modals %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.bootstrap5.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css"/>
+{% endblock %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Permissions</li>
+            </ol>
+        </nav>
+
+        <h3>{% block title %} Permission List {% endblock %}</h3>
+
+        <div class="card mt-3 shadow-sm">
+            <div class="card-body">
+                <table id="data" class="table dt-responsive nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Permission</th>
+                            <th>Description</th>
+                            <th>Created date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {{ modals.confirm_delete_permission() }}
+
+{% endblock %}
+
+
+{% block scripts %}
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap5.js"></script>
+  
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        ajax: '/permissions/get_data',
+        serverSide: true,
+        responsive: {
+            details: {
+                display: $.fn.dataTable.Responsive.display.modal( {
+                    header: function ( row ) {
+                        var data = row.data();
+                        return 'Detalle del permiso: '+data.name;
+                    }
+                } ),
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                    tableClass: 'table'
+                } )
+            }
+        },
+        columns: [
+            { data: "name" },
+            { data: "description" },
+            { data: "created_at" },
+            { data: "" },
+        ],      
+        columnDefs: [
+            {
+                "defaultContent": "-",
+                "targets": "_all"
+            },
+            {
+                targets: 0,
+                orderable: false,
+                searchable: true,
+                title: 'Name',
+                render: function (data, type, row, meta) {
+                    return '<h5><span class="badge" style="background-color:' + row["color"]+  '">' + data + '</span></h5>';
+                }
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: true,
+                title: 'Description',
+                render: function (data, type, row, meta) {
+                    return data;
+                }
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: true,
+                title: 'Created date',
+                render: function (data, type, row, meta) {
+                    return data;
+                }
+            },
+            {
+                targets: -1,
+                searchable: false,
+                orderable: false,
+                title: "Actions",
+                render: function(e, a, t, s) {
+                    let url_edit = '/permissions/edit/' + t.id;
+                    let url_delete = '/permissions/delete/' + t.id;
+                    return '<span class="text-nowrap">'
+                        +'<a href="' + url_edit + '" class="btn btn-sm btn-primary">'
+                        +'<i class="bi bi-pencil"></i>'
+                        +'</a>'
+                        +'<button class="btn btn-sm btn-danger ms-1"'
+                        +' type="button" data-bs-toggle="modal"'
+                        +' data-bs-target="#modalDeletePermission"'
+                        +' data-bs-url="'+ url_delete +'">'
+                        +'<i class="bi bi-trash"></i>'
+                        +'</button>'
+                        +'</span>'
+                }
+            },    
+        ],
+        dom: '<"row mx-1"<"col-sm-12 col-md-3" l><"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1"<"me-3"f>B>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        buttons: [
+            {
+                text: "Create permission",
+                className: "btn btn-success btn-sm mb-3 mb-md-0",
+                action: function (e, dt, node, config) {
+                    window.location.href = '/permissions/create';
+                }
+            }
+        ],
+      });
+    });
+  </script>
+
+    <script src="{{ url_for('roles.static', filename='js/modal.js') }}"></script>
+
+{% endblock %}
