@@ -1,10 +1,9 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, render_template, request
 from flask_login import login_required
 from sqlalchemy import or_
 
 from app.decorators import admin_required
 
-from ...config import settings
 from ...models import User
 
 users_bp = Blueprint(

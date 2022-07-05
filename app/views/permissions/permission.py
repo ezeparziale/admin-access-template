@@ -1,11 +1,10 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import login_required
 from sqlalchemy import or_
 
 from app.decorators import admin_required
 
-from ...config import settings
-from ...models import Permission, Role
+from ...models import Permission
 from .forms import EditPermissionForm, PermissionForm
 
 permission_bp = Blueprint(

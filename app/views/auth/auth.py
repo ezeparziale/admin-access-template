@@ -1,11 +1,10 @@
-import pprint
 from threading import Thread
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
-from app import app, bcrypt, db, login_manager, mail
+from app import app, bcrypt, mail
 
 from ...config import settings
 from ...models import User
@@ -83,9 +82,7 @@ def send_email_confirm(user):
     """
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
-    pprint.PrettyPrinter().pprint(
-        url_for("auth.reset_token", token=token, _external=True)
-    )
+
     return thr
 
 
@@ -132,9 +129,7 @@ def send_email(user):
     msg.html = render_template("email.html", token=token)
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
-    pprint.PrettyPrinter().pprint(
-        url_for("auth.reset_token", token=token, _external=True)
-    )
+
 
 
 @auth_bp.route("/reset_password/", methods=["GET", "POST"])
@@ -192,7 +187,6 @@ def confirm(token):
 @auth_bp.route("/confirm")
 @login_required
 def resend_confirmation():
-    token = current_user.get_confirm_token()
     send_email_confirm(current_user)
     flash("Email de confirmacion reenviado", category="info")
     return redirect(url_for("home.home_view"))

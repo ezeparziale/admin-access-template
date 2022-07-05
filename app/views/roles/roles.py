@@ -2,9 +2,8 @@ from flask import Blueprint, jsonify, redirect, render_template, request, url_fo
 from flask_login import login_required
 from sqlalchemy import or_
 
-from app.decorators import admin_required, moderate_required, role_permission_required
+from app.decorators import admin_required
 
-from ...config import settings
 from ...models import Permission, Role, User
 from .forms import CreateRoleForm, EditRoleForm
 
@@ -178,7 +177,6 @@ def get_data_users(id):
                 User.email.like(f"%{search}%"),
             )
         )
-    print(query)
 
     total_filtered = query.count()
 
@@ -213,11 +211,3 @@ def get_data_users(id):
         "recordsTotal": User.query.count(),
         "draw": request.args.get("draw", type=int),
     }
-
-
-@roles_bp.route("/eze", methods=["GET", "POST"])
-# @moderate_required
-# @admin_required
-@role_permission_required("moderate", "write")
-def eze():
-    return jsonify({"message": "success"})
