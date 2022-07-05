@@ -18,3 +18,13 @@ table.dataTable{
     color:var(--bs-white);
     background-color:var(--global-color-danger);
 }
+
+.breadcrumb a{
+    color:rgba(var(--bs-body-color-rgb),.75)!important;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color:rgba(var(--bs-body-color-rgb),.75)!important;
+    text-decoration: underline;
+}
