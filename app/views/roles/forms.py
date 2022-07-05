@@ -13,6 +13,7 @@ class CreateRoleForm(FlaskForm):
     permissions = SelectMultipleField(
         "Permissions",
         coerce=int,
+        render_kw={"data-placeholder":"Choose anything"}
     )
     submit = SubmitField("Create")
 
@@ -33,6 +34,7 @@ class EditRoleForm(FlaskForm):
     permissions = SelectMultipleField(
         "Permissions",
         coerce=int,
+        render_kw={"data-placeholder":"Choose anything"}
     )
     submit = SubmitField("Update")
 
