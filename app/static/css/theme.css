@@ -4,7 +4,7 @@
 }
 
 body{
-    min-height: 75rem;
+    /* min-height: 75rem; */
     padding-top: 4.5rem;
     color: var(--bs-gray-600);
     background-color: var(--global-color-background);
