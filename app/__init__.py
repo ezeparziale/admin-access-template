@@ -4,12 +4,24 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
-
+import logging
 from .config import settings
 
 # Flask
 app = Flask(__name__)
 app.config.from_object(settings)
+
+# Logging
+if not app.debug:
+    gunicorn_logger = logging.getLogger("gunicorn.error")
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+else:
+    logging.basicConfig(
+        level=logging.DEBUG, 
+        format="[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s", 
+        datefmt="%Y-%m-%d %I:%M:%S %z",
+    )
 
 # Database
 db = SQLAlchemy(app)
