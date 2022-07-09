@@ -28,6 +28,8 @@ auth_bp = Blueprint(
 def before_request():
     if current_user.is_authenticated:
         current_user.ping()
+        if current_user.email in settings.ADMIN_EMAIL:
+            current_user.set_admin_role()
         if (
             not current_user.confirmed
             and request.endpoint

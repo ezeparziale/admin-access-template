@@ -135,6 +135,11 @@ class User(db.Model, UserMixin):
     def is_admin(self):
         return self.has_role("admin")
 
+    def set_admin_role(self):
+        role_admin = Role.query.get_or_404(1)
+        self.add_role(role_admin)
+        self.update()
+
     @staticmethod
     def verify_token(token):
         try:
