@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from email.policy import default
 
 import jwt
 from flask import current_app, redirect, url_for
