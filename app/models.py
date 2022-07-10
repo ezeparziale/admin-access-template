@@ -217,6 +217,13 @@ class Role(db.Model):
             "created_at": self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
         }
 
+    @staticmethod
+    def insert_default_values():
+        db.session.add(Permission(name="admin", description="Admin role"))
+        db.session.add(Permission(name="moderate", description="Moderator role"))
+        db.session.add(Permission(name="users", description="Users role"))
+        db.session.commit()
+
 
 class Permission(db.Model):
     __tablename__ = "permissions"
@@ -263,3 +270,10 @@ class Permission(db.Model):
             "color": self.color,
             "created_at": self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
         }
+
+    @staticmethod
+    def insert_default_values():
+        db.session.add(Permission(name="write", description="Write permission", color="#8ac926"))
+        db.session.add(Permission(name="update", description="Update permission", color="#1982c4"))
+        db.session.add(Permission(name="delete", description="Delete permission", color="#ff595e"))
+        db.session.commit()
