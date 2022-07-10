@@ -21,7 +21,7 @@ services:
     ports:
       - 5432:5432
     env_file:
-      - ./.env
+      - ./.env.db
     volumes:
       - postgres-db:/var/lib/postgresql/data
     networks:
