@@ -3,6 +3,8 @@ version: "3.9"
 services:
 
   app:
+    hostname: app
+    container_name: app
     build: .
     ports: 
       - 5000:5000
