@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     ROWS_PER_PAGE: int = 10
     # SQLALCHEMY_ECHO = True
 
+    SITE_NAME: str
+
     class Config:
         env_file = ".env"
 
