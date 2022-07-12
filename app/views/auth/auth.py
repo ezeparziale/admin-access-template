@@ -71,20 +71,13 @@ def send_async_email(app, msg):
 def send_email_confirm(user):
     token = user.get_confirm_token()
     msg = Message(
-        subject="Confirme cuenta", recipients=[user.email], sender="noreplay@test.com"
+        subject="Confirmar cuenta",
+        recipients=[user.email],
+        sender="noreplay@test.com",
     )
-    msg.html = f"""
-    <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    </head>
-    <body>
-        <p>Ingrese al siguiente link para confirmar cuenta:</p>
-        <a class="btn btn-primary" href="{ url_for("auth.confirm", token=token, _external=True) }">Confirmar cuenta</a>
-    </body>
-    """
+    msg.html = render_template("emails/confirm_account.html", token=token, app_name=settings.SITE_NAME)
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
-
     return thr
 
 
@@ -120,15 +113,14 @@ def logout():
     return redirect(url_for("home.home_view"))
 
 
-def send_email(user):
+def send_email_reset_password(user):
     token = user.get_token()
     msg = Message(
         subject="Password Reset Request",
         recipients=[user.email],
         sender="noreplay@test.com",
     )
-
-    msg.html = render_template("email.html", token=token)
+    msg.html = render_template("emails/reset_password.html", token=token, app_name=settings.SITE_NAME)
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
 
@@ -140,7 +132,7 @@ def reset_password():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            send_email(user)
+            send_email_reset_password(user)
             flash(
                 "Solicitud de reseteo de password enviada, revise su email",
                 category="success",
