@@ -41,7 +41,7 @@
          {% with messages=get_flashed_messages(with_categories=true) %}
             {% if messages %}
                {% for category, message in messages %}
-                  <div class="alert alert-{{category}} alert-dismissible fade show">
+                  <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
                      {{ message }}
                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
@@ -62,6 +62,9 @@
 
    <!-- Select2 -->
    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+   <!-- Custom Script -->
+   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
    {% block scripts %} {% endblock %}
 
