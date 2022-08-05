@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import jwt
 from flask import current_app, redirect, url_for
 from flask_login import UserMixin, current_user
-from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
+from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table, event
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
@@ -40,6 +40,7 @@ class User(db.Model, UserMixin):
     created_user = Column(Integer, ForeignKey("users.id"))
     updated_user = Column(Integer, ForeignKey("users.id"))
     confirmed = Column(BOOLEAN, default=False)
+    locale = Column(String, nullable=False, default=settings.DEFAULT_LANGUAGE)
     last_seen = Column(
         TIMESTAMP(timezone=True),
         server_default=text("CURRENT_TIMESTAMP"),
@@ -80,6 +81,7 @@ class User(db.Model, UserMixin):
             decode = jwt.decode(
                 token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
             )
+            print(decode)
             if decode.get("comfirm") != self.id:
                 return False
             self.confirmed = True
@@ -138,6 +140,14 @@ class User(db.Model, UserMixin):
         role_admin = Role.query.get_or_404(1)
         self.add_role(role_admin)
         self.update()
+
+    def update_locale(self, locale):
+        if locale in settings.LANGUAGES:
+            self.locale = locale
+            self.update()
+            return True
+        return False
+
 
     @staticmethod
     def verify_token(token):
@@ -277,3 +287,16 @@ class Permission(db.Model):
         db.session.add(Permission(name="update", description="Update permission", color="#1982c4"))
         db.session.add(Permission(name="delete", description="Delete permission", color="#ff595e"))
         db.session.commit()
+
+
+# @event.listens_for(Role.__table__, 'after_create')
+# def create_roles(*args, **kwargs):
+#     db.session.add(
+#         Role(
+#             name="admin", 
+#             description="Admin role",
+#             )
+#     )
+#     db.session.add(Role(name="moderate", description="Moderator role"))
+#     db.session.add(Role(name="users", description="Users role"))
+#     db.session.commit()
