@@ -28,6 +28,7 @@ def upgrade() -> None:
     sa.Column('created_user', sa.Integer(), nullable=True),
     sa.Column('updated_user', sa.Integer(), nullable=True),
     sa.Column('confirmed', sa.BOOLEAN(), nullable=True),
+    sa.Column('locale', sa.String(), nullable=False),
     sa.Column('last_seen', sa.TIMESTAMP(timezone=True), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.ForeignKeyConstraint(['created_user'], ['users.id'], ),
     sa.ForeignKeyConstraint(['updated_user'], ['users.id'], ),
