@@ -16,6 +16,9 @@ class Settings(BaseSettings):
 
     SITE_NAME: str
 
+    DEFAULT_LANGUAGE: str = "en"
+    LANGUAGES: list = ["en", "es"]
+
     class Config:
         env_file = ".env"
 
