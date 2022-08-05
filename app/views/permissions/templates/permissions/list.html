@@ -20,21 +20,21 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Permissions</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _("Permissions") }}</li>
             </ol>
         </nav>
 
-        <h3>{% block title %} Permission List {% endblock %}</h3>
+        <h3>{% block title %} {{ _("Permissions list") }} {% endblock %}</h3>
 
         <div class="card mt-3 shadow-sm">
             <div class="card-body">
                 <table id="data" class="table dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Permission</th>
-                            <th>Description</th>
-                            <th>Created date</th>
-                            <th>Actions</th>
+                            <th>{{ _("Permission") }}</th>
+                            <th>{{ _("Description") }}</th>
+                            <th>{{ _("Created date") }}</th>
+                            <th>{{ _("Actions") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,7 +68,7 @@
                 display: $.fn.dataTable.Responsive.display.modal( {
                     header: function ( row ) {
                         var data = row.data();
-                        return 'Detalle del permiso: '+data.name;
+                        return '{{ _("Permission detail") }}: '+data.name;
                     }
                 } ),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
@@ -91,7 +91,7 @@
                 targets: 0,
                 orderable: false,
                 searchable: true,
-                title: 'Name',
+                title: '{{ _("Permission") }}',
                 render: function (data, type, row, meta) {
                     return '<h5><span class="badge" style="background-color:' + row["color"]+  '">' + data + '</span></h5>';
                 }
@@ -100,7 +100,7 @@
                 targets: 1,
                 orderable: false,
                 searchable: true,
-                title: 'Description',
+                title: '{{ _("Description") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -109,7 +109,7 @@
                 targets: 1,
                 orderable: false,
                 searchable: true,
-                title: 'Created date',
+                title: '{{ _("Created date") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -118,7 +118,7 @@
                 targets: -1,
                 searchable: false,
                 orderable: false,
-                title: "Actions",
+                title: '{{ _("Actions") }}',
                 render: function(e, a, t, s) {
                     let url_edit = '/permissions/edit/' + t.id;
                     let url_delete = '/permissions/delete/' + t.id;
@@ -139,17 +139,32 @@
         dom: '<"row mx-1"<"col-sm-12 col-md-3" l><"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1"<"me-3"f>B>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         buttons: [
             {
-                text: "Create permission",
+                text: '{{ _("Create permission") }}',
                 className: "btn btn-success btn-sm mb-3 mb-md-0",
                 action: function (e, dt, node, config) {
                     window.location.href = '/permissions/create';
                 }
             }
         ],
+        "language": {
+            "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
+            "zeroRecords": '{{ _("Nothing found - sorry") }}',
+            "info": '{{ _("Showing page _PAGE_ of _PAGES_") }}',
+            "infoEmpty": '{{ _("No records available") }}',
+            "infoFiltered": '{{ _("(filtered from _MAX_ total records)") }}',
+            "search": '{{ _("Search:") }}',
+            "loadingRecords": '{{ _("Loading...") }}',
+            "paginate": {
+                "first": '{{ _("First") }}',
+                "last": '{{ _("Last") }}',
+                "next": '{{ _("Next") }}',
+                "previous": '{{ _("Previous") }}',
+            },
+        },
       });
     });
   </script>
 
-    <script src="{{ url_for('roles.static', filename='js/modal.js') }}"></script>
+  <script src="{{ url_for('permissions.static', filename='js/modal.js') }}"></script>
 
 {% endblock %}

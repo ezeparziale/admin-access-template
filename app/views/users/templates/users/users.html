@@ -20,21 +20,21 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
               <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Users</li>
+              <li class="breadcrumb-item active" aria-current="page">{{ _("Users") }}</li>
             </ol>
         </nav>
 
-        <h3>{% block title %} Users {% endblock %}</h3>
+        <h3>{% block title %} {{ _("Users") }} {% endblock %}</h3>
 
         <div class="card mt-3 shadow-sm">
             <div class="card-body">   
                 <table id="data" class="table dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Created date</th>
-                            <th>Roles</th>
+                            <th>{{ _("Username") }}</th>
+                            <th>{{ _("Email") }}</th>
+                            <th>{{ _("Created date") }}</th>
+                            <th>{{ _("Roles") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,7 +66,7 @@
                 display: $.fn.dataTable.Responsive.display.modal( {
                     header: function ( row ) {
                         var data = row.data();
-                        return 'Detalle del rol: '+data.name;
+                        return '{{ _("Detail") }}: '+data.name;
                     }
                 } ),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
@@ -90,7 +90,7 @@
                 targets: 0,
                 orderable: true,
                 searchable: true,
-                title: 'Username',
+                title: '{{ _("Username") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -99,7 +99,7 @@
                 targets: 1,
                 orderable: true,
                 searchable: true,
-                title: 'Email',
+                title: '{{ _("Email") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -108,7 +108,7 @@
                 targets: 2,
                 orderable: true,
                 searchable: true,
-                title: 'Created date',
+                title: '{{ _("Created date") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -117,7 +117,7 @@
                 targets: 3,
                 orderable: true,
                 searchable: true,
-                title: 'Roles',
+                title: '{{ _("Roles") }}',
                 render: function (data, type, row, meta) {
                     for (var i = 0, r="<h5>"; i < data.length; i++) {
                         r += '<a href="/roles/view/' + data[i][0] + '"><span class="badge bg-secondary">' + data[i][1] + '</span></a> ';
@@ -127,6 +127,21 @@
                 }
             },
         ],
+        "language": {
+            "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
+            "zeroRecords": '{{ _("Nothing found - sorry") }}',
+            "info": '{{ _("Showing page _PAGE_ of _PAGES_") }}',
+            "infoEmpty": '{{ _("No records available") }}',
+            "infoFiltered": '{{ _("(filtered from _MAX_ total records)") }}',
+            "search": '{{ _("Search:") }}',
+            "loadingRecords": '{{ _("Loading...") }}',
+            "paginate": {
+                "first": '{{ _("First") }}',
+                "last": '{{ _("Last") }}',
+                "next": '{{ _("Next") }}',
+                "previous": '{{ _("Previous") }}',
+            },
+        }
       });
     });
   </script>

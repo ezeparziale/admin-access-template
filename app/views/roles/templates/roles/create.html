@@ -13,12 +13,12 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">Roles</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">{{ _("Roles") }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _("Create") }}</li>
             </ol>
         </nav>
 
-        <h3>{% block title %} Create New Role {% endblock %}</h3>
+        <h3>{% block title %} {{ _("Create new role") }} {% endblock %}</h3>
 
         <form method="post" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
@@ -59,7 +59,7 @@
                 </div>
             </fieldset>
             <div class="float-end mt-3">
-                <a href="{{ url_for('roles.roles_view') }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ url_for('roles.roles_view') }}" class="btn btn-secondary">{{ _("Cancel") }}</a>
                 {{ form.submit(class="btn btn-primary") }}
             </div>
         </form>

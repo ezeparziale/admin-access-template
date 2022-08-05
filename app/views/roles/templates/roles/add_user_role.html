@@ -20,23 +20,23 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">Roles</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add user</li>
+                <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">{{ _("Roles") }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _("Add User") }}</li>
             </ol>
         </nav>
 
-        <h3>{% block title %} Add User to Role: {{ role.name }} {% endblock %}</h3>
+        <h3>{% block title %} {{ _("Add user to role") }}: {{ role.name }} {% endblock %}</h3>
 
         <div class="card mt-3 shadow-sm">
             <div class="card-body">        
                 <table id="data" class="table dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Created date</th>
-                            <th>Roles</th>
-                            <th>Actions</th>
+                            <th>{{ _("Username") }}</th>
+                            <th>{{ _("Email") }}</th>
+                            <th>{{ _("Created date") }}</th>
+                            <th>{{ _("Roles") }}</th>
+                            <th>{{ _("Actions") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +73,7 @@
                 display: $.fn.dataTable.Responsive.display.modal( {
                     header: function ( row ) {
                         var data = row.data();
-                        return 'Detalle del rol: '+data.name;
+                        return '{{ _("Rol detail") }}: '+data.name;
                     }
                 } ),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
@@ -97,7 +97,7 @@
                 targets: 0,
                 orderable: true,
                 searchable: true,
-                title: 'Username',
+                title: '{{ _("Username") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -106,7 +106,7 @@
                 targets: 1,
                 orderable: true,
                 searchable: true,
-                title: 'Email',
+                title: '{{ _("Email") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -115,7 +115,7 @@
                 targets: 2,
                 orderable: true,
                 searchable: true,
-                title: 'Created date',
+                title: '{{ _("Created date") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -124,7 +124,7 @@
                 targets: 3,
                 orderable: true,
                 searchable: true,
-                title: 'Roles',
+                title: '{{ _("Roles") }}',
                 render: function (data, type, row, meta) {
                     for (var i = 0, r="<h5>"; i < data.length; i++) {
                         r += '<a href="/roles/view/' + data[i][0] + '">'
@@ -145,7 +145,7 @@
                 targets: -1,
                 searchable: false,
                 orderable: false,
-                title: "Actions",
+                title: '{{ _("Actions") }}',
                 render: function(data, type, row, meta) {
                     if (row.roles.map(function(e) { return e[1]; }).includes("{{ role.name }}")) {
                         let url_delete = '/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
@@ -170,6 +170,21 @@
                 }
             },    
         ],
+        "language": {
+            "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
+            "zeroRecords": '{{ _("Nothing found - sorry") }}',
+            "info": '{{ _("Showing page _PAGE_ of _PAGES_") }}',
+            "infoEmpty": '{{ _("No records available") }}',
+            "infoFiltered": '{{ _("(filtered from _MAX_ total records)") }}',
+            "search": '{{ _("Search:") }}',
+            "loadingRecords": '{{ _("Loading...") }}',
+            "paginate": {
+                "first": '{{ _("First") }}',
+                "last": '{{ _("Last") }}',
+                "next": '{{ _("Next") }}',
+                "previous": '{{ _("Previous") }}',
+            },
+        },
       });
     });
   </script>

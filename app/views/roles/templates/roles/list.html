@@ -20,11 +20,11 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
               <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Roles</li>
+              <li class="breadcrumb-item active" aria-current="page">{{ _("Roles") }}</li>
             </ol>
         </nav>
 
-        <h3>{% block title %} Roles List {% endblock %}</h3>
+        <h3>{% block title %} {{ _("Roles list") }} {% endblock %}</h3>
 
         <div class="row mt-3">
             {% for role in user_roles %}
@@ -33,7 +33,7 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ role.name }}</h3>
                             <p>Total users: {{ role.users|length }}</p>
-                            <a href="{{url_for('roles.view_role', id=role.id)}}" class="btn btn-primary">View</a>
+                            <a href="{{url_for('roles.view_role', id=role.id)}}" class="btn btn-primary">{{ _("View") }}</a>
                         </div>
                     </div>
                 </div>
@@ -45,11 +45,11 @@
                 <table id="data" class="table dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Role</th>
-                            <th>Description</th>
-                            <th>Permissions</th>
-                            <th>Created date</th>
-                            <th>Actions</th>
+                            <th>{{ _("Role") }}</th>
+                            <th>{{ _("Description") }}</th>
+                            <th>{{ _("Permissions") }}</th>
+                            <th>{{ _("Created date") }}</th>
+                            <th>{{ _("Actions") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,7 @@
                 display: $.fn.dataTable.Responsive.display.modal( {
                     header: function ( row ) {
                         var data = row.data();
-                        return 'Detalle del rol: '+data.name;
+                        return '{{ _("Rol detail") }}: '+data.name;
                     }
                 } ),
                 renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
@@ -108,7 +108,7 @@
                 targets: 0,
                 orderable: true,
                 searchable: true,
-                title: 'Name',
+                title: '{{ _("Name") }}',
                 render: function (data, type, row, meta) {
                     return '<h5><a href="/roles/view/' + row.id + '"><span class="badge bg-primary">' + data + '</span></a></h5> ';
                 }
@@ -117,7 +117,7 @@
                 targets: 1,
                 orderable: true,
                 searchable: true,
-                title: 'Description',
+                title: '{{ _("Description") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -126,7 +126,7 @@
                 targets: 2,
                 orderable: false,
                 searchable: true,
-                title: 'Permissions',
+                title: '{{ _("Permissions") }}',
                 render: function(e, a, t, s) {
                     for (var i = 0, r="<h5>"; i < e.length; i++) {
                         r += '<span class="badge" style="background-color:' + e[i][1] +  '">' + e[i][0] + '</span> ';
@@ -139,7 +139,7 @@
                 targets: 3,
                 orderable: true,
                 searchable: true,
-                title: 'Created date',
+                title: '{{ _("Created date") }}',
                 render: function (data, type, row, meta) {
                     return data;
                 }
@@ -148,7 +148,7 @@
                 targets: -1,
                 searchable: false,
                 orderable: false,
-                title: "Actions",
+                title: '{{ _("Actions") }}',
                 render: function(e, a, t, s) {
                     let url_edit = '/roles/edit/' + t.id;
                     let url_delete = '/roles/delete/' + t.id;
@@ -168,13 +168,28 @@
         dom: '<"row mx-1"<"col-sm-12 col-md-3" l><"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1"<"me-3"f>B>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         buttons: [
             {
-                text: "Create Role",
+                text: '{{ _("Create role") }}',
                 className: "btn btn-success btn-sm mb-3 mb-md-0",
                 action: function (e, dt, node, config) {
                     window.location.href = '/roles/create';
                 }
             }
         ],
+        "language": {
+            "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
+            "zeroRecords": '{{ _("Nothing found - sorry") }}',
+            "info": '{{ _("Showing page _PAGE_ of _PAGES_") }}',
+            "infoEmpty": '{{ _("No records available") }}',
+            "infoFiltered": '{{ _("(filtered from _MAX_ total records)") }}',
+            "search": '{{ _("Search:") }}',
+            "loadingRecords": '{{ _("Loading...") }}',
+            "paginate": {
+                "first": '{{ _("First") }}',
+                "last": '{{ _("Last") }}',
+                "next": '{{ _("Next") }}',
+                "previous": '{{ _("Previous") }}',
+            },
+        },
       });
     });
   </script>

@@ -16,65 +16,86 @@
         {% if current_user.is_authenticated and current_user.is_admin() %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Admin
+            {{ _("Admin") }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
               <a class="dropdown-item" aria-current="page" href="{{ url_for('users.users_view') }}">
-                Users
+                {{ _("Users") }}
               </a>
             </li>
             <li>
               <a class="dropdown-item" aria-current="page" href="{{ url_for('roles.roles_view') }}">
-                Roles
+                {{ _("Roles") }}
               </a>
             </li>
             <li>
               <a class="dropdown-item" aria-current="page" href="{{ url_for('permissions.permissions_view') }}">
-                Permissions
+                {{ _("Permissions") }}
               </a>
             </li>
           </ul>
         </li>
-        {% endif %}  
+        {% endif %}
+        
       </ul>
 
       <ul class="navbar-nav justify-content-end">
       {% if current_user.is_authenticated %}
       <div class="dropdown text-end">
-        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="d-block link-dark text-decoration-none" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="{{ url_for('static', filename='img/flags/' + current_user.locale + '.png') }}" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li>
+            <a class="dropdown-item" aria-current="page" href="#" onclick="change_language('es')">
+              <img src="{{ url_for('static', filename='img/flags/es.png') }}" width="32" height="32" class="rounded-circle">
+              {{ _("Spanish") }}
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" aria-current="page" href="#" onclick="change_language('en')">
+              <img src="{{ url_for('static', filename='img/flags/en.png') }}" width="32" height="32" class="rounded-circle">
+              {{ _("English") }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none ms-2" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="{{ url_for('static', filename='img/avatars/avatar.png') }}" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownUser">
           <li>
             <a class="dropdown-item" aria-current="page" href="#">
-              <i class="bi bi-person"></i> Perfil
+              <i class="bi bi-person"></i> {{ _("Profile") }}
             </a>
           </li>
           <li>
             <a class="dropdown-item" aria-current="page" href="#">
-              <i class="bi bi-gear"></i> Configuración
+              <i class="bi bi-gear"></i> {{ _("Settings") }}
             </a>
           </li>
           <li>
             <a class="dropdown-item" aria-current="page" href="#">
-              <i class="bi bi-info-circle"></i> About
+              <i class="bi bi-info-circle"></i> {{ _("About") }}
             </a>
           </li>
           <li><hr class="dropdown-divider"></li>             
           <li>
             <a class="dropdown-item dropdown-item-danger" aria-current="page" href="{{ url_for('auth.logout') }}">
-              <i class="bi bi-box-arrow-right"></i> Logout
+              <i class="bi bi-box-arrow-right"></i> {{ _("Logout") }}
             </a>
-          </li>
+          </li> 
         </ul>
       </div>
       {% else %}
         <li class="nav-item">
-          <a class="btn btn-outline-light me-1" href="{{ url_for('auth.login') }}">Login</a>
+          <a class="btn btn-outline-light me-1" href="{{ url_for('auth.login') }}">{{ _("Login") }}</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-primary me-1" aria-current="page" href="{{ url_for('auth.register') }}">Sign Up</a>
+          <a class="btn btn-primary me-1" aria-current="page" href="{{ url_for('auth.register') }}">{{ _("Sign Up") }}</a>
         </li>
       {% endif %}
       </ul>

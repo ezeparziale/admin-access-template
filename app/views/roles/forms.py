@@ -1,21 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
+from flask_babel import lazy_gettext
 
 from ...models import Permission, Role
 
 
 class CreateRoleForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired(), Length(min=2, max=30)])
+    name = StringField(lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)])
     description = StringField(
-        "Description", validators=[DataRequired(), Length(min=2, max=120)]
+        lazy_gettext("Description"), validators=[DataRequired(), Length(min=2, max=120)]
     )
     permissions = SelectMultipleField(
-        "Permissions",
+        lazy_gettext("Permissions"),
         coerce=int,
-        render_kw={"data-placeholder":"Choose anything"}
+        render_kw={"data-placeholder":lazy_gettext("Choose anything")}
     )
-    submit = SubmitField("Create")
+    submit = SubmitField(lazy_gettext("Create"))
 
     def __init__(self, *args, **kwargs):
         super(CreateRoleForm, self).__init__(*args, **kwargs)
@@ -23,20 +24,20 @@ class CreateRoleForm(FlaskForm):
 
     def validate_name(self, field):
         if Role.query.filter_by(name=field.data).first():
-            raise ValidationError("Role name already exists.")
+            raise ValidationError(lazy_gettext("Role name already exists."))
 
 
 class EditRoleForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired(), Length(min=2, max=30)])
+    name = StringField(lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)])
     description = StringField(
-        "Description", validators=[DataRequired(), Length(min=2, max=120)]
+        lazy_gettext("Description"), validators=[DataRequired(), Length(min=2, max=120)]
     )
     permissions = SelectMultipleField(
-        "Permissions",
+        lazy_gettext("Permissions"),
         coerce=int,
-        render_kw={"data-placeholder":"Choose anything"}
+        render_kw={"data-placeholder":lazy_gettext("Choose anything")}
     )
-    submit = SubmitField("Update")
+    submit = SubmitField(lazy_gettext("Update"))
 
     def __init__(self, *args, **kwargs):
         super(EditRoleForm, self).__init__(*args, **kwargs)
