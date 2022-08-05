@@ -1,11 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from flask_babel import Babel
 import logging
 from .config import settings
+from flask_babel import lazy_gettext
 
 # Flask
 app = Flask(__name__)
@@ -33,7 +35,7 @@ bcrypt = Bcrypt(app)
 # Login Manager
 login_manager = LoginManager(app)
 login_manager.refresh_view = "auth.login"
-login_manager.needs_refresh_message = "Por favor vuelva a loguearse!!!"
+login_manager.needs_refresh_message = lazy_gettext("Please log in to access this page!")
 login_manager.needs_refresh_message_category = "info"
 
 # Mail
@@ -41,6 +43,22 @@ mail = Mail(app)
 
 # Moment
 moment = Moment(app)
+
+# Babel
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    if current_user.locale:
+        return current_user.locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@babel.timezoneselector
+def get_timezone():
+    user = getattr(g, "user", None)
+    if user is not None:
+        return user.timezone
 
 # Blueprints
 from .views.home import home
@@ -66,6 +84,10 @@ app.register_blueprint(users.users_bp)
 from .views.admin import admin
 
 app.register_blueprint(admin.admin_bp)
+
+from .views.account import account
+
+app.register_blueprint(account.account_bp)
 
 
 @app.errorhandler(404)
