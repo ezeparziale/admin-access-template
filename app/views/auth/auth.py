@@ -125,7 +125,6 @@ def send_email_reset_password(user):
     thr.start()
 
 
-
 @auth_bp.route("/reset_password/", methods=["GET", "POST"])
 def reset_password():
     form = ResetPasswordRequestForm()
