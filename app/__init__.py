@@ -5,25 +5,30 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
-import logging
+from logging.config import dictConfig
 from .config import settings
 from flask_babel import lazy_gettext
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s',
+        'datefmt': '%Y-%m-%d %I:%M:%S %z'
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 
 # Flask
 app = Flask(__name__)
 app.config.from_object(settings)
-
-# Logging
-if not app.debug:
-    gunicorn_logger = logging.getLogger("gunicorn.error")
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
-else:
-    logging.basicConfig(
-        level=logging.DEBUG, 
-        format="[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s", 
-        datefmt="%Y-%m-%d %I:%M:%S %z",
-    )
 
 # Database
 db = SQLAlchemy(app)
