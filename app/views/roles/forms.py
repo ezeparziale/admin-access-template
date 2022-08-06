@@ -1,20 +1,22 @@
+from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from wtforms import SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
-from flask_babel import lazy_gettext
 
 from ...models import Permission, Role
 
 
 class CreateRoleForm(FlaskForm):
-    name = StringField(lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)])
+    name = StringField(
+        lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)]
+    )
     description = StringField(
         lazy_gettext("Description"), validators=[DataRequired(), Length(min=2, max=120)]
     )
     permissions = SelectMultipleField(
         lazy_gettext("Permissions"),
         coerce=int,
-        render_kw={"data-placeholder":lazy_gettext("Choose anything")}
+        render_kw={"data-placeholder": lazy_gettext("Choose anything")},
     )
     submit = SubmitField(lazy_gettext("Create"))
 
@@ -28,14 +30,16 @@ class CreateRoleForm(FlaskForm):
 
 
 class EditRoleForm(FlaskForm):
-    name = StringField(lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)])
+    name = StringField(
+        lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)]
+    )
     description = StringField(
         lazy_gettext("Description"), validators=[DataRequired(), Length(min=2, max=120)]
     )
     permissions = SelectMultipleField(
         lazy_gettext("Permissions"),
         coerce=int,
-        render_kw={"data-placeholder":lazy_gettext("Choose anything")}
+        render_kw={"data-placeholder": lazy_gettext("Choose anything")},
     )
     submit = SubmitField(lazy_gettext("Update"))
 

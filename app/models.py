@@ -148,7 +148,6 @@ class User(db.Model, UserMixin):
             return True
         return False
 
-
     @staticmethod
     def verify_token(token):
         try:
@@ -283,9 +282,15 @@ class Permission(db.Model):
 
     @staticmethod
     def insert_default_values():
-        db.session.add(Permission(name="write", description="Write permission", color="#8ac926"))
-        db.session.add(Permission(name="update", description="Update permission", color="#1982c4"))
-        db.session.add(Permission(name="delete", description="Delete permission", color="#ff595e"))
+        db.session.add(
+            Permission(name="write", description="Write permission", color="#8ac926")
+        )
+        db.session.add(
+            Permission(name="update", description="Update permission", color="#1982c4")
+        )
+        db.session.add(
+            Permission(name="delete", description="Delete permission", color="#ff595e")
+        )
         db.session.commit()
 
 
@@ -293,7 +298,7 @@ class Permission(db.Model):
 # def create_roles(*args, **kwargs):
 #     db.session.add(
 #         Role(
-#             name="admin", 
+#             name="admin",
 #             description="Admin role",
 #             )
 #     )

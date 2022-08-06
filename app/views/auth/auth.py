@@ -75,7 +75,9 @@ def send_email_confirm(user):
         recipients=[user.email],
         sender="noreplay@test.com",
     )
-    msg.html = render_template("emails/confirm_account.html", token=token, app_name=settings.SITE_NAME)
+    msg.html = render_template(
+        "emails/confirm_account.html", token=token, app_name=settings.SITE_NAME
+    )
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
     return thr
@@ -120,7 +122,9 @@ def send_email_reset_password(user):
         recipients=[user.email],
         sender="noreplay@test.com",
     )
-    msg.html = render_template("emails/reset_password.html", token=token, app_name=settings.SITE_NAME)
+    msg.html = render_template(
+        "emails/reset_password.html", token=token, app_name=settings.SITE_NAME
+    )
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
 

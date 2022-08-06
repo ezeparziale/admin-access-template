@@ -1,30 +1,34 @@
+from logging.config import dictConfig
+
 from flask import Flask, render_template, request
+from flask_babel import Babel, lazy_gettext
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
-from flask_babel import Babel
-from logging.config import dictConfig
-from .config import settings
-from flask_babel import lazy_gettext
 
-dictConfig({
-    'version': 1,
-    'formatters': {'default': {
-        'format': '[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s',
-        'datefmt': '%Y-%m-%d %I:%M:%S %z'
-    }},
-    'handlers': {'wsgi': {
-        'class': 'logging.StreamHandler',
-        'stream': 'ext://flask.logging.wsgi_errors_stream',
-        'formatter': 'default'
-    }},
-    'root': {
-        'level': 'INFO',
-        'handlers': ['wsgi']
+from .config import settings
+
+dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s",
+                "datefmt": "%Y-%m-%d %I:%M:%S %z",
+            }
+        },
+        "handlers": {
+            "wsgi": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://flask.logging.wsgi_errors_stream",
+                "formatter": "default",
+            }
+        },
+        "root": {"level": "INFO", "handlers": ["wsgi"]},
     }
-})
+)
 
 # Flask
 app = Flask(__name__)
@@ -52,11 +56,12 @@ moment = Moment(app)
 # Babel
 babel = Babel(app)
 
+
 @babel.localeselector
 def get_locale():
     if current_user.locale:
         return current_user.locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @babel.timezoneselector
@@ -64,6 +69,7 @@ def get_timezone():
     user = getattr(g, "user", None)
     if user is not None:
         return user.timezone
+
 
 # Blueprints
 from .views.home import home
