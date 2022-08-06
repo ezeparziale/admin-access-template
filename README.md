@@ -9,10 +9,6 @@ python -m venv env
 ```
 
 ```bash
-$env:FLASK_APP="app"
-```
-
-```bash
 env/scripts/activate
 ```
 
