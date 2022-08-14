@@ -66,6 +66,8 @@ def get_locale():
 
 @babel.timezoneselector
 def get_timezone():
+    if current_user.is_authenticated and current_user.timezone:
+        return current_user.timezone    
     return "UTC"
 
 
