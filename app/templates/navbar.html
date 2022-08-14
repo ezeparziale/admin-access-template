@@ -68,7 +68,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownUser">
           <li>
-            <a class="dropdown-item" aria-current="page" href="#">
+            <a class="dropdown-item" aria-current="page" href="{{ url_for('user.user_view', username=current_user.username) }}">
               <i class="bi bi-person"></i> {{ _("Profile") }}
             </a>
           </li>

@@ -92,6 +92,9 @@ from .views.about import about
 
 app.register_blueprint(about.about_bp)
 
+from .views.user import user
+
+app.register_blueprint(user.user_bp)
 
 @app.errorhandler(404)
 def page_not_found(e):
