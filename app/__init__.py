@@ -80,10 +80,6 @@ from .views.auth import auth
 
 app.register_blueprint(auth.auth_bp)
 
-from .views.users import users
-
-app.register_blueprint(users.users_bp)
-
 from .views.admin import admin
 
 app.register_blueprint(admin.admin_bp)
