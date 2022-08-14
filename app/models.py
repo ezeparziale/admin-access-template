@@ -43,6 +43,7 @@ class User(db.Model, UserMixin):
     updated_user = Column(Integer, ForeignKey("users.id"))
     confirmed = Column(BOOLEAN, default=False)
     locale = Column(String, nullable=False, default=settings.DEFAULT_LANGUAGE)
+    timezone = Column(String, nullable=True)
     last_seen = Column(
         TIMESTAMP(timezone=True),
         server_default=text("CURRENT_TIMESTAMP"),
