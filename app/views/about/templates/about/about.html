@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+    {% include "navbar.html" %}
+{% endblock %}
+
+
+{% block content %}
+    
+    <h1>{% block title %} {{ _("About") }} {% endblock %}</h1>
+
+{% endblock %}
