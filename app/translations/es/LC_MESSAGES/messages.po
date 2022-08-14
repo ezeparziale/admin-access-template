@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-14 14:41-0300\n"
+"POT-Creation-Date: 2022-08-14 15:00-0300\n"
 "PO-Revision-Date: 2022-07-31 15:52-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -417,4 +417,8 @@ msgstr "Agregar usuario"
 #: app/views/admin/templates/users/list_users.html:69
 msgid "Detail"
 msgstr "Detalle"
+
+#: app/views/user/templates/user/user.html:24
+msgid "Member since"
+msgstr "Miembre desde"
 

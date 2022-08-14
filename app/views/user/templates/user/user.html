@@ -21,7 +21,7 @@
             <h4 class="fw-bold mb-2">{{ user.username }}
             </h4>
             <p class="text-muted small mb-4">
-              Miembro desde: {{ moment(user.created_at).format("L") }}
+              {{ _("Member since") }}: {{ moment(user.created_at).format("L") }}
             </p>                        
           </div>
         </div>
