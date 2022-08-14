@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-14 12:53-0300\n"
+"POT-Creation-Date: 2022-08-14 14:41-0300\n"
 "PO-Revision-Date: 2022-07-31 15:52-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -77,8 +77,8 @@ msgid "Admin"
 msgstr "Admin"
 
 #: app/templates/navbar.html:24 app/views/admin/templates/admin/admin.html:25
-#: app/views/users/templates/users/list_users.html:23
-#: app/views/users/templates/users/list_users.html:27
+#: app/views/admin/templates/users/list_users.html:23
+#: app/views/admin/templates/users/list_users.html:27
 msgid "Users"
 msgstr "Usuarios"
 
@@ -92,8 +92,8 @@ msgstr "Usuarios"
 #: app/views/admin/templates/roles/view.html:23
 #: app/views/admin/templates/roles/view.html:38
 #: app/views/admin/templates/roles/view.html:123
-#: app/views/users/templates/users/list_users.html:37
-#: app/views/users/templates/users/list_users.html:120
+#: app/views/admin/templates/users/list_users.html:37
+#: app/views/admin/templates/users/list_users.html:120
 msgid "Roles"
 msgstr "Roles"
 
@@ -240,8 +240,8 @@ msgstr "Permiso"
 #: app/views/admin/templates/roles/list.html:142
 #: app/views/admin/templates/roles/view.html:37
 #: app/views/admin/templates/roles/view.html:114
-#: app/views/users/templates/users/list_users.html:36
-#: app/views/users/templates/users/list_users.html:111
+#: app/views/admin/templates/users/list_users.html:36
+#: app/views/admin/templates/users/list_users.html:111
 msgid "Created date"
 msgstr "Fecha de creación"
 
@@ -268,7 +268,7 @@ msgstr "Crear permiso"
 #: app/views/admin/templates/roles/add_user_role.html:174
 #: app/views/admin/templates/roles/list.html:179
 #: app/views/admin/templates/roles/view.html:171
-#: app/views/users/templates/users/list_users.html:131
+#: app/views/admin/templates/users/list_users.html:131
 msgid "Display _MENU_ records per page"
 msgstr "Mostrar _MENU_ registros por pagina"
 
@@ -276,7 +276,7 @@ msgstr "Mostrar _MENU_ registros por pagina"
 #: app/views/admin/templates/roles/add_user_role.html:175
 #: app/views/admin/templates/roles/list.html:180
 #: app/views/admin/templates/roles/view.html:172
-#: app/views/users/templates/users/list_users.html:132
+#: app/views/admin/templates/users/list_users.html:132
 msgid "Nothing found - sorry"
 msgstr "Sin resultados"
 
@@ -284,7 +284,7 @@ msgstr "Sin resultados"
 #: app/views/admin/templates/roles/add_user_role.html:176
 #: app/views/admin/templates/roles/list.html:181
 #: app/views/admin/templates/roles/view.html:173
-#: app/views/users/templates/users/list_users.html:133
+#: app/views/admin/templates/users/list_users.html:133
 msgid "Showing page _PAGE_ of _PAGES_"
 msgstr "Página _PAGE_ de _PAGES_"
 
@@ -292,7 +292,7 @@ msgstr "Página _PAGE_ de _PAGES_"
 #: app/views/admin/templates/roles/add_user_role.html:177
 #: app/views/admin/templates/roles/list.html:182
 #: app/views/admin/templates/roles/view.html:174
-#: app/views/users/templates/users/list_users.html:134
+#: app/views/admin/templates/users/list_users.html:134
 msgid "No records available"
 msgstr "Sin registros"
 
@@ -300,7 +300,7 @@ msgstr "Sin registros"
 #: app/views/admin/templates/roles/add_user_role.html:178
 #: app/views/admin/templates/roles/list.html:183
 #: app/views/admin/templates/roles/view.html:175
-#: app/views/users/templates/users/list_users.html:135
+#: app/views/admin/templates/users/list_users.html:135
 msgid "(filtered from _MAX_ total records)"
 msgstr "(Filtrado de _MAX_ registros totales)"
 
@@ -308,7 +308,7 @@ msgstr "(Filtrado de _MAX_ registros totales)"
 #: app/views/admin/templates/roles/add_user_role.html:179
 #: app/views/admin/templates/roles/list.html:184
 #: app/views/admin/templates/roles/view.html:176
-#: app/views/users/templates/users/list_users.html:136
+#: app/views/admin/templates/users/list_users.html:136
 msgid "Search:"
 msgstr "Buscar:"
 
@@ -316,7 +316,7 @@ msgstr "Buscar:"
 #: app/views/admin/templates/roles/add_user_role.html:180
 #: app/views/admin/templates/roles/list.html:185
 #: app/views/admin/templates/roles/view.html:177
-#: app/views/users/templates/users/list_users.html:137
+#: app/views/admin/templates/users/list_users.html:137
 msgid "Loading..."
 msgstr "Cargando..."
 
@@ -324,7 +324,7 @@ msgstr "Cargando..."
 #: app/views/admin/templates/roles/add_user_role.html:182
 #: app/views/admin/templates/roles/list.html:187
 #: app/views/admin/templates/roles/view.html:179
-#: app/views/users/templates/users/list_users.html:139
+#: app/views/admin/templates/users/list_users.html:139
 msgid "First"
 msgstr "Primero"
 
@@ -332,7 +332,7 @@ msgstr "Primero"
 #: app/views/admin/templates/roles/add_user_role.html:183
 #: app/views/admin/templates/roles/list.html:188
 #: app/views/admin/templates/roles/view.html:180
-#: app/views/users/templates/users/list_users.html:140
+#: app/views/admin/templates/users/list_users.html:140
 msgid "Last"
 msgstr "Último"
 
@@ -340,7 +340,7 @@ msgstr "Último"
 #: app/views/admin/templates/roles/add_user_role.html:184
 #: app/views/admin/templates/roles/list.html:189
 #: app/views/admin/templates/roles/view.html:181
-#: app/views/users/templates/users/list_users.html:141
+#: app/views/admin/templates/users/list_users.html:141
 msgid "Next"
 msgstr "Siguiente"
 
@@ -348,7 +348,7 @@ msgstr "Siguiente"
 #: app/views/admin/templates/roles/add_user_role.html:185
 #: app/views/admin/templates/roles/list.html:190
 #: app/views/admin/templates/roles/view.html:182
-#: app/views/users/templates/users/list_users.html:142
+#: app/views/admin/templates/users/list_users.html:142
 msgid "Previous"
 msgstr "Anterior"
 
@@ -364,8 +364,8 @@ msgstr "Agregar rol de usuario"
 #: app/views/admin/templates/roles/add_user_role.html:100
 #: app/views/admin/templates/roles/view.html:35
 #: app/views/admin/templates/roles/view.html:96
-#: app/views/users/templates/users/list_users.html:34
-#: app/views/users/templates/users/list_users.html:93
+#: app/views/admin/templates/users/list_users.html:34
+#: app/views/admin/templates/users/list_users.html:93
 msgid "Username"
 msgstr "Usuario"
 
@@ -373,8 +373,8 @@ msgstr "Usuario"
 #: app/views/admin/templates/roles/add_user_role.html:109
 #: app/views/admin/templates/roles/view.html:36
 #: app/views/admin/templates/roles/view.html:105
-#: app/views/users/templates/users/list_users.html:35
-#: app/views/users/templates/users/list_users.html:102
+#: app/views/admin/templates/users/list_users.html:35
+#: app/views/admin/templates/users/list_users.html:102
 msgid "Email"
 msgstr "Email"
 
@@ -414,7 +414,7 @@ msgstr "Eliminar Rol"
 msgid "Add user"
 msgstr "Agregar usuario"
 
-#: app/views/users/templates/users/list_users.html:69
+#: app/views/admin/templates/users/list_users.html:69
 msgid "Detail"
 msgstr "Detalle"
 
