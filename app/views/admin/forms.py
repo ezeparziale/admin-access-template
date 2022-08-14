@@ -1,8 +1,8 @@
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
-from wtforms import SelectMultipleField, StringField, SubmitField, HiddenField
+from sqlalchemy import and_, or_
+from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
-from sqlalchemy import or_, and_
 
 from ...models import Permission, Role
 
@@ -60,14 +60,17 @@ class EditPermissionForm(FlaskForm):
         if not rv:
             return False
 
-        check_permission_exists = Permission.query.filter(and_(Permission.name==self.name.data, Permission.id!=self.id.data)).all()
+        check_permission_exists = Permission.query.filter(
+            and_(Permission.name == self.name.data, Permission.id != self.id.data)
+        ).all()
 
         if check_permission_exists:
-            self.name.errors.append(f"Permission: '{self.name.data}' name already exists.")
+            self.name.errors.append(
+                f"Permission: '{self.name.data}' name already exists."
+            )
             return False
-        
-        return True
 
+        return True
 
 
 class CreateRoleForm(FlaskForm):
@@ -117,10 +120,12 @@ class EditRoleForm(FlaskForm):
         if not rv:
             return False
 
-        check_role_exists = Role.query.filter(and_(Role.name==self.name.data, Role.id!=self.id.data)).all()
+        check_role_exists = Role.query.filter(
+            and_(Role.name == self.name.data, Role.id != self.id.data)
+        ).all()
 
         if check_role_exists:
             self.name.errors.append(f"Role: '{self.name.data}' name already exists.")
             return False
-        
+
         return True

@@ -96,6 +96,7 @@ from .views.user import user
 
 app.register_blueprint(user.user_bp)
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404

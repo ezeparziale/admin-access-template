@@ -25,6 +25,7 @@ from .users import users_bp
 
 admin_bp.register_blueprint(users_bp)
 
+
 @admin_bp.route("/", methods=["GET"])
 @login_required
 @admin_required
