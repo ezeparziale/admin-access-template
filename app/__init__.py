@@ -100,6 +100,10 @@ from .views.account import account
 
 app.register_blueprint(account.account_bp)
 
+from .views.about import about
+
+app.register_blueprint(about.about_bp)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
