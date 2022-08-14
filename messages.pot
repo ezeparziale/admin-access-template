@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-14 11:58-0300\n"
+"POT-Creation-Date: 2022-08-14 12:53-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,10 +31,10 @@ msgstr ""
 
 #: app/templates/macro_modal.html:14 app/templates/macro_modal.html:37
 #: app/templates/macro_modal.html:60 app/templates/macro_modal.html:83
-#: app/views/permissions/templates/permissions/create.html:63
-#: app/views/permissions/templates/permissions/edit.html:63
-#: app/views/roles/templates/roles/create.html:62
-#: app/views/roles/templates/roles/edit.html:62
+#: app/views/admin/templates/permissions/create.html:63
+#: app/views/admin/templates/permissions/edit.html:63
+#: app/views/admin/templates/roles/create.html:62
+#: app/views/admin/templates/roles/edit.html:62
 msgid "Cancel"
 msgstr ""
 
@@ -76,33 +76,33 @@ msgid "Admin"
 msgstr ""
 
 #: app/templates/navbar.html:24 app/views/admin/templates/admin/admin.html:25
-#: app/views/users/templates/users/users.html:23
-#: app/views/users/templates/users/users.html:27
+#: app/views/users/templates/users/list_users.html:23
+#: app/views/users/templates/users/list_users.html:27
 msgid "Users"
 msgstr ""
 
 #: app/templates/navbar.html:29 app/views/admin/templates/admin/admin.html:34
-#: app/views/roles/templates/roles/add_user_role.html:23
-#: app/views/roles/templates/roles/add_user_role.html:38
-#: app/views/roles/templates/roles/add_user_role.html:127
-#: app/views/roles/templates/roles/create.html:16
-#: app/views/roles/templates/roles/edit.html:16
-#: app/views/roles/templates/roles/list.html:23
-#: app/views/roles/templates/roles/view.html:23
-#: app/views/roles/templates/roles/view.html:38
-#: app/views/roles/templates/roles/view.html:123
-#: app/views/users/templates/users/users.html:37
-#: app/views/users/templates/users/users.html:120
+#: app/views/admin/templates/roles/add_user_role.html:23
+#: app/views/admin/templates/roles/add_user_role.html:38
+#: app/views/admin/templates/roles/add_user_role.html:127
+#: app/views/admin/templates/roles/create.html:16
+#: app/views/admin/templates/roles/edit.html:16
+#: app/views/admin/templates/roles/list.html:23
+#: app/views/admin/templates/roles/view.html:23
+#: app/views/admin/templates/roles/view.html:38
+#: app/views/admin/templates/roles/view.html:123
+#: app/views/users/templates/users/list_users.html:37
+#: app/views/users/templates/users/list_users.html:120
 msgid "Roles"
 msgstr ""
 
-#: app/templates/navbar.html:34 app/views/admin/templates/admin/admin.html:43
-#: app/views/permissions/templates/permissions/create.html:16
-#: app/views/permissions/templates/permissions/edit.html:16
-#: app/views/permissions/templates/permissions/list.html:23
-#: app/views/roles/forms.py:17 app/views/roles/forms.py:40
-#: app/views/roles/templates/roles/list.html:50
-#: app/views/roles/templates/roles/list.html:129
+#: app/templates/navbar.html:34 app/views/admin/forms.py:66
+#: app/views/admin/forms.py:89 app/views/admin/templates/admin/admin.html:43
+#: app/views/admin/templates/permissions/create.html:16
+#: app/views/admin/templates/permissions/edit.html:16
+#: app/views/admin/templates/permissions/list.html:23
+#: app/views/admin/templates/roles/list.html:50
+#: app/views/admin/templates/roles/list.html:129
 msgid "Permissions"
 msgstr ""
 
@@ -138,6 +138,53 @@ msgstr ""
 msgid "Sign Up"
 msgstr ""
 
+#: app/views/admin/forms.py:11 app/views/admin/forms.py:37
+#: app/views/admin/forms.py:60 app/views/admin/forms.py:83
+#: app/views/admin/templates/roles/list.html:111
+msgid "Name"
+msgstr ""
+
+#: app/views/admin/forms.py:13 app/views/admin/forms.py:20
+#: app/views/admin/forms.py:26 app/views/admin/forms.py:39
+#: app/views/admin/forms.py:46 app/views/admin/forms.py:52
+msgid "Please complete this field"
+msgstr ""
+
+#: app/views/admin/forms.py:18 app/views/admin/forms.py:44
+#: app/views/admin/forms.py:63 app/views/admin/forms.py:86
+#: app/views/admin/templates/permissions/list.html:35
+#: app/views/admin/templates/permissions/list.html:103
+#: app/views/admin/templates/roles/list.html:49
+#: app/views/admin/templates/roles/list.html:120
+msgid "Description"
+msgstr ""
+
+#: app/views/admin/forms.py:25 app/views/admin/forms.py:51
+msgid "Color"
+msgstr ""
+
+#: app/views/admin/forms.py:28 app/views/admin/forms.py:70
+#: app/views/admin/templates/permissions/create.html:17
+#: app/views/admin/templates/roles/create.html:17
+msgid "Create"
+msgstr ""
+
+#: app/views/admin/forms.py:32
+msgid "Permission name already exists."
+msgstr ""
+
+#: app/views/admin/forms.py:54 app/views/admin/forms.py:93
+msgid "Update"
+msgstr ""
+
+#: app/views/admin/forms.py:68 app/views/admin/forms.py:91
+msgid "Choose anything"
+msgstr ""
+
+#: app/views/admin/forms.py:78
+msgid "Role name already exists."
+msgstr ""
+
 #: app/views/admin/templates/admin/admin.html:26
 msgid "All users info."
 msgstr ""
@@ -162,258 +209,211 @@ msgstr ""
 msgid "Go to permission"
 msgstr ""
 
-#: app/views/permissions/forms.py:11 app/views/permissions/forms.py:37
-#: app/views/roles/forms.py:11 app/views/roles/forms.py:34
-#: app/views/roles/templates/roles/list.html:111
-msgid "Name"
-msgstr ""
-
-#: app/views/permissions/forms.py:13 app/views/permissions/forms.py:20
-#: app/views/permissions/forms.py:26 app/views/permissions/forms.py:39
-#: app/views/permissions/forms.py:46 app/views/permissions/forms.py:52
-msgid "Please complete this field"
-msgstr ""
-
-#: app/views/permissions/forms.py:18 app/views/permissions/forms.py:44
-#: app/views/permissions/templates/permissions/list.html:35
-#: app/views/permissions/templates/permissions/list.html:103
-#: app/views/roles/forms.py:14 app/views/roles/forms.py:37
-#: app/views/roles/templates/roles/list.html:49
-#: app/views/roles/templates/roles/list.html:120
-msgid "Description"
-msgstr ""
-
-#: app/views/permissions/forms.py:25 app/views/permissions/forms.py:51
-msgid "Color"
-msgstr ""
-
-#: app/views/permissions/forms.py:28
-#: app/views/permissions/templates/permissions/create.html:17
-#: app/views/roles/forms.py:21 app/views/roles/templates/roles/create.html:17
-msgid "Create"
-msgstr ""
-
-#: app/views/permissions/forms.py:32
-msgid "Permission name already exists."
-msgstr ""
-
-#: app/views/permissions/forms.py:54 app/views/roles/forms.py:44
-msgid "Update"
-msgstr ""
-
-#: app/views/permissions/templates/permissions/create.html:21
+#: app/views/admin/templates/permissions/create.html:21
 msgid "Create new permission"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/edit.html:17
-#: app/views/roles/templates/roles/edit.html:17
+#: app/views/admin/templates/permissions/edit.html:17
+#: app/views/admin/templates/roles/edit.html:17
 msgid "Edit"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/edit.html:21
+#: app/views/admin/templates/permissions/edit.html:21
 msgid "Edit permission"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:27
+#: app/views/admin/templates/permissions/list.html:27
 msgid "Permissions list"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:34
-#: app/views/permissions/templates/permissions/list.html:94
+#: app/views/admin/templates/permissions/list.html:34
+#: app/views/admin/templates/permissions/list.html:94
 msgid "Permission"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:36
-#: app/views/permissions/templates/permissions/list.html:112
-#: app/views/roles/templates/roles/add_user_role.html:37
-#: app/views/roles/templates/roles/add_user_role.html:118
-#: app/views/roles/templates/roles/list.html:51
-#: app/views/roles/templates/roles/list.html:142
-#: app/views/roles/templates/roles/view.html:37
-#: app/views/roles/templates/roles/view.html:114
-#: app/views/users/templates/users/users.html:36
-#: app/views/users/templates/users/users.html:111
+#: app/views/admin/templates/permissions/list.html:36
+#: app/views/admin/templates/permissions/list.html:112
+#: app/views/admin/templates/roles/add_user_role.html:37
+#: app/views/admin/templates/roles/add_user_role.html:118
+#: app/views/admin/templates/roles/list.html:51
+#: app/views/admin/templates/roles/list.html:142
+#: app/views/admin/templates/roles/view.html:37
+#: app/views/admin/templates/roles/view.html:114
+#: app/views/users/templates/users/list_users.html:36
+#: app/views/users/templates/users/list_users.html:111
 msgid "Created date"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:37
-#: app/views/permissions/templates/permissions/list.html:121
-#: app/views/roles/templates/roles/add_user_role.html:39
-#: app/views/roles/templates/roles/add_user_role.html:148
-#: app/views/roles/templates/roles/list.html:52
-#: app/views/roles/templates/roles/list.html:151
-#: app/views/roles/templates/roles/view.html:39
-#: app/views/roles/templates/roles/view.html:147
+#: app/views/admin/templates/permissions/list.html:37
+#: app/views/admin/templates/permissions/list.html:121
+#: app/views/admin/templates/roles/add_user_role.html:39
+#: app/views/admin/templates/roles/add_user_role.html:148
+#: app/views/admin/templates/roles/list.html:52
+#: app/views/admin/templates/roles/list.html:151
+#: app/views/admin/templates/roles/view.html:39
+#: app/views/admin/templates/roles/view.html:147
 msgid "Actions"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:71
+#: app/views/admin/templates/permissions/list.html:71
 msgid "Permission detail"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:142
+#: app/views/admin/templates/permissions/list.html:142
 msgid "Create permission"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:150
-#: app/views/roles/templates/roles/add_user_role.html:174
-#: app/views/roles/templates/roles/list.html:179
-#: app/views/roles/templates/roles/view.html:171
-#: app/views/users/templates/users/users.html:131
+#: app/views/admin/templates/permissions/list.html:150
+#: app/views/admin/templates/roles/add_user_role.html:174
+#: app/views/admin/templates/roles/list.html:179
+#: app/views/admin/templates/roles/view.html:171
+#: app/views/users/templates/users/list_users.html:131
 msgid "Display _MENU_ records per page"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:151
-#: app/views/roles/templates/roles/add_user_role.html:175
-#: app/views/roles/templates/roles/list.html:180
-#: app/views/roles/templates/roles/view.html:172
-#: app/views/users/templates/users/users.html:132
+#: app/views/admin/templates/permissions/list.html:151
+#: app/views/admin/templates/roles/add_user_role.html:175
+#: app/views/admin/templates/roles/list.html:180
+#: app/views/admin/templates/roles/view.html:172
+#: app/views/users/templates/users/list_users.html:132
 msgid "Nothing found - sorry"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:152
-#: app/views/roles/templates/roles/add_user_role.html:176
-#: app/views/roles/templates/roles/list.html:181
-#: app/views/roles/templates/roles/view.html:173
-#: app/views/users/templates/users/users.html:133
+#: app/views/admin/templates/permissions/list.html:152
+#: app/views/admin/templates/roles/add_user_role.html:176
+#: app/views/admin/templates/roles/list.html:181
+#: app/views/admin/templates/roles/view.html:173
+#: app/views/users/templates/users/list_users.html:133
 msgid "Showing page _PAGE_ of _PAGES_"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:153
-#: app/views/roles/templates/roles/add_user_role.html:177
-#: app/views/roles/templates/roles/list.html:182
-#: app/views/roles/templates/roles/view.html:174
-#: app/views/users/templates/users/users.html:134
+#: app/views/admin/templates/permissions/list.html:153
+#: app/views/admin/templates/roles/add_user_role.html:177
+#: app/views/admin/templates/roles/list.html:182
+#: app/views/admin/templates/roles/view.html:174
+#: app/views/users/templates/users/list_users.html:134
 msgid "No records available"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:154
-#: app/views/roles/templates/roles/add_user_role.html:178
-#: app/views/roles/templates/roles/list.html:183
-#: app/views/roles/templates/roles/view.html:175
-#: app/views/users/templates/users/users.html:135
+#: app/views/admin/templates/permissions/list.html:154
+#: app/views/admin/templates/roles/add_user_role.html:178
+#: app/views/admin/templates/roles/list.html:183
+#: app/views/admin/templates/roles/view.html:175
+#: app/views/users/templates/users/list_users.html:135
 msgid "(filtered from _MAX_ total records)"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:155
-#: app/views/roles/templates/roles/add_user_role.html:179
-#: app/views/roles/templates/roles/list.html:184
-#: app/views/roles/templates/roles/view.html:176
-#: app/views/users/templates/users/users.html:136
+#: app/views/admin/templates/permissions/list.html:155
+#: app/views/admin/templates/roles/add_user_role.html:179
+#: app/views/admin/templates/roles/list.html:184
+#: app/views/admin/templates/roles/view.html:176
+#: app/views/users/templates/users/list_users.html:136
 msgid "Search:"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:156
-#: app/views/roles/templates/roles/add_user_role.html:180
-#: app/views/roles/templates/roles/list.html:185
-#: app/views/roles/templates/roles/view.html:177
-#: app/views/users/templates/users/users.html:137
+#: app/views/admin/templates/permissions/list.html:156
+#: app/views/admin/templates/roles/add_user_role.html:180
+#: app/views/admin/templates/roles/list.html:185
+#: app/views/admin/templates/roles/view.html:177
+#: app/views/users/templates/users/list_users.html:137
 msgid "Loading..."
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:158
-#: app/views/roles/templates/roles/add_user_role.html:182
-#: app/views/roles/templates/roles/list.html:187
-#: app/views/roles/templates/roles/view.html:179
-#: app/views/users/templates/users/users.html:139
+#: app/views/admin/templates/permissions/list.html:158
+#: app/views/admin/templates/roles/add_user_role.html:182
+#: app/views/admin/templates/roles/list.html:187
+#: app/views/admin/templates/roles/view.html:179
+#: app/views/users/templates/users/list_users.html:139
 msgid "First"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:159
-#: app/views/roles/templates/roles/add_user_role.html:183
-#: app/views/roles/templates/roles/list.html:188
-#: app/views/roles/templates/roles/view.html:180
-#: app/views/users/templates/users/users.html:140
+#: app/views/admin/templates/permissions/list.html:159
+#: app/views/admin/templates/roles/add_user_role.html:183
+#: app/views/admin/templates/roles/list.html:188
+#: app/views/admin/templates/roles/view.html:180
+#: app/views/users/templates/users/list_users.html:140
 msgid "Last"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:160
-#: app/views/roles/templates/roles/add_user_role.html:184
-#: app/views/roles/templates/roles/list.html:189
-#: app/views/roles/templates/roles/view.html:181
-#: app/views/users/templates/users/users.html:141
+#: app/views/admin/templates/permissions/list.html:160
+#: app/views/admin/templates/roles/add_user_role.html:184
+#: app/views/admin/templates/roles/list.html:189
+#: app/views/admin/templates/roles/view.html:181
+#: app/views/users/templates/users/list_users.html:141
 msgid "Next"
 msgstr ""
 
-#: app/views/permissions/templates/permissions/list.html:161
-#: app/views/roles/templates/roles/add_user_role.html:185
-#: app/views/roles/templates/roles/list.html:190
-#: app/views/roles/templates/roles/view.html:182
-#: app/views/users/templates/users/users.html:142
+#: app/views/admin/templates/permissions/list.html:161
+#: app/views/admin/templates/roles/add_user_role.html:185
+#: app/views/admin/templates/roles/list.html:190
+#: app/views/admin/templates/roles/view.html:182
+#: app/views/users/templates/users/list_users.html:142
 msgid "Previous"
 msgstr ""
 
-#: app/views/roles/forms.py:19 app/views/roles/forms.py:42
-msgid "Choose anything"
-msgstr ""
-
-#: app/views/roles/forms.py:29
-msgid "Role name already exists."
-msgstr ""
-
-#: app/views/roles/templates/roles/add_user_role.html:24
+#: app/views/admin/templates/roles/add_user_role.html:24
 msgid "Add User"
 msgstr ""
 
-#: app/views/roles/templates/roles/add_user_role.html:28
+#: app/views/admin/templates/roles/add_user_role.html:28
 msgid "Add user to role"
 msgstr ""
 
-#: app/views/roles/templates/roles/add_user_role.html:35
-#: app/views/roles/templates/roles/add_user_role.html:100
-#: app/views/roles/templates/roles/view.html:35
-#: app/views/roles/templates/roles/view.html:96
-#: app/views/users/templates/users/users.html:34
-#: app/views/users/templates/users/users.html:93
+#: app/views/admin/templates/roles/add_user_role.html:35
+#: app/views/admin/templates/roles/add_user_role.html:100
+#: app/views/admin/templates/roles/view.html:35
+#: app/views/admin/templates/roles/view.html:96
+#: app/views/users/templates/users/list_users.html:34
+#: app/views/users/templates/users/list_users.html:93
 msgid "Username"
 msgstr ""
 
-#: app/views/roles/templates/roles/add_user_role.html:36
-#: app/views/roles/templates/roles/add_user_role.html:109
-#: app/views/roles/templates/roles/view.html:36
-#: app/views/roles/templates/roles/view.html:105
-#: app/views/users/templates/users/users.html:35
-#: app/views/users/templates/users/users.html:102
+#: app/views/admin/templates/roles/add_user_role.html:36
+#: app/views/admin/templates/roles/add_user_role.html:109
+#: app/views/admin/templates/roles/view.html:36
+#: app/views/admin/templates/roles/view.html:105
+#: app/views/users/templates/users/list_users.html:35
+#: app/views/users/templates/users/list_users.html:102
 msgid "Email"
 msgstr ""
 
-#: app/views/roles/templates/roles/add_user_role.html:76
-#: app/views/roles/templates/roles/list.html:87
-#: app/views/roles/templates/roles/view.html:72
+#: app/views/admin/templates/roles/add_user_role.html:76
+#: app/views/admin/templates/roles/list.html:87
+#: app/views/admin/templates/roles/view.html:72
 msgid "Rol detail"
 msgstr ""
 
-#: app/views/roles/templates/roles/create.html:21
+#: app/views/admin/templates/roles/create.html:21
 msgid "Create new role"
 msgstr ""
 
-#: app/views/roles/templates/roles/edit.html:21
+#: app/views/admin/templates/roles/edit.html:21
 msgid "Edit role"
 msgstr ""
 
-#: app/views/roles/templates/roles/list.html:27
+#: app/views/admin/templates/roles/list.html:27
 msgid "Roles list"
 msgstr ""
 
-#: app/views/roles/templates/roles/list.html:36
-#: app/views/roles/templates/roles/view.html:24
+#: app/views/admin/templates/roles/list.html:36
+#: app/views/admin/templates/roles/view.html:24
 msgid "View"
 msgstr ""
 
-#: app/views/roles/templates/roles/list.html:48
-#: app/views/roles/templates/roles/view.html:28
+#: app/views/admin/templates/roles/list.html:48
+#: app/views/admin/templates/roles/view.html:28
 msgid "Role"
 msgstr ""
 
-#: app/views/roles/templates/roles/list.html:171
+#: app/views/admin/templates/roles/list.html:171
 msgid "Create role"
 msgstr ""
 
-#: app/views/roles/templates/roles/view.html:163
+#: app/views/admin/templates/roles/view.html:163
 msgid "Add user"
 msgstr ""
 
-#: app/views/users/templates/users/users.html:69
+#: app/views/users/templates/users/list_users.html:69
 msgid "Detail"
 msgstr ""
 
