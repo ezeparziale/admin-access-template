@@ -19,7 +19,7 @@ users_bp = Blueprint(
 @login_required
 @admin_required
 def users_view():
-    return render_template("users/users.html")
+    return render_template("users/list_users.html")
 
 
 @users_bp.route("/get_data", methods=["GET"])
