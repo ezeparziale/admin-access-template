@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-05 19:23-0300\n"
+"POT-Creation-Date: 2022-08-14 11:58-0300\n"
 "PO-Revision-Date: 2022-07-31 15:52-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -18,12 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
-#: app/__init__.py:38
+#: app/__init__.py:47
 msgid "Please log in to access this page!"
 msgstr "Por favor vuelva a loguearse para acceder a esta pagina!"
 
 #: app/templates/macro_modal.html:7
-#, fuzzy
 msgid "Delete role"
 msgstr "Eliminar Rol"
 
@@ -46,7 +45,6 @@ msgid "Delete"
 msgstr "Borrar"
 
 #: app/templates/macro_modal.html:30
-#, fuzzy
 msgid "Delete permission"
 msgstr "Borrar permiso"
 
@@ -103,7 +101,7 @@ msgstr "Roles"
 #: app/views/permissions/templates/permissions/create.html:16
 #: app/views/permissions/templates/permissions/edit.html:16
 #: app/views/permissions/templates/permissions/list.html:23
-#: app/views/roles/forms.py:15 app/views/roles/forms.py:36
+#: app/views/roles/forms.py:17 app/views/roles/forms.py:40
 #: app/views/roles/templates/roles/list.html:50
 #: app/views/roles/templates/roles/list.html:129
 msgid "Permissions"
@@ -125,7 +123,7 @@ msgstr "Perfil"
 msgid "Settings"
 msgstr "Configuración"
 
-#: app/templates/navbar.html:82
+#: app/templates/navbar.html:82 app/views/about/templates/about/about.html:10
 msgid "About"
 msgstr "Acerca"
 
@@ -165,42 +163,42 @@ msgstr "Toda la info de permisos"
 msgid "Go to permission"
 msgstr "Ir a permisos"
 
-#: app/views/permissions/forms.py:10 app/views/permissions/forms.py:23
-#: app/views/roles/forms.py:10 app/views/roles/forms.py:31
+#: app/views/permissions/forms.py:11 app/views/permissions/forms.py:37
+#: app/views/roles/forms.py:11 app/views/roles/forms.py:34
 #: app/views/roles/templates/roles/list.html:111
 msgid "Name"
 msgstr "Nombre"
 
-#: app/views/permissions/forms.py:10 app/views/permissions/forms.py:12
-#: app/views/permissions/forms.py:14 app/views/permissions/forms.py:23
-#: app/views/permissions/forms.py:25 app/views/permissions/forms.py:27
+#: app/views/permissions/forms.py:13 app/views/permissions/forms.py:20
+#: app/views/permissions/forms.py:26 app/views/permissions/forms.py:39
+#: app/views/permissions/forms.py:46 app/views/permissions/forms.py:52
 msgid "Please complete this field"
 msgstr "Por favor completar el campo"
 
-#: app/views/permissions/forms.py:12 app/views/permissions/forms.py:25
+#: app/views/permissions/forms.py:18 app/views/permissions/forms.py:44
 #: app/views/permissions/templates/permissions/list.html:35
 #: app/views/permissions/templates/permissions/list.html:103
-#: app/views/roles/forms.py:12 app/views/roles/forms.py:33
+#: app/views/roles/forms.py:14 app/views/roles/forms.py:37
 #: app/views/roles/templates/roles/list.html:49
 #: app/views/roles/templates/roles/list.html:120
 msgid "Description"
 msgstr "Descripción"
 
-#: app/views/permissions/forms.py:14 app/views/permissions/forms.py:27
+#: app/views/permissions/forms.py:25 app/views/permissions/forms.py:51
 msgid "Color"
 msgstr "Color"
 
-#: app/views/permissions/forms.py:15
+#: app/views/permissions/forms.py:28
 #: app/views/permissions/templates/permissions/create.html:17
-#: app/views/roles/forms.py:19 app/views/roles/templates/roles/create.html:17
+#: app/views/roles/forms.py:21 app/views/roles/templates/roles/create.html:17
 msgid "Create"
 msgstr "Crear"
 
-#: app/views/permissions/forms.py:19
+#: app/views/permissions/forms.py:32
 msgid "Permission name already exists."
 msgstr "El permiso ya existe."
 
-#: app/views/permissions/forms.py:28 app/views/roles/forms.py:40
+#: app/views/permissions/forms.py:54 app/views/roles/forms.py:44
 msgid "Update"
 msgstr "Actualizar"
 
@@ -346,11 +344,11 @@ msgstr "Siguiente"
 msgid "Previous"
 msgstr "Anterior"
 
-#: app/views/roles/forms.py:17 app/views/roles/forms.py:38
+#: app/views/roles/forms.py:19 app/views/roles/forms.py:42
 msgid "Choose anything"
 msgstr "Elegir alguna"
 
-#: app/views/roles/forms.py:27
+#: app/views/roles/forms.py:29
 msgid "Role name already exists."
 msgstr "El permiso ya existe."
 
