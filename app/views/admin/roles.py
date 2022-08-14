@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, jsonify, redirect, render_template, request, url_for, flash
 from flask_login import login_required
 from sqlalchemy import or_
 
@@ -52,7 +52,6 @@ def edit_role(id):
     form = EditRoleForm()
 
     if form.validate_on_submit():
-        print(form.permissions.data)
         role.name = form.name.data
         role.description = form.description.data
         role.permissions = Permission.query.filter(
@@ -61,6 +60,7 @@ def edit_role(id):
         role.update()
         return redirect(url_for("admin.roles.roles_view"))
 
+    form.id.data= role.id
     form.name.data = role.name
     form.description.data = role.description
     form.permissions.data = [p.id for p in role.permissions]

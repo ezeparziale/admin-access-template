@@ -56,6 +56,7 @@ def edit_role(id):
         permission.update()
         return redirect(url_for("admin.permissions.permissions_view"))
 
+    form.id.data = permission.id
     form.name.data = permission.name
     form.description.data = permission.description
     form.color.data = permission.color

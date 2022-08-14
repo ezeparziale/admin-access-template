@@ -1,7 +1,8 @@
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
-from wtforms import SelectMultipleField, StringField, SubmitField
+from wtforms import SelectMultipleField, StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired, Length, ValidationError
+from sqlalchemy import or_, and_
 
 from ...models import Permission, Role
 
@@ -33,6 +34,7 @@ class PermissionForm(FlaskForm):
 
 
 class EditPermissionForm(FlaskForm):
+    id = HiddenField()
     name = StringField(
         lazy_gettext("Name"),
         validators=[
@@ -52,6 +54,19 @@ class EditPermissionForm(FlaskForm):
         validators=[DataRequired(lazy_gettext("Please complete this field"))],
     )
     submit = SubmitField(lazy_gettext("Update"))
+
+    def validate(self):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+
+        check_permission_exists = Permission.query.filter(and_(Permission.name==self.name.data, Permission.id!=self.id.data)).all()
+
+        if check_permission_exists:
+            self.name.errors.append(f"Permission: '{self.name.data}' name already exists.")
+            return False
+        
+        return True
 
 
 
@@ -79,6 +94,7 @@ class CreateRoleForm(FlaskForm):
 
 
 class EditRoleForm(FlaskForm):
+    id = HiddenField()
     name = StringField(
         lazy_gettext("Name"), validators=[DataRequired(), Length(min=2, max=30)]
     )
@@ -96,6 +112,15 @@ class EditRoleForm(FlaskForm):
         super(EditRoleForm, self).__init__(*args, **kwargs)
         self.permissions.choices = [(p.id, p.name) for p in Permission.query.all()]
 
-    # def validate_name(self, field):
-    #     if Role.query.filter_by(name=field.data).first():
-    #         raise ValidationError("Role name already exists.")
+    def validate(self):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+
+        check_role_exists = Role.query.filter(and_(Role.name==self.name.data, Role.id!=self.id.data)).all()
+
+        if check_role_exists:
+            self.name.errors.append(f"Role: '{self.name.data}' name already exists.")
+            return False
+        
+        return True
