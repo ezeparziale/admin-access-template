@@ -386,11 +386,11 @@ msgstr "Detalle"
 
 #: app/views/admin/templates/roles/create.html:21
 msgid "Create new role"
-msgstr "Eliminar Rol"
+msgstr "Crear nuevo rol"
 
 #: app/views/admin/templates/roles/edit.html:21
 msgid "Edit role"
-msgstr "Eliminar Rol"
+msgstr "Edit Rol"
 
 #: app/views/admin/templates/roles/list.html:27
 msgid "Roles list"
@@ -408,7 +408,7 @@ msgstr "Rol"
 
 #: app/views/admin/templates/roles/list.html:171
 msgid "Create role"
-msgstr "Eliminar Rol"
+msgstr "Crear rol"
 
 #: app/views/admin/templates/roles/view.html:163
 msgid "Add user"
