@@ -30,7 +30,11 @@
       
       <!-- Moment -->
       {{ moment.include_moment() }}
-      {{ moment.locale(auto_detect=True) }}
+      {% if current_user.is_authenticated %}
+         {{ moment.locale(current_user.locale) }}
+      {% else %}
+         {{ moment.locale(auto_detect=True) }}
+      {% endif %}
 
    </head>
 <body>
