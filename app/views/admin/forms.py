@@ -1,6 +1,6 @@
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
-from sqlalchemy import and_, or_
+from sqlalchemy import and_
 from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 

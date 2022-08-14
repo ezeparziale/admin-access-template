@@ -1,11 +1,6 @@
-from flask import Blueprint, flash, jsonify, make_response, render_template, request
-from flask_babel import _
+from flask import Blueprint, jsonify, make_response, request
 from flask_login import current_user, login_required
-from sqlalchemy import or_
 
-from app.decorators import admin_required
-
-from ...models import User
 
 account_bp = Blueprint(
     "account",
