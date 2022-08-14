@@ -27,34 +27,34 @@
                 <div class="form-group">
                     {{ form.name.label(class="form-control-label") }}
                     {% if form.name.errors %}
-                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                        {{ form.name(class="form-control is-invalid") }}
                             {% for error in form.name.errors %}
                                 <span>{{ error }}</span>
                             {% endfor%}
                     {% else %}
-                        {{ form.name(class="form-control form-control-lg") }}
+                        {{ form.name(class="form-control") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.description.label(class="form-control-label") }}
                     {% if form.description.errors %}
-                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        {{ form.description(class="form-control is-invalid") }}
                             {% for error in form.description.errors %}
                                 <span>{{ error }}</span>
                             {% endfor%}
                     {% else %}
-                        {{ form.description(class="form-control form-control-lg") }}
+                        {{ form.description(class="form-control") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.permissions.label(class="form-control-label") }}
                     {% if form.permissions.errors %}
-                        {{ form.permissions(class="form-select form-select-lg is-invalid") }}
+                        {{ form.permissions(class="form-select is-invalid") }}
                             {% for error in form.permissions.errors %}
                                 <span>{{ error }}</span>
                             {% endfor%}
                     {% else %}
-                        {{ form.permissions(class="form-select form-select-lg") }}
+                        {{ form.permissions(class="form-select") }}
                     {% endif %}
                 </div>
             </fieldset>
