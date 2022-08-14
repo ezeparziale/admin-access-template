@@ -11,6 +11,9 @@ admin_bp = Blueprint(
     static_folder="static",
 )
 
+from .permission import permission_bp
+
+admin_bp.register_blueprint(permission_bp)
 
 @admin_bp.route("/", methods=["GET"])
 @login_required

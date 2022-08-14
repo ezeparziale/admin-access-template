@@ -61,7 +61,7 @@
   <script>
     $(document).ready(function () {
       $('#data').DataTable({
-        ajax: '/permissions/get_data',
+        ajax: '/admin/permissions/get_data',
         serverSide: true,
         responsive: {
             details: {
@@ -120,8 +120,8 @@
                 orderable: false,
                 title: '{{ _("Actions") }}',
                 render: function(e, a, t, s) {
-                    let url_edit = '/permissions/edit/' + t.id;
-                    let url_delete = '/permissions/delete/' + t.id;
+                    let url_edit = '/admin/permissions/edit/' + t.id;
+                    let url_delete = '/admin/permissions/delete/' + t.id;
                     return '<span class="text-nowrap">'
                         +'<a href="' + url_edit + '" class="btn btn-sm btn-primary">'
                         +'<i class="bi bi-pencil"></i>'
@@ -142,7 +142,7 @@
                 text: '{{ _("Create permission") }}',
                 className: "btn btn-success btn-sm mb-3 mb-md-0",
                 action: function (e, dt, node, config) {
-                    window.location.href = '/permissions/create';
+                    window.location.href = '/admin/permissions/create';
                 }
             }
         ],
@@ -165,6 +165,6 @@
     });
   </script>
 
-  <script src="{{ url_for('permissions.static', filename='js/modal.js') }}"></script>
+  <script src="{{ url_for('admin.permissions.static', filename='js/modal_permission.js') }}"></script>
 
 {% endblock %}

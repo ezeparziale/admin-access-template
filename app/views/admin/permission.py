@@ -7,6 +7,7 @@ from app.decorators import admin_required
 from ...models import Permission
 from .forms import EditPermissionForm, PermissionForm
 
+
 permission_bp = Blueprint(
     "permissions",
     __name__,
@@ -36,7 +37,7 @@ def permissions_create():
             color=form.color.data,
         )
         permission.save()
-        return redirect(url_for("permissions.permissions_view"))
+        return redirect(url_for("admin.permissions.permissions_view"))
 
     return render_template("permissions/create.html", form=form)
 
@@ -53,7 +54,7 @@ def edit_role(id):
         permission.description = form.description.data
         permission.color = form.color.data
         permission.update()
-        return redirect(url_for("permissions.permissions_view"))
+        return redirect(url_for("admin.permissions.permissions_view"))
 
     form.name.data = permission.name
     form.description.data = permission.description
@@ -67,7 +68,7 @@ def edit_role(id):
 def delete_permission(id):
     permission = Permission.query.get_or_404(id)
     permission.delete()
-    return redirect(url_for("permissions.permissions_view"))
+    return redirect(url_for("admin.permissions.permissions_view"))
 
 
 @permission_bp.route("/get_data", methods=["GET"])

@@ -84,10 +84,6 @@ from .views.roles import roles
 
 app.register_blueprint(roles.roles_bp)
 
-from .views.permissions import permission
-
-app.register_blueprint(permission.permission_bp)
-
 from .views.users import users
 
 app.register_blueprint(users.users_bp)
@@ -104,6 +100,7 @@ from .views.about import about
 
 app.register_blueprint(about.about_bp)
 
+print(app.url_map)
 
 @app.errorhandler(404)
 def page_not_found(e):
