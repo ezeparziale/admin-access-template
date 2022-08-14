@@ -59,16 +59,14 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
-    if current_user.locale:
+    if current_user.is_authenticated:
         return current_user.locale
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @babel.timezoneselector
 def get_timezone():
-    user = getattr(g, "user", None)
-    if user is not None:
-        return user.timezone
+    return "UTC"
 
 
 # Blueprints

@@ -10,6 +10,8 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP
 from app import app, db, login_manager
 from app.config import settings
 
+from flask_babel import format_datetime
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -95,7 +97,7 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "created_at": self.created_at,
+            "created_at": format_datetime(self.created_at, format="long"),
             "roles": [(role.id, role.name) for role in self.roles],
         }
 
@@ -223,7 +225,7 @@ class Role(db.Model):
             "permissions": [
                 (permission.name, permission.color) for permission in self.permissions
             ],
-            "created_at": self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
+            "created_at": format_datetime(self.created_at, format="long"),
         }
 
     @staticmethod
@@ -277,7 +279,7 @@ class Permission(db.Model):
             "name": self.name,
             "description": self.description,
             "color": self.color,
-            "created_at": self.created_at.strftime("%d/%m/%Y %H:%M:%S %Z"),
+            "created_at": format_datetime(self.created_at, format="long"),
         }
 
     @staticmethod
