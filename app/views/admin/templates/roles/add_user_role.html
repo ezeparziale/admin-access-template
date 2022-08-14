@@ -99,7 +99,7 @@
                 searchable: true,
                 title: '{{ _("Username") }}',
                 render: function (data, type, row, meta) {
-                    return data;
+                    return '<h5><a href="/user/' + data + '"><span class="badge bg-primary">' + data + '</span></a></h5>';
                 }
             },
             {
