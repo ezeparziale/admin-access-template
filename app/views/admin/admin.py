@@ -11,9 +11,14 @@ admin_bp = Blueprint(
     static_folder="static",
 )
 
+# Blueprint nested
 from .permission import permission_bp
 
 admin_bp.register_blueprint(permission_bp)
+
+from .roles import roles_bp
+
+admin_bp.register_blueprint(roles_bp)
 
 @admin_bp.route("/", methods=["GET"])
 @login_required

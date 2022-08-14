@@ -39,7 +39,7 @@ def create_role():
             ).all(),
         )
         role.save()
-        return redirect(url_for("roles.roles_view"))
+        return redirect(url_for("admin.roles.roles_view"))
 
     return render_template("roles/create.html", form=form)
 
@@ -59,7 +59,7 @@ def edit_role(id):
             Permission.id.in_(form.permissions.data)
         ).all()
         role.update()
-        return redirect(url_for("roles.roles_view"))
+        return redirect(url_for("admin.roles.roles_view"))
 
     form.name.data = role.name
     form.description.data = role.description
@@ -73,7 +73,7 @@ def edit_role(id):
 def delete_role(id):
     role = Role.query.get_or_404(id)
     role.delete()
-    return redirect(url_for("roles.roles_view"))
+    return redirect(url_for("admin.roles.roles_view"))
 
 
 @roles_bp.route("/delete_user/<int:role_id>/<int:user_id>", methods=["GET", "POST"])
@@ -83,7 +83,7 @@ def delete_role_from_user(role_id, user_id):
     role = Role.query.get_or_404(role_id)
     user = User.query.get_or_404(user_id)
     user.remove_role(role)
-    return redirect(url_for("roles.view_role", id=role_id))
+    return redirect(url_for("admin.roles.view_role", id=role_id))
 
 
 @roles_bp.route("/add_user/<int:role_id>/<int:user_id>", methods=["GET", "POST"])
@@ -93,7 +93,7 @@ def add_user_to_role(role_id, user_id):
     role = Role.query.get_or_404(role_id)
     user = User.query.get_or_404(user_id)
     user.add_role(role)
-    return redirect(url_for("roles.view_role", id=role_id))
+    return redirect(url_for("admin.roles.view_role", id=role_id))
 
 
 @roles_bp.route("/add_user_role/<int:role_id>", methods=["GET", "POST"])

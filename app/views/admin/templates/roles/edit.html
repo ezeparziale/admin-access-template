@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">{{ _("Roles") }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('admin.roles.roles_view') }}">{{ _("Roles") }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ _("Edit") }}</li>
             </ol>
         </nav>
@@ -59,7 +59,7 @@
                 </div>
             </fieldset>
             <div class="float-end mt-3">
-                <a href="{{ url_for('roles.roles_view') }}" class="btn btn-secondary">{{ _("Cancel") }}</a>
+                <a href="{{ url_for('admin.roles.roles_view') }}" class="btn btn-secondary">{{ _("Cancel") }}</a>
                 {{ form.submit(class="btn btn-primary") }}
             </div>
         </form>
@@ -69,5 +69,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('roles.static', filename='js/roles_select2.js') }}"></script>
+    <script src="{{ url_for('admin.roles.static', filename='js/roles_select2.js') }}"></script>
 {% endblock %}

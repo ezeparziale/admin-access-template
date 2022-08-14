@@ -20,7 +20,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
               <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-              <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">{{ _("Roles") }}</a></li>
+              <li class="breadcrumb-item"><a href="{{ url_for('admin.roles.roles_view') }}">{{ _("Roles") }}</a></li>
               <li class="breadcrumb-item active" aria-current="page">{{ _("View") }}</li>
             </ol>
         </nav>
@@ -62,7 +62,7 @@
   <script>
     $(document).ready(function () {
       $('#data').DataTable({
-        ajax: '/roles/get_data_users/{{ role.id }}',
+        ajax: '/admin/roles/get_data_users/{{ role.id }}',
         serverSide: true,
         responsive: {
             details: {
@@ -123,7 +123,7 @@
                 title: '{{ _("Roles") }}',
                 render: function (data, type, row, meta) {
                     for (var i = 0, r="<h5>"; i < data.length; i++) {
-                        r += '<a href="/roles/view/' 
+                        r += '<a href="/admin/roles/view/' 
                           + data[i][0] 
                           + '">'
 
@@ -146,7 +146,7 @@
                 orderable: false,
                 title: '{{ _("Actions") }}',
                 render: function(data, type, row, meta) {
-                    let url_delete = '/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
+                    let url_delete = '/admin/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
                     return '<span class="text-nowrap">'
                         +'<button class="btn btn-sm btn-danger ms-1"'
                         +' type="button" data-bs-toggle="modal"'
@@ -163,7 +163,7 @@
                 text: '{{ _("Add user") }}',
                 className: "btn btn-success btn-sm mb-3 mb-md-0",
                 action: function (e, dt, node, config) {
-                    window.location.href = '/roles/add_user_role/' + "{{ role.id }}";
+                    window.location.href = '/admin/roles/add_user_role/' + "{{ role.id }}";
                 }
             }
         ],
@@ -186,6 +186,6 @@
     });
   </script>
 
-  <script src="{{ url_for('roles.static', filename='js/delete_user_role.js') }}"></script>
+  <script src="{{ url_for('admin.roles.static', filename='js/delete_user_role.js') }}"></script>
 
 {% endblock %}

@@ -33,7 +33,7 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ role.name }}</h3>
                             <p>Total users: {{ role.users|length }}</p>
-                            <a href="{{url_for('roles.view_role', id=role.id)}}" class="btn btn-primary">{{ _("View") }}</a>
+                            <a href="{{url_for('admin.roles.view_role', id=role.id)}}" class="btn btn-primary">{{ _("View") }}</a>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
   <script>
     $(document).ready(function () {
       $('#data').DataTable({
-        ajax: '/roles/get_data',
+        ajax: '/admin/roles/get_data',
         serverSide: true,
         responsive: {
             details: {
@@ -110,7 +110,7 @@
                 searchable: true,
                 title: '{{ _("Name") }}',
                 render: function (data, type, row, meta) {
-                    return '<h5><a href="/roles/view/' + row.id + '"><span class="badge bg-primary">' + data + '</span></a></h5> ';
+                    return '<h5><a href="/admin/roles/view/' + row.id + '"><span class="badge bg-primary">' + data + '</span></a></h5> ';
                 }
             },
             {
@@ -150,8 +150,8 @@
                 orderable: false,
                 title: '{{ _("Actions") }}',
                 render: function(e, a, t, s) {
-                    let url_edit = '/roles/edit/' + t.id;
-                    let url_delete = '/roles/delete/' + t.id;
+                    let url_edit = '/admin/roles/edit/' + t.id;
+                    let url_delete = '/admin/roles/delete/' + t.id;
                     return '<span class="text-nowrap">'
                         +'<a href="' + url_edit + '" class="btn btn-sm btn-primary">'
                         +'<i class="bi bi-pencil"></i>'
@@ -171,7 +171,7 @@
                 text: '{{ _("Create role") }}',
                 className: "btn btn-success btn-sm mb-3 mb-md-0",
                 action: function (e, dt, node, config) {
-                    window.location.href = '/roles/create';
+                    window.location.href = '/admin/roles/create';
                 }
             }
         ],
@@ -194,6 +194,6 @@
     });
   </script>
 
-    <script src="{{ url_for('roles.static', filename='js/modal.js') }}"></script>
+    <script src="{{ url_for('admin.roles.static', filename='js/modal_role.js') }}"></script>
 
 {% endblock %}

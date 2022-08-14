@@ -120,7 +120,7 @@
                 title: '{{ _("Roles") }}',
                 render: function (data, type, row, meta) {
                     for (var i = 0, r="<h5>"; i < data.length; i++) {
-                        r += '<a href="/roles/view/' + data[i][0] + '"><span class="badge bg-secondary">' + data[i][1] + '</span></a> ';
+                        r += '<a href="/admin/roles/view/' + data[i][0] + '"><span class="badge bg-secondary">' + data[i][1] + '</span></a> ';
                     }
                     r += '</h5>';
                     return r;

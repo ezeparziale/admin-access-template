@@ -20,7 +20,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('roles.roles_view') }}">{{ _("Roles") }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.roles.roles_view') }}">{{ _("Roles") }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ _("Add User") }}</li>
             </ol>
         </nav>
@@ -127,7 +127,7 @@
                 title: '{{ _("Roles") }}',
                 render: function (data, type, row, meta) {
                     for (var i = 0, r="<h5>"; i < data.length; i++) {
-                        r += '<a href="/roles/view/' + data[i][0] + '">'
+                        r += '<a href="/admin/roles/view/' + data[i][0] + '">'
                             
                         if ("{{ role.name }}" == data[i][1]) {
                           r += '<span class="badge bg-primary">'
@@ -148,7 +148,7 @@
                 title: '{{ _("Actions") }}',
                 render: function(data, type, row, meta) {
                     if (row.roles.map(function(e) { return e[1]; }).includes("{{ role.name }}")) {
-                        let url_delete = '/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
+                        let url_delete = '/admin/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
                         return '<span class="text-nowrap">'
                             +'<button class="btn btn-sm btn-danger ms-1"'
                             +' type="button" data-bs-toggle="modal"'
@@ -157,7 +157,7 @@
                             +'</button>'
                             +'</span>'                    
                     } else {
-                        let url_add = '/roles/add_user/' + "{{ role.id }}" + '/' + row.id;
+                        let url_add = '/admin/roles/add_user/' + "{{ role.id }}" + '/' + row.id;
                         return '<span class="text-nowrap">'
                             +'<button class="btn btn-sm btn-primary ms-1"'
                             +' type="button" data-bs-toggle="modal"'
@@ -189,8 +189,8 @@
     });
   </script>
 
-  <script src="{{ url_for('roles.static', filename='js/add_user_role.js') }}"></script>
-  <script src="{{ url_for('roles.static', filename='js/delete_user_role.js') }}"></script>
+  <script src="{{ url_for('admin.roles.static', filename='js/add_user_role.js') }}"></script>
+  <script src="{{ url_for('admin.roles.static', filename='js/delete_user_role.js') }}"></script>
 
 
 {% endblock %}
