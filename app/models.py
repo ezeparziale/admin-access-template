@@ -71,7 +71,7 @@ class User(db.Model, UserMixin):
     def get_confirm_token(self, expires_sec=300):
         encoded = jwt.encode(
             {
-                "comfirm": self.id,
+                "confirm": self.id,
                 "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec),
             },
             current_app.config["SECRET_KEY"],
@@ -85,7 +85,7 @@ class User(db.Model, UserMixin):
                 token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
             )
             print(decode)
-            if decode.get("comfirm") != self.id:
+            if decode.get("confirm") != self.id:
                 return False
             self.confirmed = True
             self.update()
