@@ -1,3 +1,4 @@
+import email
 from threading import Thread
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
@@ -90,20 +91,21 @@ def register():
         return redirect(url_for("home.home_view"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        if form.email.data in settings.ADMIN_EMAIL:
-            encrypted_password = bcrypt.generate_password_hash(
-                form.password.data
-            ).decode("utf-8")
-            user = User(
-                username=form.username.data,
-                email=form.email.data,
-                password=encrypted_password,
-            )
-            user.save()
-            flash(_("Account created succefully"), category="success")
-            flash(_("Please check your email and confim your account"), category="info")
-            send_email_confirm(user)
-            return redirect(url_for("auth.login"))
+        if not User.query.filter_by(email=form.email.data).first():
+            if form.email.data in settings.ADMIN_EMAIL:
+                encrypted_password = bcrypt.generate_password_hash(
+                    form.password.data
+                ).decode("utf-8")
+                user = User(
+                    username=form.username.data,
+                    email=form.email.data,
+                    password=encrypted_password,
+                )
+                user.save()
+                flash(_("Account created succefully"), category="success")
+                flash(_("Please check your email and confirm your account"), category="info")
+                send_email_confirm(user)
+                return redirect(url_for("auth.login"))
         else:
             flash(_("A user with this username already exists"), category="danger")
     return render_template("register.html", form=form)

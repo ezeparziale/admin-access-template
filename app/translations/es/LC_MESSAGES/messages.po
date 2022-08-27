@@ -433,7 +433,7 @@ msgid "Account created succefully"
 msgstr "Cuenta creada exitosamente"
 
 #: app/views/auth/auth.py:104
-msgid "Please check your email and confim your account"
+msgid "Please check your email and confirm your account"
 msgstr "Por favor chequea tu email y confirma tu cuenta"
 
 #: app/views/auth/auth.py:108
