@@ -1,41 +1,41 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
-
+from flask_babel import lazy_gettext
 
 class RegistrationForm(FlaskForm):
     username = StringField(
-        label="USUARIO", validators=[DataRequired(), Length(min=3, max=20)]
+        label=lazy_gettext("USERNAME"), validators=[DataRequired(), Length(min=3, max=20)]
     )
-    email = StringField(label="EMAIL", validators=[DataRequired(), Email()])
+    email = StringField(label=lazy_gettext("EMAIL"), validators=[DataRequired(), Email()])
     password = PasswordField(
-        label="PASSWORD", validators=[DataRequired(), Length(min=6, max=16)]
+        label=lazy_gettext("PASSWORD"), validators=[DataRequired(), Length(min=6, max=16)]
     )
     confirm_password = PasswordField(
-        label="CONFIRMAR PASSWORD", validators=[DataRequired(), EqualTo("password")]
+        label=lazy_gettext("CONFIRM PASSWORD"), validators=[DataRequired(), EqualTo("password")]
     )
-    submit = SubmitField(label="Registrar")
+    submit = SubmitField(label=lazy_gettext("Sign up"))
 
 
 class LoginForm(FlaskForm):
-    email = StringField(label="EMAIL", validators=[DataRequired(), Email()])
+    email = StringField(label=lazy_gettext("EMAIL"), validators=[DataRequired(), Email()])
     password = PasswordField(
-        label="PASSWORD", validators=[DataRequired(), Length(min=6, max=16)]
+        label=lazy_gettext("PASSWORD"), validators=[DataRequired(), Length(min=6, max=16)]
     )
-    remember_me = BooleanField(label="Recuérdame")
-    submit = SubmitField(label="Iniciar sesión")
+    remember_me = BooleanField(label=lazy_gettext("Remember me"))
+    submit = SubmitField(label=lazy_gettext("Log in"))
 
 
 class ResetPasswordRequestForm(FlaskForm):
-    email = StringField(label="EMAIL", validators=[DataRequired(), Email()])
-    submit = SubmitField(label="Restablecer Password")
+    email = StringField(label=lazy_gettext("EMAIL"), validators=[DataRequired(), Email()])
+    submit = SubmitField(label=lazy_gettext("Reset password"))
 
 
 class ResetPasswordForm(FlaskForm):
     password = PasswordField(
-        label="Password", validators=[DataRequired(), Length(min=6, max=16)]
+        label=lazy_gettext("PASSWORD"), validators=[DataRequired(), Length(min=6, max=16)]
     )
     confirm_password = PasswordField(
-        label="Confirma Password", validators=[DataRequired(), EqualTo("password")]
+        label=lazy_gettext("CONFIRM PASSWORD"), validators=[DataRequired(), EqualTo("password")]
     )
-    submit = SubmitField(label="Cambiar Password")
+    submit = SubmitField(label=lazy_gettext("Change password"))

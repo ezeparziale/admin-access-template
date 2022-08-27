@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('auth.static', filename='css/auth.css') }}">
 {% endblock %}
 
-{% block title %} Registrarse {% endblock %}
+{% block title %} {{ _("Sign Up") }} {% endblock %}
 
 {% block content %}
     
@@ -16,8 +16,8 @@
                     <div class="text-center">
                         <p class="fs-3 text-uppercase fw-bolder mb-5"><i class="bi bi-stack"></i> APP NAME</p>
                     </div>
-                    <h4 class="mb-2">Bienvenido a APP NAME! 🚀</h4>
-                    <p class="mb-4 muted">Registrese para acceder a tu cuenta</p>
+                    <h4 class="mb-2">{{ _("Welcome to") }} APP NAME! 👋</h4>
+                    <p class="mb-4 muted">{{ _("Create your account") }}</p>
                     <fieldset>
                         <div class="form-group mt-2">
                             {{ form.username.label(class="form-control-label") }}
@@ -68,9 +68,9 @@
                         {{ form.submit(class="btn btn-primary") }}
                     </div>
                     <p class="text-center mt-3">
-                        <span>Ya tienes cuenta?</span>
+                        <span>{{ _("Already have an account?") }}</span>
                         <a href="{{ url_for('auth.login') }}" class="link-primary">
-                          <span>Inicia sesión</span>
+                          <span>{{ _("Sign in") }}</span>
                         </a>
                     </p>
                 </div>

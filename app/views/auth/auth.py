@@ -3,6 +3,7 @@ from threading import Thread
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
+from flask_babel import _
 
 from app import app, bcrypt, mail
 
@@ -59,7 +60,7 @@ def login():
             if next is None or not next.startswith("/"):
                 next = url_for("home.home_view")
             return redirect(next)
-        flash("Error al loguearse", category="danger")
+        flash(_("Login error"), category="danger")
     return render_template("login.html", form=form)
 
 
@@ -71,7 +72,7 @@ def send_async_email(app, msg):
 def send_email_confirm(user):
     token = user.get_confirm_token()
     msg = Message(
-        subject="Confirmar cuenta",
+        subject=_("Confirm account"),
         recipients=[user.email],
         sender="noreplay@test.com",
     )
@@ -99,12 +100,12 @@ def register():
                 password=encrypted_password,
             )
             user.save()
-            flash("Cuenta creada exitosamente", category="success")
-            flash("Verifique su mail para confirmar cuenta", category="info")
+            flash(_("Account created succefully"), category="success")
+            flash(_("Please check your email and confim your account"), category="info")
             send_email_confirm(user)
             return redirect(url_for("auth.login"))
         else:
-            flash("Usuario no habilitado", category="danger")
+            flash(_("A user with this username already exists"), category="danger")
     return render_template("register.html", form=form)
 
 
@@ -118,7 +119,7 @@ def logout():
 def send_email_reset_password(user):
     token = user.get_token()
     msg = Message(
-        subject="Password Reset Request",
+        subject=_("Reset password"),
         recipients=[user.email],
         sender="noreplay@test.com",
     )
@@ -137,12 +138,11 @@ def reset_password():
         if user:
             send_email_reset_password(user)
             flash(
-                "Solicitud de reseteo de password enviada, revise su email",
+                _("A reset password link has been sent to you by email"),
                 category="success",
             )
             return redirect(url_for("auth.login"))
         else:
-            flash("Email no registrado, por favor registrese", category="danger")
             return redirect(url_for("auth.register"))
     return render_template("reset_password.html", form=form)
 
@@ -151,7 +151,7 @@ def reset_password():
 def reset_token(token):
     user = User.verify_token(token)
     if user is None:
-        flash("Token invalido", category="warning")
+        flash(_("The reset link is invalid or has expired"), category="warning")
         return redirect(url_for("auth.reset_password"))
 
     form = ResetPasswordForm()
@@ -161,7 +161,7 @@ def reset_token(token):
         )
         user.password = encrypted_password
         user.update()
-        flash("Password cambiado", category="success")
+        flash(_("Password changed"), category="success")
         return redirect(url_for("auth.login"))
 
     return render_template("change_password.html", form=form)
@@ -171,13 +171,12 @@ def reset_token(token):
 @login_required
 def confirm(token):
     if current_user.confirmed:
-        flash("La cuenta ya se encuentra confirmada", category="info")
         return redirect(url_for("home.home_view"))
     if current_user.confirm(token):
-        flash("Cuenta confirmada!!!", category="success")
+        flash(_("You have confirmed your account!"), category="success")
         return redirect(url_for("auth.login"))
     else:
-        flash("Token expirado", category="danger")
+        flash(_("The confirmation link is invalid or has expired"), category="danger")
     return redirect(url_for("home.home_view"))
 
 
@@ -185,5 +184,5 @@ def confirm(token):
 @login_required
 def resend_confirmation():
     send_email_confirm(current_user)
-    flash("Email de confirmacion reenviado", category="info")
+    flash(_("A confirmation email has been sent to you by email"), category="info")
     return redirect(url_for("home.home_view"))

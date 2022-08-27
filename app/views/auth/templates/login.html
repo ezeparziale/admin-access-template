@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('auth.static', filename='css/auth.css') }}">
 {% endblock %}
 
-{% block title %} Iniciar sesión {% endblock %}
+{% block title %} {{ _("Login") }} {% endblock %}
 
 {% block content %}
 
@@ -16,8 +16,8 @@
                     <div class="text-center">
                         <p class="fs-3 text-uppercase fw-bolder mb-5"><i class="bi bi-stack"></i> APP NAME</p>
                     </div>
-                    <h4 class="mb-2">Bienvenido a APP NAME! 👋</h4>
-                    <p class="mb-4 muted">Inicia sesión para acceder a tu cuenta</p>
+                    <h4 class="mb-2">{{ _("Welcome to") }} APP NAME! 👋</h4>
+                    <p class="mb-4 muted">{{ _("Please sign-in to your account") }}</p>
                     <fieldset>
                         <div class="form-group mt-2">
                             {{ form.email.label(class="form-control-label") }}
@@ -50,12 +50,12 @@
                     </div>
                     <div class="row g-2 align-items-center mt-3">
                         <div class="col-auto">{{ form.submit(class="btn btn-primary") }}</div>
-                        <div class="col-auto"><a href="{{ url_for('auth.reset_password') }}">Olvidaste la contraseña?</a></div>
+                        <div class="col-auto"><a href="{{ url_for('auth.reset_password') }}">{{ _("Forgot password") }}</a></div>
                     </div>
                     <p class="text-center mt-3">
-                        <span>No tienes cuenta?</span>
+                        <span>{{ _("Not registered yet?") }}</span>
                         <a href="{{ url_for('auth.register') }}">
-                          <span>Registrarse</span>
+                          <span>{{ _("Create an account") }}</span>
                         </a>
                     </p>
                 </div>
