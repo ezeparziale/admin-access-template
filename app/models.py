@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 
 import jwt
 from flask import current_app, redirect, url_for
+from flask_babel import format_datetime
 from flask_login import UserMixin, current_user
 from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.sql.expression import text
@@ -9,8 +10,6 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP
 
 from app import db, login_manager
 from app.config import settings
-
-from flask_babel import format_datetime
 
 
 @login_manager.user_loader

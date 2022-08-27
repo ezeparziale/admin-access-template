@@ -1,10 +1,9 @@
-import email
 from threading import Thread
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_babel import _
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
-from flask_babel import _
 
 from app import app, bcrypt, mail
 
@@ -103,7 +102,10 @@ def register():
                 )
                 user.save()
                 flash(_("Account created succefully"), category="success")
-                flash(_("Please check your email and confirm your account"), category="info")
+                flash(
+                    _("Please check your email and confirm your account"),
+                    category="info",
+                )
                 send_email_confirm(user)
                 return redirect(url_for("auth.login"))
         else:

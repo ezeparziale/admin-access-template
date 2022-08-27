@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import current_user, login_required
 
-
 account_bp = Blueprint(
     "account",
     __name__,
