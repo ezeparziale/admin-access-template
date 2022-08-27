@@ -39,8 +39,6 @@ class User(db.Model, UserMixin):
         server_default=text("CURRENT_TIMESTAMP"),
         nullable=False,
     )
-    created_user = Column(Integer, ForeignKey("users.id"))
-    updated_user = Column(Integer, ForeignKey("users.id"))
     confirmed = Column(BOOLEAN, default=False)
     locale = Column(String, nullable=False, default=settings.DEFAULT_LANGUAGE)
     timezone = Column(String, nullable=True)
@@ -105,13 +103,9 @@ class User(db.Model, UserMixin):
     def save(self):
         db.session.add(self)
         db.session.commit()
-        self.created_user = self.id
-        self.updated_user = self.id
-        db.session.commit()
 
     def update(self):
         self.updated_at = datetime.utcnow()
-        self.updated_user = current_user.id
         db.session.commit()
 
     def add_role(self, role):
