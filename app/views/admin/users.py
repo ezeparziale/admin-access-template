@@ -4,7 +4,7 @@ from sqlalchemy import or_
 
 from app.decorators import admin_required
 
-from ...models import User
+from app.models import User
 
 users_bp = Blueprint(
     "users",

@@ -4,7 +4,7 @@ from sqlalchemy import and_
 from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 
-from ...models import Permission, Role
+from app.models import Permission, Role
 
 
 class PermissionForm(FlaskForm):

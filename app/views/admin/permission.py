@@ -4,7 +4,7 @@ from sqlalchemy import or_
 
 from app.decorators import admin_required
 
-from ...models import Permission
+from app.models import Permission
 from .forms import EditPermissionForm, PermissionForm
 
 permission_bp = Blueprint(

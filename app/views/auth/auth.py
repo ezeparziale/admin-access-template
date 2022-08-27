@@ -7,8 +7,8 @@ from flask_mail import Message
 
 from app import app, bcrypt, mail
 
-from ...config import settings
-from ...models import User
+from app.config import settings
+from app.models import User
 from .forms import (
     LoginForm,
     RegistrationForm,

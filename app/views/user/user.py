@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
 
-from ...models import User
+from app.models import User
 
 user_bp = Blueprint(
     "user",
