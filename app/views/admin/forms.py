@@ -88,7 +88,7 @@ class CreateRoleForm(FlaskForm):
     submit = SubmitField(lazy_gettext("Create"))
 
     def __init__(self, *args, **kwargs):
-        super(CreateRoleForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.permissions.choices = [(p.id, p.name) for p in Permission.query.all()]
 
     def validate_name(self, field):
@@ -112,7 +112,7 @@ class EditRoleForm(FlaskForm):
     submit = SubmitField(lazy_gettext("Update"))
 
     def __init__(self, *args, **kwargs):
-        super(EditRoleForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.permissions.choices = [(p.id, p.name) for p in Permission.query.all()]
 
     def validate(self):
