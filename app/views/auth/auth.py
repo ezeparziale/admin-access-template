@@ -8,7 +8,7 @@ from flask_mail import Message
 from app import app, bcrypt, mail
 
 from app.config import settings
-from app.models import User
+from app.models import User, Role
 from .forms import (
     LoginForm,
     RegistrationForm,
@@ -101,6 +101,8 @@ def register():
                     password=encrypted_password,
                 )
                 user.save()
+                role = Role.query.filter_by(name="users").first()
+                user.add_role(role)
                 flash(_("Account created succefully"), category="success")
                 flash(
                     _("Please check your email and confirm your account"),
