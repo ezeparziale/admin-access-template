@@ -48,14 +48,7 @@
                 </div>
                 <div class="form-group">
                     {{ form.permissions.label(class="form-control-label") }}
-                    {% if form.permissions.errors %}
-                        {{ form.permissions(class="form-select is-invalid") }}
-                            {% for error in form.permissions.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor%}
-                    {% else %}
-                        {{ form.permissions(class="form-select") }}
-                    {% endif %}
+                    {{ form.permissions(class="tom-select") }}
                 </div>
             </fieldset>
             <div class="float-end mt-3">
@@ -69,5 +62,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('admin.roles.static', filename='js/roles_select2.js') }}"></script>
+    <script src="{{ url_for('admin.roles.static', filename='js/roles_select.js') }}"></script>
 {% endblock %}
