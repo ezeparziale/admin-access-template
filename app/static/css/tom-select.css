@@ -219,7 +219,7 @@
 .focus .ts-control {
   color:#212529;
   background-color:#fff;
-  border-color:#86b7fe;
+  border-color:var(--bs-primary-300);
   outline:0;
   box-shadow:0 0 0 .25rem rgba(118, 109, 244,.25)
 }
@@ -232,6 +232,7 @@
   margin: 0 2px 0px 0;
   padding: 2px 6px;
   background: var(--bs-primary-300);
+  border-radius: .375rem;
   color: #fff;
   border: 0px solid #ced4da;
 }
@@ -338,8 +339,8 @@
   cursor: default;
 }
 .ts-dropdown .active {
-  background-color: #f5fafd;
-  color: #495c68;
+  background-color: var(--bs-primary-300);
+  color: #fff;
 }
 .ts-dropdown .active.create {
   color: #495c68;
