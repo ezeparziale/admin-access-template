@@ -6,9 +6,9 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
 from app import app, bcrypt, mail
-
 from app.config import settings
-from app.models import User, Role
+from app.models import Role, User
+
 from .forms import (
     LoginForm,
     RegistrationForm,

@@ -83,7 +83,11 @@ class CreateRoleForm(FlaskForm):
     permissions = SelectMultipleField(
         lazy_gettext("Permissions"),
         coerce=int,
-        render_kw={"placeholder": lazy_gettext("Choose anything"), "multiple":"", "autocomplete": "off"},
+        render_kw={
+            "placeholder": lazy_gettext("Choose anything"),
+            "multiple": "",
+            "autocomplete": "off",
+        },
     )
     submit = SubmitField(lazy_gettext("Create"))
 

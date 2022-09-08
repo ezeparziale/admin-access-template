@@ -3,8 +3,8 @@ from flask_login import login_required
 from sqlalchemy import or_
 
 from app.decorators import admin_required
-
 from app.models import Permission, Role, User
+
 from .forms import CreateRoleForm, EditRoleForm
 
 roles_bp = Blueprint(
