@@ -81,7 +81,6 @@ class User(db.Model, UserMixin):
             decode = jwt.decode(
                 token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
             )
-            print(decode)
             if decode.get("confirm") != self.id:
                 return False
             self.confirmed = True
