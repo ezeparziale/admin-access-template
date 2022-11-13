@@ -3,6 +3,7 @@ from logging.config import dictConfig
 from flask import Flask, render_template, request
 from flask_babel import Babel, lazy_gettext
 from flask_bcrypt import Bcrypt
+from flask_caching import Cache
 from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_moment import Moment
@@ -55,6 +56,9 @@ moment = Moment(app)
 
 # Babel
 babel = Babel(app)
+
+# Cache
+cache = Cache(app)
 
 
 @babel.localeselector
