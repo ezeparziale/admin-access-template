@@ -8,7 +8,7 @@ from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
-from app import db, login_manager
+from app import cache, db, login_manager
 from app.config import settings
 
 
@@ -109,17 +109,23 @@ class User(db.Model, UserMixin):
     def add_role(self, role):
         self.roles.append(role)
         self.update()
+        cache.delete_memoized(self.has_role)
+        cache.delete_memoized(self.has_role_permission)
 
     def remove_role(self, role):
         self.roles.remove(role)
         self.update()
+        cache.delete_memoized(self.has_role)
+        cache.delete_memoized(self.has_role_permission)
 
+    @cache.memoize(300)
     def has_role(self, role_name):
         for role in self.roles:
             if role.name == role_name:
                 return True
         return False
 
+    @cache.memoize(300)
     def has_role_permission(self, role_name, permission_name):
         for role in self.roles:
             if role.name == role_name:
