@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     MAIL_PASSWORD: str
     ADMIN_EMAIL: str
     ROWS_PER_PAGE: int = 10
+    CACHE_TYPE: str = "SimpleCache"
+    CACHE_DEFAULT_TIMEOUT: int = 300
     # SQLALCHEMY_ECHO = True
 
     SITE_NAME: str
