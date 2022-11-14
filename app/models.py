@@ -22,7 +22,7 @@ def unauthorized():
     return redirect(url_for("auth.login"))
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin):  # type: ignore  # noqa
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     username = Column(String(40), unique=True, nullable=False)
@@ -176,7 +176,7 @@ user_role = Table(
 )
 
 
-class Role(db.Model):
+class Role(db.Model):  # type: ignore  # noqa
     __tablename__ = "roles"
     id = Column(Integer, primary_key=True)
     name = Column(String(40), unique=True, nullable=False)
@@ -235,7 +235,7 @@ class Role(db.Model):
         db.session.commit()
 
 
-class Permission(db.Model):
+class Permission(db.Model):  # type: ignore  # noqa
     __tablename__ = "permissions"
     id = Column(Integer, primary_key=True)
     name = Column(String(40), unique=True, nullable=False)
