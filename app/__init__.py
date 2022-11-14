@@ -78,7 +78,7 @@ def get_timezone():
 # Blueprints
 from .views.home import home
 
-app.register_blueprint(home.home_bp)
+app.register_blueprint(home.home_bp)  # type: ignore  # noqa
 
 from .views.auth import auth
 
@@ -86,15 +86,15 @@ app.register_blueprint(auth.auth_bp)  # type: ignore  # noqa
 
 from .views.admin import admin
 
-app.register_blueprint(admin.admin_bp)
+app.register_blueprint(admin.admin_bp)  # type: ignore  # noqa
 
 from .views.account import account
 
-app.register_blueprint(account.account_bp)
+app.register_blueprint(account.account_bp)  # type: ignore  # noqa
 
 from .views.about import about
 
-app.register_blueprint(about.about_bp)
+app.register_blueprint(about.about_bp)  # type: ignore  # noqa
 
 from .views.user import user
 
