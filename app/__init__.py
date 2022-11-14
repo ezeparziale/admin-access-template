@@ -82,7 +82,7 @@ app.register_blueprint(home.home_bp)
 
 from .views.auth import auth
 
-app.register_blueprint(auth.auth_bp)
+app.register_blueprint(auth.auth_bp)  # type: ignore  # noqa
 
 from .views.admin import admin
 
@@ -98,7 +98,7 @@ app.register_blueprint(about.about_bp)
 
 from .views.user import user
 
-app.register_blueprint(user.user_bp)
+app.register_blueprint(user.user_bp)  # type: ignore  # noqa
 
 
 @app.errorhandler(404)
