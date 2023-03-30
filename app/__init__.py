@@ -54,25 +54,25 @@ mail = Mail(app)
 # Moment
 moment = Moment(app)
 
-# Babel
-babel = Babel(app)
 
 # Cache
 cache = Cache(app)
 
 
-@babel.localeselector
+# Babel
 def get_locale():
     if current_user.is_authenticated:
         return current_user.locale
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-@babel.timezoneselector
 def get_timezone():
     if current_user.is_authenticated and current_user.timezone:
         return current_user.timezone
     return "UTC"
+
+
+babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
 
 # Blueprints
