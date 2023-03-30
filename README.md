@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ## :runner: Run
 
 ```bash
-flask --debug run
+flask run --debug
 ```
 
 ## :pushpin: Features
