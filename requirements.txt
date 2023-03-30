@@ -10,5 +10,5 @@ Flask-Moment==1.0.5
 pydantic[dotenv]==1.10.7
 gunicorn==20.1.0
 alembic==1.10.2
-Flask-Babel==2.0.0
+Flask-Babel==3.0.1
 Flask-Caching==2.0.1
