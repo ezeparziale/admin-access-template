@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 import jwt
-from flask import current_app, redirect, url_for
+from flask import current_app, redirect, request, url_for
 from flask_babel import format_datetime
 from flask_login import UserMixin, current_user
 from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
@@ -19,7 +19,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("auth.login", next=request.path))
 
 
 class User(db.Model, UserMixin):  # type: ignore  # noqa
