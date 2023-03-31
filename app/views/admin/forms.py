@@ -4,6 +4,7 @@ from sqlalchemy import and_
 from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 
+from app import db
 from app.models import Permission, Role
 
 
@@ -29,7 +30,12 @@ class PermissionForm(FlaskForm):
     submit = SubmitField(lazy_gettext("Create"))
 
     def validate_name(self, field):
-        if Permission.query.filter_by(name=field.data).first():
+        check = (
+            db.session.execute(db.select(Permission).filter_by(name=field.data))
+            .scalars()
+            .first()
+        )
+        if check:
             raise ValidationError(lazy_gettext("Permission name already exists."))
 
 
@@ -55,22 +61,19 @@ class EditPermissionForm(FlaskForm):
     )
     submit = SubmitField(lazy_gettext("Update"))
 
-    def validate(self):
-        rv = FlaskForm.validate(self)
-        if not rv:
-            return False
-
-        check_permission_exists = Permission.query.filter(
-            and_(Permission.name == self.name.data, Permission.id != self.id.data)
-        ).all()
+    def validate_name(self, field):
+        check_permission_exists = (
+            db.session.execute(
+                db.select(Permission).filter(
+                    and_(Permission.name == field.data, Permission.id != self.id.data)
+                )
+            )
+            .scalars()
+            .first()
+        )
 
         if check_permission_exists:
-            self.name.errors.append(
-                f"Permission: '{self.name.data}' name already exists."
-            )
-            return False
-
-        return True
+            raise ValidationError(f"Permission '{field.data}' already exists.")
 
 
 class CreateRoleForm(FlaskForm):
@@ -96,7 +99,12 @@ class CreateRoleForm(FlaskForm):
         self.permissions.choices = [(p.id, p.name) for p in Permission.query.all()]
 
     def validate_name(self, field):
-        if Role.query.filter_by(name=field.data).first():
+        check = (
+            db.session.execute(db.select(Role).filter_by(name=field.data))
+            .scalars()
+            .first()
+        )
+        if check:
             raise ValidationError(lazy_gettext("Role name already exists."))
 
 
@@ -119,17 +127,16 @@ class EditRoleForm(FlaskForm):
         super().__init__(*args, **kwargs)
         self.permissions.choices = [(p.id, p.name) for p in Permission.query.all()]
 
-    def validate(self):
-        rv = FlaskForm.validate(self)
-        if not rv:
-            return False
-
-        check_role_exists = Role.query.filter(
-            and_(Role.name == self.name.data, Role.id != self.id.data)
-        ).all()
+    def validate_name(self, field):
+        check_role_exists = (
+            db.session.execute(
+                db.select(Role).filter(
+                    and_(Role.name == field.data, Role.id != self.id.data)
+                )
+            )
+            .scalars()
+            .first()
+        )
 
         if check_role_exists:
-            self.name.errors.append(f"Role: '{self.name.data}' name already exists.")
-            return False
-
-        return True
+            raise ValidationError(f"Role '{field.data}' already exists.")
