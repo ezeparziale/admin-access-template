@@ -139,7 +139,7 @@ def upgrade() -> None:
 
     # Default values
     op.bulk_insert(
-        permissions,
+        permissions,  # type: ignore  # noqa
         [
             {
                 "name": "write",
@@ -159,7 +159,7 @@ def upgrade() -> None:
         ],
     )
     op.bulk_insert(
-        roles,
+        roles,  # type: ignore  # noqa
         [
             {
                 "name": "admin",
@@ -176,7 +176,7 @@ def upgrade() -> None:
         ],
     )
     op.bulk_insert(
-        role_permission,
+        role_permission,  # type: ignore  # noqa
         [
             {
                 "role_id": 1,
