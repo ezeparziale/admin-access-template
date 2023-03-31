@@ -76,27 +76,27 @@ babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
 
 # Blueprints
-from .views.home import home
+from .views.home import home  # type: ignore  # noqa
 
 app.register_blueprint(home.home_bp)  # type: ignore  # noqa
 
-from .views.auth import auth
+from .views.auth import auth  # type: ignore  # noqa
 
 app.register_blueprint(auth.auth_bp)  # type: ignore  # noqa
 
-from .views.admin import admin
+from .views.admin import admin  # type: ignore  # noqa
 
 app.register_blueprint(admin.admin_bp)  # type: ignore  # noqa
 
-from .views.account import account
+from .views.account import account  # type: ignore  # noqa
 
 app.register_blueprint(account.account_bp)  # type: ignore  # noqa
 
-from .views.about import about
+from .views.about import about  # type: ignore  # noqa
 
 app.register_blueprint(about.about_bp)  # type: ignore  # noqa
 
-from .views.user import user
+from .views.user import user  # type: ignore  # noqa
 
 app.register_blueprint(user.user_bp)  # type: ignore  # noqa
 

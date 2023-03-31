@@ -12,18 +12,17 @@ admin_bp = Blueprint(
 )
 
 # Blueprint nested
-from .permission import permission_bp
+from .permission import permission_bp  # type: ignore  # noqa
 
-admin_bp.register_blueprint(permission_bp)
+admin_bp.register_blueprint(permission_bp)  # type: ignore  # noqa
 
-from .roles import roles_bp
+from .roles import roles_bp  # type: ignore  # noqa
 
-admin_bp.register_blueprint(roles_bp)
+admin_bp.register_blueprint(roles_bp)  # type: ignore  # noqa
 
+from .users import users_bp  # type: ignore  # noqa
 
-from .users import users_bp
-
-admin_bp.register_blueprint(users_bp)
+admin_bp.register_blueprint(users_bp)  # type: ignore  # noqa
 
 
 @admin_bp.route("/", methods=["GET"])
