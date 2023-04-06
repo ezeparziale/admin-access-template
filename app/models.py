@@ -111,6 +111,10 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
         self.updated_at = datetime.utcnow()
         db.session.commit()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def add_role(self, role):
         self.roles.append(role)
         self.update()

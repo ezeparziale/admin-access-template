@@ -1,9 +1,12 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required
 from sqlalchemy import or_, and_, func
 
+from app import bcrypt, db
 from app.decorators import admin_required
 from app.models import User, Role
+
+from .forms import CreateUserForm, EditUserForm
 
 users_bp = Blueprint(
     "users",
@@ -19,6 +22,65 @@ users_bp = Blueprint(
 @admin_required
 def users_view():
     return render_template("users/list_users.html")
+
+
+@users_bp.route("/create", methods=["GET", "POST"])
+@login_required
+@admin_required
+def create_user():
+    form = CreateUserForm()
+
+    if form.validate_on_submit():
+        encrypted_password = bcrypt.generate_password_hash(form.password.data).decode(
+            "utf-8"
+        )
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            confirmed=form.confirmed.data,
+            password=encrypted_password,
+            roles=Role.query.filter(
+                Role.id.in_(form.roles.data)
+            ).all(),
+        )
+        user.save()
+        return redirect(url_for("admin.users.users_view"))
+
+    return render_template("users/create.html", form=form)
+
+
+@users_bp.route("/edit/<int:id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def edit_user(id):
+    user = db.get_or_404(User, id)
+
+    form = EditUserForm()
+
+    if form.validate_on_submit():
+        user.username = form.username.data
+        user.email = form.email.data
+        user.confirmed = form.confirmed.data
+        user.roles = Role.query.filter(Role.id.in_(form.roles.data)).all()
+        user.update()
+        return redirect(url_for("admin.users.users_view"))
+
+    form.id.data = user.id
+    form.username.data = user.username
+    form.email.data = user.email
+    form.confirmed.data = user.confirmed
+    form.roles.data = [p.id for p in user.roles]
+
+    return render_template("users/edit.html", form=form)
+
+
+@users_bp.route("/delete/<int:id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def delete_user(id):
+    user = db.get_or_404(User, id)
+    user.delete()
+    return redirect(url_for("admin.users.users_view"))
 
 
 @users_bp.route("/get_data", methods=["GET"])

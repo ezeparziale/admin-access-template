@@ -34,11 +34,11 @@
                 <div class="card-body">
                     <div id="filters" class="">
                         <div id="date_picker" class="d-flex">
-                            <label for="start" class="form-label col-form-label-sm align-self-center my-auto me-3">{{
-                                _("Created
-                                date") }}</label>
+                            <label for="start" class="form-label col-form-label-sm align-self-center my-auto me-3">
+                                {{ _("Created date") }}
+                            </label>
                             <input type="text" id="start" name="start" class="form-control form-control-sm w-auto">
-                            <span class="align-self-center mx-2">to</span>
+                            <span class="align-self-center mx-2 col-form-label-sm">to</span>
                             <input type="text" id="end" name="end" class="form-control form-control-sm w-auto">
                         </div>
                     </div>
@@ -52,6 +52,8 @@
             </div>
         </div>
     </div>
+
+    {{ modals.confirm_delete_user() }}
 
 {% endblock %}
 
@@ -96,7 +98,7 @@
             { data: "email" },
             { data: "created_at" },
             { data: "roles" },
-
+            { data: "" },
         ],      
         columnDefs: [
             {
@@ -143,6 +145,36 @@
                     return r;
                 }
             },
+            {
+                targets: -1,
+                searchable: false,
+                orderable: false,
+                title: 'Actions',
+                render: function(e, a, t, s) {
+                    let url_edit = '/admin/users/edit/' + t.id;
+                    let url_delete = '/admin/users/delete/' + t.id;
+                    return '<span class="text-nowrap">'
+                        +'<a href="' + url_edit + '" class="btn btn-sm btn-primary">'
+                        +'<i class="bi bi-pencil"></i>'
+                        +'</a>'
+                        +'<button class="btn btn-sm btn-danger ms-1"'
+                        +' type="button" data-bs-toggle="modal"'
+                        +' data-bs-target="#modalDeleteUser" data-bs-url="'+ url_delete +'"' + ' data-bs-name="'+ t.username + '" >'
+                        +'<i class="bi bi-trash"></i>'
+                        +'</button>'
+                        +'</span>'
+                }
+            },    
+        ],
+        dom: '<"row mx-1"<"col-sm-12 col-md-3" l><"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1"<"me-3"f>B>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        buttons: [
+            {
+                text: 'Create user',
+                className: "btn btn-success btn-sm mb-3 mb-md-0",
+                action: function (e, dt, node, config) {
+                    window.location.href = '/admin/users/create';
+                }
+            }
         ],
         initComplete: function() {
             this.api().columns(2).every(function() {
@@ -216,5 +248,8 @@
     const rangepicker = new DateRangePicker(elem, defaultOptions);
 
 </script>
+
+<script src="{{ url_for('admin.users.static', filename='js/users/delete_modal.js') }}"></script>
+
 
 {% endblock %}

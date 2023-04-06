@@ -1,11 +1,11 @@
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from sqlalchemy import and_
-from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField
-from wtforms.validators import DataRequired, Length, ValidationError
+from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField, PasswordField, BooleanField
+from wtforms.validators import DataRequired, Length, ValidationError, Email
 
 from app import db
-from app.models import Permission, Role
+from app.models import Permission, Role, User
 
 
 class PermissionForm(FlaskForm):
@@ -140,3 +140,101 @@ class EditRoleForm(FlaskForm):
 
         if check_role_exists:
             raise ValidationError(f"Role '{field.data}' already exists.")
+
+
+class EditUserForm(FlaskForm):
+    id = HiddenField()
+    username = StringField(
+        "Username", validators=[DataRequired(), Length(min=2, max=30)]
+    )
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    confirmed = BooleanField("Confirmed")
+    roles = SelectMultipleField(
+        lazy_gettext("Roles"),
+        coerce=int,
+        render_kw={
+            "placeholder": lazy_gettext("Choose anything"),
+            "multiple": "",
+            "autocomplete": "off",
+        },
+    )
+    submit = SubmitField("Update")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.roles.choices = [(p.id, p.name) for p in Role.query.all()]
+
+    def validate_username(self, field):
+        check_username_exists = (
+            db.session.execute(
+                db.select(User).filter(
+                    and_(User.username == field.data, User.id != self.id.data)
+                )
+            )
+            .scalars()
+            .first()
+        )
+
+        if check_username_exists:
+            raise ValidationError(f"Username '{field.data}' already exists.")
+
+    def validate_email(self, field):
+        check_email_exists = (
+            db.session.execute(
+                db.select(User).filter(
+                    and_(User.email == field.data, User.id != self.id.data)
+                )
+            )
+            .scalars()
+            .first()
+        )
+
+        if check_email_exists:
+            raise ValidationError(f"Email '{field.data}' already exists.")
+
+
+class CreateUserForm(FlaskForm):
+    username = StringField(
+        "Username", validators=[DataRequired(), Length(min=2, max=30)]
+    )
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField(
+        label="Password", validators=[DataRequired(), Length(min=6, max=16)]
+    )
+    confirmed = BooleanField("Confirmed")
+    roles = SelectMultipleField(
+        lazy_gettext("Roles"),
+        coerce=int,
+        render_kw={
+            "placeholder": lazy_gettext("Choose anything"),
+            "multiple": "",
+            "autocomplete": "off",
+        },
+    )
+    submit = SubmitField("Create")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.roles.choices = [(p.id, p.name) for p in Role.query.all()]
+
+    def validate_username(self, field):
+        check_username_exists = (
+            db.session.execute(
+                db.select(User).filter(and_(User.username == field.data))
+            )
+            .scalars()
+            .first()
+        )
+
+        if check_username_exists:
+            raise ValidationError(f"Username '{field.data}' already exists.")
+
+    def validate_email(self, field):
+        check_email_exists = (
+            db.session.execute(db.select(User).filter(and_(User.email == field.data)))
+            .scalars()
+            .first()
+        )
+
+        if check_email_exists:
+            raise ValidationError(f"Email '{field.data}' already exists.")
