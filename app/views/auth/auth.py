@@ -91,25 +91,27 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         if not User.query.filter_by(email=form.email.data).first():
+            encrypted_password = bcrypt.generate_password_hash(
+                form.password.data
+            ).decode("utf-8")
+            user = User(
+                username=form.username.data,
+                email=form.email.data,
+                password=encrypted_password,
+            )
+            user.save()
+            role = Role.query.filter_by(name="users").first()
+            user.add_role(role)
             if form.email.data in settings.ADMIN_EMAIL:
-                encrypted_password = bcrypt.generate_password_hash(
-                    form.password.data
-                ).decode("utf-8")
-                user = User(
-                    username=form.username.data,
-                    email=form.email.data,
-                    password=encrypted_password,
-                )
-                user.save()
-                role = Role.query.filter_by(name="users").first()
+                role = Role.query.filter_by(name="admin").first()
                 user.add_role(role)
-                flash(_("Account created succefully"), category="success")
-                flash(
-                    _("Please check your email and confirm your account"),
-                    category="info",
-                )
-                send_email_confirm(user)
-                return redirect(url_for("auth.login"))
+            flash(_("Account created succefully"), category="success")
+            flash(
+                _("Please check your email and confirm your account"),
+                category="info",
+            )
+            send_email_confirm(user)
+            return redirect(url_for("auth.login"))
         else:
             flash(_("A user with this username already exists"), category="danger")
     return render_template("register.html", form=form)
