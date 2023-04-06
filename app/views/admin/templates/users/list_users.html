@@ -14,19 +14,40 @@
 {% block content %}
 
     <div class="container">
-
+    
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{ _("Users") }}</li>
+                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _("Users") }}</li>
             </ol>
         </nav>
-
+    
         <h3>{% block title %} {{ _("Users") }} {% endblock %}</h3>
+    
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="toggle-switch">
+            <label class="form-check-label" for="toggle-switch">Filtros</label>
+        </div>
+        <div class="content" style="display:none;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div id="filters" class="">
+                        <div id="date_picker" class="d-flex">
+                            <label for="start" class="form-label col-form-label-sm align-self-center my-auto me-3">{{
+                                _("Created
+                                date") }}</label>
+                            <input type="text" id="start" name="start" class="form-control form-control-sm w-auto">
+                            <span class="align-self-center mx-2">to</span>
+                            <input type="text" id="end" name="end" class="form-control form-control-sm w-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="card mt-3 shadow-sm">
-            <div class="card-body">   
+            <div class="card-body">
                 <table id="data" class="table dt-responsive nowrap" style="width:100%"></table>
             </div>
         </div>
@@ -39,6 +60,19 @@
 
     {{ table.table_import_scripts() }}
 
+    <script>
+        const toggleSwitch = document.getElementById('toggle-switch');
+        const contentDiv = document.querySelector('.content');
+
+        toggleSwitch.addEventListener('change', function () {
+            if (this.checked) {
+                contentDiv.style.display = 'block';
+            } else {
+                contentDiv.style.display = 'none';
+            }
+        });
+    </script>
+    
   <script>
     $(document).ready(function () {
       $('#data').DataTable({
@@ -110,6 +144,20 @@
                 }
             },
         ],
+        initComplete: function() {
+            this.api().columns(2).every(function() {
+                var column = this;
+                const elem_start = $("#start"),
+                      elem_end = $("#end");
+                      
+                elem_start.on("changeDate", function() {
+                    var valFrom = elem_start.val()
+                    var valTo = elem_end.val()
+                    column.search(valFrom ? valFrom+ "," + valTo : "", false, true).draw()
+                });
+            })
+            ;
+        },
         "language": {
             "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
             "zeroRecords": '{{ _("Nothing found - sorry") }}',
@@ -128,5 +176,45 @@
       });
     });
   </script>
+
+<script>
+
+    const defaultOptions = {
+        allowOneSidedRange: false,
+        autohide: false,
+        beforeShowDay: null,
+        beforeShowDecade: null,
+        beforeShowMonth: null,
+        beforeShowYear: null,
+        calendarWeeks: false,
+        clearBtn: true,
+        dateDelimiter: ',',
+        datesDisabled: [],
+        daysOfWeekDisabled: [],
+        daysOfWeekHighlighted: [],
+        defaultViewDate: new Date().setHours(0, 0, 0, 0),
+        disableTouchKeyboard: false,
+        format: 'yyyy-mm-dd',
+        language: '{{ current_user.locale }}',
+        maxDate: null,
+        maxNumberOfDates: 1,
+        maxView: 3,
+        minDate: null,
+        nextArrow: '»',
+        orientation: 'auto',
+        prevArrow: '«',
+        showDaysOfWeek: true,
+        showOnFocus: true,
+        startView: 0,
+        title: '',
+        todayBtn: true,
+        todayHighlight: true,
+        weekStart: 0
+    };
+
+    const elem = document.getElementById('date_picker');
+    const rangepicker = new DateRangePicker(elem, defaultOptions);
+
+</script>
 
 {% endblock %}

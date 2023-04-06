@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required
-from sqlalchemy import or_
+from sqlalchemy import or_, and_, func
 
 from app.decorators import admin_required
-from app.models import User
+from app.models import User, Role
 
 users_bp = Blueprint(
     "users",
@@ -27,6 +27,18 @@ def users_view():
 def get_users_data():
     query = User.query
 
+    # created_at filter
+    created_at_filter = request.args.get("columns[2][search][value]", "")
+
+    if created_at_filter:
+        created_at_filter_from, created_at_filter_to = created_at_filter.split(",")
+        query = query.filter(
+            and_(
+                func.date(User.created_at) >= created_at_filter_from,
+                func.date(User.created_at) <= created_at_filter_to,
+            )
+        )
+
     # search filter
     search = request.args.get("search[value]")
     if search:
@@ -34,6 +46,7 @@ def get_users_data():
             or_(
                 User.username.like(f"%{search}%"),
                 User.email.like(f"%{search}%"),
+                User.roles.any(Role.name.like(f"%{search}%")),
             )
         )
     total_filtered = query.count()
