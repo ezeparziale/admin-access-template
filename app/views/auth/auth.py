@@ -1,13 +1,10 @@
-from threading import Thread
-
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_babel import _
 from flask_login import current_user, login_required, login_user, logout_user
-from flask_mail import Message
 
-from app import app, mail
 from app.config import settings
 from app.models import Role, User
+from app.utils.email import send_email
 
 from .forms import (
     LoginForm,
@@ -74,24 +71,19 @@ def login():
     return render_template("login.html", form=form)
 
 
-def send_async_email(app, msg):
-    with app.app_context():
-        mail.send(msg)
-
-
 def send_email_confirm(user):
     token = user.get_confirm_token()
-    msg = Message(
-        subject=_("Confirm account"),
-        recipients=[user.email],
-        sender="noreplay@test.com",
-    )
-    msg.html = render_template(
+
+    html_body = render_template(
         "emails/confirm_account.html", token=token, app_name=settings.SITE_NAME
     )
-    thr = Thread(target=send_async_email, args=[app, msg])
-    thr.start()
-    return thr
+    text_body = ""
+    subject = _("Confirm account")
+    recipients = [user.email]
+    sender = "noreplay@test.com"
+    send_email(
+        subject, sender, recipients, text_body, html_body, attachments=None, sync=False
+    )
 
 
 @auth_bp.route("/register/", methods=["GET", "POST"])
@@ -134,17 +126,17 @@ def logout():
 
 def send_email_reset_password(user):
     token = user.get_token()
-    msg = Message(
-        subject=_("Reset password"),
-        recipients=[user.email],
-        sender="noreplay@test.com",
-    )
-    msg.html = render_template(
+
+    html_body = render_template(
         "emails/reset_password.html", token=token, app_name=settings.SITE_NAME
     )
-    thr = Thread(target=send_async_email, args=[app, msg])
-    thr.start()
-
+    text_body = ""
+    subject = _("Reset password")
+    recipients = [user.email]
+    sender = "noreplay@test.com"
+    send_email(
+        subject, sender, recipients, text_body, html_body, attachments=None, sync=False
+    )
 
 @auth_bp.route("/reset_password/", methods=["GET", "POST"])
 def reset_password():
