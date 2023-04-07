@@ -5,7 +5,7 @@ from flask_babel import _
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 
-from app import app, bcrypt, mail
+from app import app, mail
 from app.config import settings
 from app.models import Role, User
 
@@ -38,6 +38,9 @@ def before_request():
             and request.endpoint != "static"
         ):
             return redirect(url_for("auth.unconfirmed"))
+        if current_user.blocked:
+            logout_user()
+            flash(_("Cuenta bloqueada"), category="info")
 
 
 @auth_bp.route("/unconfirmed/")
@@ -54,13 +57,17 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember_me.data)
-            next = request.args.get("next")
-            if next is None or not next.startswith("/"):
-                next = url_for("home.home_view")
-            return redirect(next)
-        flash(_("Login error"), category="danger")
+        if user and user.check_password_hash(form.password.data):
+            if user.blocked:
+                flash(_("Cuenta bloqueada"), category="info")
+            else:
+                login_user(user, remember=form.remember_me.data)
+                next = request.args.get("next")
+                if next is None or not next.startswith("/"):
+                    next = url_for("home.home_view")
+                return redirect(next)
+        else:
+            flash(_("Login error"), category="danger")
     return render_template("login.html", form=form)
 
 
@@ -91,9 +98,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         if not User.query.filter_by(email=form.email.data).first():
-            encrypted_password = bcrypt.generate_password_hash(
-                form.password.data
-            ).decode("utf-8")
+            encrypted_password = User.generate_password_hash(form.password.data)
             user = User(
                 username=form.username.data,
                 email=form.email.data,
@@ -164,10 +169,7 @@ def reset_token(token):
 
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        encrypted_password = bcrypt.generate_password_hash(form.password.data).decode(
-            "utf-8"
-        )
-        user.password = encrypted_password
+        user.password = User.generate_password_hash(form.password.data)
         user.update()
         flash(_("Password changed"), category="success")
         return redirect(url_for("auth.login"))

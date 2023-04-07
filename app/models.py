@@ -10,7 +10,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
-from app import cache, db, login_manager
+from app import bcrypt, cache, db, login_manager
 from app.config import settings
 
 
@@ -173,6 +173,13 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
         except:  # noqa: E722
             return None
         return User.query.get(user_id)
+
+    def check_password_hash(self, password: str) -> bool:
+        return bcrypt.check_password_hash(self.password, password)
+
+    @staticmethod
+    def generate_password_hash(password: str) -> str:
+        return bcrypt.generate_password_hash(password).decode("utf-8")
 
 
 role_permission = Table(
