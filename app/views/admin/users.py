@@ -38,6 +38,7 @@ def create_user():
             username=form.username.data,
             email=form.email.data,
             confirmed=form.confirmed.data,
+            blocked = form.blocked.data,
             password=encrypted_password,
             roles=Role.query.filter(Role.id.in_(form.roles.data)).all(),
         )
@@ -59,6 +60,7 @@ def edit_user(id):
         user.username = form.username.data
         user.email = form.email.data
         user.confirmed = form.confirmed.data
+        user.blocked = form.blocked.data
         user.roles = Role.query.filter(Role.id.in_(form.roles.data)).all()
         user.update()
         return redirect(url_for("admin.users.users_view"))
@@ -67,6 +69,7 @@ def edit_user(id):
     form.username.data = user.username
     form.email.data = user.email
     form.confirmed.data = user.confirmed
+    form.blocked.data = user.blocked
     form.roles.data = [p.id for p in user.roles]
 
     return render_template("users/edit.html", form=form)

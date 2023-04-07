@@ -156,6 +156,7 @@ class EditUserForm(FlaskForm):
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
     confirmed = BooleanField("Confirmed")
+    blocked = BooleanField("blocked")
     roles = SelectMultipleField(
         lazy_gettext("Roles"),
         coerce=int,
@@ -209,6 +210,7 @@ class CreateUserForm(FlaskForm):
         label="Password", validators=[DataRequired(), Length(min=6, max=16)]
     )
     confirmed = BooleanField("Confirmed")
+    blocked = BooleanField("blocked")
     roles = SelectMultipleField(
         lazy_gettext("Roles"),
         coerce=int,
