@@ -58,15 +58,18 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password_hash(form.password.data):
-            if user.blocked:
+            if user.is_blocked():
                 flash(_("Cuenta bloqueada"), category="info")
             else:
+                user.handle_successful_login()
                 login_user(user, remember=form.remember_me.data)
                 next = request.args.get("next")
                 if next is None or not next.startswith("/"):
                     next = url_for("home.home_view")
                 return redirect(next)
         else:
+            if user:
+                user.handle_failed_login()
             flash(_("Login error"), category="danger")
     return render_template("login.html", form=form)
 
