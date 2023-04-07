@@ -54,7 +54,7 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
     )
 
     def __repr__(self) -> str:
-        return f"User(id={self.id}, username={self.username}, email={self.email}, created_at={self.created_at})"  # noqa: E501
+        return f"User(id={self.id}, username={self.username}, email={self.email}, blocked={self.blocked}, created_at={self.created_at})"  # noqa: E501
 
     def ping(self) -> None:
         self.last_seen = datetime.utcnow()
