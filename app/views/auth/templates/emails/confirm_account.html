@@ -44,7 +44,7 @@
 </head>
 <body>
     <h3>{{ app_name|upper }}</h3>
-    <p>Confirme su cuenta:</p>
-    <a class="button" href="{{ url_for('auth.confirm', token=token, _external=True) }}">Confirmar</a>
+    <p>{{ _("Confirm your account:") }}</p>
+    <a class="button" href="{{ url_for('auth.confirm', token=token, _external=True) }}">{{ _("Confirm:") }}</a>
 </body>
 </html>

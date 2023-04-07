@@ -11,14 +11,14 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('admin.users.users_view') }}">Users</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">{{ _("Home") }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">{{ _("Admin") }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.users.users_view') }}">{{ _("Users") }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _("Create") }}</li>
             </ol>
         </nav>
 
-        <h3>{% block title %} Create user {% endblock %}</h3>
+        <h3>{% block title %} {{ _("Create user") }} {% endblock %}</h3>
 
         <form method="post" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
@@ -75,7 +75,7 @@
                 </div>
             </fieldset>
             <div class="float-end mt-3">
-                <a href="{{ url_for('admin.users.users_view') }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ url_for('admin.users.users_view') }}" class="btn btn-secondary">{{ _("Cancel") }}</a>
                 {{ form.submit(class="btn btn-primary") }}
             </div>
         </form>

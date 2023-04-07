@@ -18,10 +18,10 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">Admin</a></li>
-              <li class="breadcrumb-item"><a href="{{ url_for('admin.roles.roles_view') }}">{{ _("Roles") }}</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{ _("View") }}</li>
+                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">{{ _("Home") }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">{{ _("Admin") }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('admin.roles.roles_view') }}">{{ _("Roles") }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ _("View") }}</li>
             </ol>
         </nav>
 

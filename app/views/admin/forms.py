@@ -152,11 +152,11 @@ class EditRoleForm(FlaskForm):
 class EditUserForm(FlaskForm):
     id = HiddenField()
     username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=30)]
+        lazy_gettext("Username"), validators=[DataRequired(), Length(min=2, max=30)]
     )
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    confirmed = BooleanField("Confirmed")
-    blocked = BooleanField("blocked")
+    email = StringField(lazy_gettext("Email"), validators=[DataRequired(), Email()])
+    confirmed = BooleanField(lazy_gettext("Confirmed"))
+    blocked = BooleanField(lazy_gettext("Blocked"))
     roles = SelectMultipleField(
         lazy_gettext("Roles"),
         coerce=int,
@@ -203,14 +203,14 @@ class EditUserForm(FlaskForm):
 
 class CreateUserForm(FlaskForm):
     username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=30)]
+        lazy_gettext("Username"), validators=[DataRequired(), Length(min=2, max=30)]
     )
-    email = StringField("Email", validators=[DataRequired(), Email()])
+    email = StringField(lazy_gettext("Email"), validators=[DataRequired(), Email()])
     password = PasswordField(
-        label="Password", validators=[DataRequired(), Length(min=6, max=16)]
+        label=lazy_gettext("Password"), validators=[DataRequired(), Length(min=6, max=16)]
     )
-    confirmed = BooleanField("Confirmed")
-    blocked = BooleanField("blocked")
+    confirmed = BooleanField(lazy_gettext("Confirmed"))
+    blocked = BooleanField(lazy_gettext("Blocked"))
     roles = SelectMultipleField(
         lazy_gettext("Roles"),
         coerce=int,
@@ -236,7 +236,7 @@ class CreateUserForm(FlaskForm):
         )
 
         if check_username_exists:
-            raise ValidationError(f"Username '{field.data}' already exists.")
+            raise ValidationError(f"_({{'Username'}}) '{field.data}' already exists.")
 
     def validate_email(self, field):
         check_email_exists = (

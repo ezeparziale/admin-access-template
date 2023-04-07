@@ -6,18 +6,18 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 class RegistrationForm(FlaskForm):
     username = StringField(
-        label=lazy_gettext("USERNAME"),
+        label=lazy_gettext("Username"),
         validators=[DataRequired(), Length(min=3, max=20)],
     )
     email = StringField(
-        label=lazy_gettext("EMAIL"), validators=[DataRequired(), Email()]
+        label=lazy_gettext("Email"), validators=[DataRequired(), Email()]
     )
     password = PasswordField(
-        label=lazy_gettext("PASSWORD"),
+        label=lazy_gettext("Password"),
         validators=[DataRequired(), Length(min=6, max=16)],
     )
     confirm_password = PasswordField(
-        label=lazy_gettext("CONFIRM PASSWORD"),
+        label=lazy_gettext("Confirm password"),
         validators=[DataRequired(), EqualTo("password")],
     )
     submit = SubmitField(label=lazy_gettext("Sign up"))
@@ -25,10 +25,10 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField(
-        label=lazy_gettext("EMAIL"), validators=[DataRequired(), Email()]
+        label=lazy_gettext("Email"), validators=[DataRequired(), Email()]
     )
     password = PasswordField(
-        label=lazy_gettext("PASSWORD"),
+        label=lazy_gettext("Password"),
         validators=[DataRequired(), Length(min=6, max=16)],
     )
     remember_me = BooleanField(label=lazy_gettext("Remember me"))
@@ -37,18 +37,18 @@ class LoginForm(FlaskForm):
 
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField(
-        label=lazy_gettext("EMAIL"), validators=[DataRequired(), Email()]
+        label=lazy_gettext("Email"), validators=[DataRequired(), Email()]
     )
     submit = SubmitField(label=lazy_gettext("Reset password"))
 
 
 class ResetPasswordForm(FlaskForm):
     password = PasswordField(
-        label=lazy_gettext("PASSWORD"),
+        label=lazy_gettext("Password"),
         validators=[DataRequired(), Length(min=6, max=16)],
     )
     confirm_password = PasswordField(
-        label=lazy_gettext("CONFIRM PASSWORD"),
+        label=lazy_gettext("Confirm password"),
         validators=[DataRequired(), EqualTo("password")],
     )
     submit = SubmitField(label=lazy_gettext("Change password"))

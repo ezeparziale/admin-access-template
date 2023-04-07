@@ -37,7 +37,7 @@ def before_request():
             return redirect(url_for("auth.unconfirmed"))
         if current_user.blocked:
             logout_user()
-            flash(_("Cuenta bloqueada"), category="info")
+            flash(_("Blocked account"), category="info")
 
 
 @auth_bp.route("/unconfirmed/")
@@ -56,7 +56,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password_hash(form.password.data):
             if user.is_blocked():
-                flash(_("Cuenta bloqueada"), category="info")
+                flash(_("Blocked account"), category="info")
             else:
                 user.handle_successful_login()
                 login_user(user, remember=form.remember_me.data)
