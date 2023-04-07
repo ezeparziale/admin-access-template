@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta, timezone
-from typing import List
+from typing import List, Union
 
 import jwt
-from flask import current_app, redirect, request, url_for
+from flask import redirect, request, url_for
 from flask_babel import format_datetime
 from flask_login import UserMixin, current_user
 from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
@@ -55,37 +55,35 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
     def __repr__(self) -> str:
         return f"User(id={self.id}, username={self.username}, email={self.email}, created_at={self.created_at})"  # noqa: E501
 
-    def ping(self):
+    def ping(self) -> None:
         self.last_seen = datetime.utcnow()
         self.update()
 
-    def get_token(self, expires_sec=300):
+    def get_token(self, expires_sec: int = 300) -> str:
         encoded = jwt.encode(
             {
                 "user_id": self.id,
                 "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec),
             },
-            current_app.config["SECRET_KEY"],
+            settings.SECRET_KEY,
             algorithm="HS256",
         )
         return encoded
 
-    def get_confirm_token(self, expires_sec=300):
+    def get_confirm_token(self, expires_sec: int = 300) -> str:
         encoded = jwt.encode(
             {
                 "confirm": self.id,
                 "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=expires_sec),
             },
-            current_app.config["SECRET_KEY"],
+            settings.SECRET_KEY,
             algorithm="HS256",
         )
         return encoded
 
-    def confirm(self, token):
+    def confirm(self, token: str) -> bool | None:
         try:
-            decode = jwt.decode(
-                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
-            )
+            decode = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             if decode.get("confirm") != self.id:
                 return False
             self.confirmed = True
@@ -94,7 +92,7 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
         except:  # noqa: E722
             return None
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "id": self.id,
             "username": self.username,
@@ -103,39 +101,39 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
             "roles": [(role.id, role.name) for role in self.roles],
         }
 
-    def save(self):
+    def save(self) -> None:
         db.session.add(self)
         db.session.commit()
 
-    def update(self):
+    def update(self) -> None:
         self.updated_at = datetime.utcnow()
         db.session.commit()
 
-    def delete(self):
+    def delete(self) -> None:
         db.session.delete(self)
         db.session.commit()
 
-    def add_role(self, role):
+    def add_role(self, role: "Role") -> None:
         self.roles.append(role)
         self.update()
         cache.delete_memoized(self.has_role)
         cache.delete_memoized(self.has_role_permission)
 
-    def remove_role(self, role):
+    def remove_role(self, role: "Role") -> None:
         self.roles.remove(role)
         self.update()
         cache.delete_memoized(self.has_role)
         cache.delete_memoized(self.has_role_permission)
 
     @cache.memoize(300)
-    def has_role(self, role_name):
+    def has_role(self, role_name: str) -> bool:
         for role in self.roles:
             if role.name == role_name:
                 return True
         return False
 
     @cache.memoize(300)
-    def has_role_permission(self, role_name, permission_name):
+    def has_role_permission(self, role_name: str, permission_name: str) -> bool:
         for role in self.roles:
             if role.name == role_name:
                 for permission in role.permissions:
@@ -146,12 +144,12 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
     def is_admin(self):
         return self.has_role("admin")
 
-    def set_admin_role(self):
+    def set_admin_role(self) -> None:
         role_admin = Role.query.get_or_404(1)
         self.add_role(role_admin)
         self.update()
 
-    def update_locale(self, locale):
+    def update_locale(self, locale: str) -> bool:
         if locale in settings.LANGUAGES:
             self.locale = locale
             self.update()
@@ -159,11 +157,9 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
         return False
 
     @staticmethod
-    def verify_token(token):
+    def verify_token(token: str) -> Union["User", None]:
         try:
-            decode = jwt.decode(
-                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
-            )
+            decode = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             user_id = decode.get("user_id")
         except:  # noqa: E722
             return None
@@ -213,22 +209,22 @@ class Role(db.Model):  # type: ignore  # noqa
     def __repr__(self) -> str:
         return f"Role(id={self.id}, name={self.name}, description={self.description}, created_at={self.created_at}, permissions={self.permissions}, users={self.users})"  # noqa: E501
 
-    def save(self):
+    def save(self) -> None:
         self.created_user = current_user.id
         self.updated_user = current_user.id
         db.session.add(self)
         db.session.commit()
 
-    def update(self):
+    def update(self) -> None:
         self.updated_at = datetime.utcnow()
         self.updated_user = current_user.id
         db.session.commit()
 
-    def delete(self):
+    def delete(self) -> None:
         db.session.delete(self)
         db.session.commit()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "id": self.id,
             "name": self.name,
@@ -240,7 +236,7 @@ class Role(db.Model):  # type: ignore  # noqa
         }
 
     @staticmethod
-    def insert_default_values():
+    def insert_default_values() -> None:
         db.session.add(Permission(name="admin", description="Admin role"))
         db.session.add(Permission(name="moderate", description="Moderator role"))
         db.session.add(Permission(name="users", description="Users role"))
@@ -270,22 +266,22 @@ class Permission(db.Model):  # type: ignore  # noqa
     def __repr__(self) -> str:
         return f"Permission(id={self.id}, name={self.name}, description={self.description}, color={self.color}, created_at={self.created_at})"  # noqa: E501
 
-    def save(self):
+    def save(self) -> None:
         self.created_user = current_user.id
         self.updated_user = current_user.id
         db.session.add(self)
         db.session.commit()
 
-    def update(self):
+    def update(self) -> None:
         self.updated_at = datetime.utcnow()
         self.updated_user = current_user.id
         db.session.commit()
 
-    def delete(self):
+    def delete(self) -> None:
         db.session.delete(self)
         db.session.commit()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "id": self.id,
             "name": self.name,
@@ -295,7 +291,7 @@ class Permission(db.Model):  # type: ignore  # noqa
         }
 
     @staticmethod
-    def insert_default_values():
+    def insert_default_values() -> None:
         db.session.add(
             Permission(name="write", description="Write permission", color="#8ac926")
         )
