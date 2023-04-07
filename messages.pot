@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-07 16:22-0300\n"
+"POT-Creation-Date: 2023-04-07 16:56-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,7 @@ msgstr ""
 
 #: app/templates/macro_modal.html:14 app/templates/macro_modal.html:37
 #: app/templates/macro_modal.html:60 app/templates/macro_modal.html:83
+#: app/templates/macro_modal.html:107
 #: app/views/admin/templates/permissions/create.html:63
 #: app/views/admin/templates/permissions/edit.html:63
 #: app/views/admin/templates/roles/create.html:55
@@ -41,7 +42,7 @@ msgid "Cancel"
 msgstr ""
 
 #: app/templates/macro_modal.html:15 app/templates/macro_modal.html:38
-#: app/templates/macro_modal.html:61
+#: app/templates/macro_modal.html:61 app/templates/macro_modal.html:108
 msgid "Delete"
 msgstr ""
 
@@ -71,6 +72,18 @@ msgstr ""
 
 #: app/templates/macro_modal.html:84
 msgid "Add"
+msgstr ""
+
+#: app/templates/macro_modal.html:99
+msgid "Delete user"
+msgstr ""
+
+#: app/templates/macro_modal.html:103
+msgid "Name:"
+msgstr ""
+
+#: app/templates/macro_modal.html:104
+msgid "Are you sure you want to delete this user?"
 msgstr ""
 
 #: app/templates/navbar.html:19 app/views/admin/templates/admin/admin.html:15
@@ -179,6 +192,7 @@ msgid "Color"
 msgstr ""
 
 #: app/views/admin/forms.py:37 app/views/admin/forms.py:102
+#: app/views/admin/forms.py:223
 #: app/views/admin/templates/permissions/create.html:17
 #: app/views/admin/templates/roles/create.html:17
 #: app/views/admin/templates/users/create.html:17
@@ -190,6 +204,7 @@ msgid "Permission name already exists."
 msgstr ""
 
 #: app/views/admin/forms.py:69 app/views/admin/forms.py:131
+#: app/views/admin/forms.py:169
 msgid "Update"
 msgstr ""
 
@@ -319,6 +334,7 @@ msgstr ""
 #: app/views/admin/templates/roles/list.html:133
 #: app/views/admin/templates/roles/view.html:39
 #: app/views/admin/templates/roles/view.html:147
+#: app/views/admin/templates/users/list_users.html:167
 msgid "Actions"
 msgstr ""
 
@@ -458,6 +474,7 @@ msgid "Add user"
 msgstr ""
 
 #: app/views/admin/templates/users/create.html:21
+#: app/views/admin/templates/users/list_users.html:187
 msgid "Create user"
 msgstr ""
 

@@ -166,7 +166,7 @@ class EditUserForm(FlaskForm):
             "autocomplete": "off",
         },
     )
-    submit = SubmitField("Update")
+    submit = SubmitField(lazy_gettext("Update"))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -220,7 +220,7 @@ class CreateUserForm(FlaskForm):
             "autocomplete": "off",
         },
     )
-    submit = SubmitField("Create")
+    submit = SubmitField(lazy_gettext("Create"))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

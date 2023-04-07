@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-07 16:22-0300\n"
+"POT-Creation-Date: 2023-04-07 16:56-0300\n"
 "PO-Revision-Date: 2022-07-31 15:52-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -24,7 +24,7 @@ msgstr "Por favor vuelva a loguearse para acceder a esta pagina!"
 
 #: app/templates/macro_modal.html:7
 msgid "Delete role"
-msgstr "Eliminar Rol"
+msgstr "Borrar rol"
 
 #: app/templates/macro_modal.html:11
 msgid "Are you sure you want to delete this role?"
@@ -32,6 +32,7 @@ msgstr "Esta seguro de eliminar este rol?"
 
 #: app/templates/macro_modal.html:14 app/templates/macro_modal.html:37
 #: app/templates/macro_modal.html:60 app/templates/macro_modal.html:83
+#: app/templates/macro_modal.html:107
 #: app/views/admin/templates/permissions/create.html:63
 #: app/views/admin/templates/permissions/edit.html:63
 #: app/views/admin/templates/roles/create.html:55
@@ -42,7 +43,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: app/templates/macro_modal.html:15 app/templates/macro_modal.html:38
-#: app/templates/macro_modal.html:61
+#: app/templates/macro_modal.html:61 app/templates/macro_modal.html:108
 msgid "Delete"
 msgstr "Borrar"
 
@@ -52,15 +53,15 @@ msgstr "Borrar permiso"
 
 #: app/templates/macro_modal.html:34
 msgid "Are you sure you want to delete this permission?"
-msgstr "Esta seguro de eliminar este permiso?"
+msgstr "Esta seguro de borrar este permiso?"
 
 #: app/templates/macro_modal.html:53
 msgid "Delete user role"
-msgstr "Eliminar rol de usuario"
+msgstr "Borrar rol de usuario"
 
 #: app/templates/macro_modal.html:57
 msgid "Are you sure you want to delete this user role?"
-msgstr "Esta seguro de eliminar este rol de usuario?"
+msgstr "Esta seguro de borrar este rol de usuario?"
 
 #: app/templates/macro_modal.html:76
 msgid "Add user role"
@@ -68,11 +69,23 @@ msgstr "Agregar rol de usuario"
 
 #: app/templates/macro_modal.html:80
 msgid "Are you sure you want to add this user role?"
-msgstr "Esta seguro de eliminar este rol?"
+msgstr "Esta seguro de agregar este rol de usuario?"
 
 #: app/templates/macro_modal.html:84
 msgid "Add"
 msgstr "Agregar"
+
+#: app/templates/macro_modal.html:99
+msgid "Delete user"
+msgstr "Borrar usuario"
+
+#: app/templates/macro_modal.html:103
+msgid "Name:"
+msgstr "Nombre:"
+
+#: app/templates/macro_modal.html:104
+msgid "Are you sure you want to delete this user?"
+msgstr "Esta seguro de borrar este usuario?"
 
 #: app/templates/navbar.html:19 app/views/admin/templates/admin/admin.html:15
 #: app/views/admin/templates/admin/admin.html:19
@@ -180,6 +193,7 @@ msgid "Color"
 msgstr "Color"
 
 #: app/views/admin/forms.py:37 app/views/admin/forms.py:102
+#: app/views/admin/forms.py:223
 #: app/views/admin/templates/permissions/create.html:17
 #: app/views/admin/templates/roles/create.html:17
 #: app/views/admin/templates/users/create.html:17
@@ -191,6 +205,7 @@ msgid "Permission name already exists."
 msgstr "El permiso ya existe."
 
 #: app/views/admin/forms.py:69 app/views/admin/forms.py:131
+#: app/views/admin/forms.py:169
 msgid "Update"
 msgstr "Actualizar"
 
@@ -225,7 +240,6 @@ msgid "Email"
 msgstr "Email"
 
 #: app/views/admin/forms.py:158 app/views/admin/forms.py:212
-#, fuzzy
 msgid "Confirmed"
 msgstr "Comfirmado"
 
@@ -236,7 +250,6 @@ msgstr "Bloqueado"
 
 #: app/views/admin/forms.py:210 app/views/auth/forms.py:16
 #: app/views/auth/forms.py:31 app/views/auth/forms.py:47
-#, fuzzy
 msgid "Password"
 msgstr "Contraseña"
 
@@ -322,6 +335,7 @@ msgstr "Fecha de creación"
 #: app/views/admin/templates/roles/list.html:133
 #: app/views/admin/templates/roles/view.html:39
 #: app/views/admin/templates/roles/view.html:147
+#: app/views/admin/templates/users/list_users.html:167
 msgid "Actions"
 msgstr "Acciones"
 
@@ -437,7 +451,7 @@ msgstr "Crear nuevo rol"
 
 #: app/views/admin/templates/roles/edit.html:21
 msgid "Edit role"
-msgstr "Edit Rol"
+msgstr "Editar rol"
 
 #: app/views/admin/templates/roles/list.html:26
 msgid "Roles list"
@@ -461,17 +475,15 @@ msgid "Add user"
 msgstr "Agregar usuario"
 
 #: app/views/admin/templates/users/create.html:21
-#, fuzzy
+#: app/views/admin/templates/users/list_users.html:187
 msgid "Create user"
-msgstr "Crear rol"
+msgstr "Crear usuario"
 
 #: app/views/admin/templates/users/edit.html:21
-#, fuzzy
 msgid "Edit user"
-msgstr "Agregar usuario"
+msgstr "Editar usuario"
 
 #: app/views/admin/templates/users/list_users.html:30
-#, fuzzy
 msgid "Filters"
 msgstr "Filtros"
 
@@ -484,7 +496,6 @@ msgid "Detail"
 msgstr "Detalle"
 
 #: app/views/auth/auth.py:40 app/views/auth/auth.py:59
-#, fuzzy
 msgid "Blocked account"
 msgstr "Crear una cuenta"
 
@@ -538,7 +549,6 @@ msgid "A confirmation email has been sent to you by email"
 msgstr "Un link de confirmación fue enviado a tu email."
 
 #: app/views/auth/forms.py:20 app/views/auth/forms.py:51
-#, fuzzy
 msgid "Confirm password"
 msgstr "Confirmar password"
 
@@ -621,17 +631,14 @@ msgid "Click here"
 msgstr "Clic aquí"
 
 #: app/views/auth/templates/emails/confirm_account.html:47
-#, fuzzy
 msgid "Confirm your account:"
 msgstr "Confirma tu cuenta:"
 
 #: app/views/auth/templates/emails/confirm_account.html:48
-#, fuzzy
 msgid "Confirm:"
 msgstr "Confirmar:"
 
 #: app/views/auth/templates/emails/reset_password.html:47
-#, fuzzy
 msgid "Follow the link to reset your password:"
 msgstr "Resetear tu contreña"
 
