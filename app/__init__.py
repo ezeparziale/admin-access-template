@@ -63,7 +63,7 @@ cache = Cache(app)
 def get_locale():
     if current_user.is_authenticated:
         return current_user.locale
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+    return request.accept_languages.best_match(settings.LANGUAGES)
 
 
 def get_timezone():
