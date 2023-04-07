@@ -31,6 +31,7 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
     username: Mapped[str] = mapped_column(String(40), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(60), nullable=False)
+    blocked: Mapped[bool] = mapped_column(BOOLEAN, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=text("CURRENT_TIMESTAMP"),
