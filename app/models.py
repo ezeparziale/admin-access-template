@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from typing import List, Union
+from typing import List, Optional, Union
 
 import jwt
 from flask import redirect, request, url_for
@@ -32,6 +32,13 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(60), nullable=False)
     blocked: Mapped[bool] = mapped_column(BOOLEAN, default=False, nullable=False)
+    login_attempts: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    last_login_attempt: Mapped[datetime] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+    block_time: Mapped[datetime] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=text("CURRENT_TIMESTAMP"),
@@ -180,6 +187,36 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
     @staticmethod
     def generate_password_hash(password: str) -> str:
         return bcrypt.generate_password_hash(password).decode("utf-8")
+
+    def handle_failed_login(self):
+        self.login_attempts += 1
+        self.last_login_attempt = datetime.utcnow()
+        if self.login_attempts >= settings.MAX_LOGIN_ATTEMPTS:
+            self.blocked = True
+            self.block_time = datetime.utcnow()
+        self.update()
+
+    def handle_successful_login(self):
+        self.login_attempts = 0
+        self.last_login_attempt = None
+        self.blocked = False
+        self.block_time = None
+        self.update()
+
+    def is_blocked(self):
+        if self.blocked:
+            if self.block_time is None:
+                return True
+            elif datetime.now(timezone.utc) >= self.block_time + settings.BLOCK_TIME:
+                self.blocked = False
+                self.block_time = None
+                self.login_attempts = 0
+                self.update()
+                return False
+            else:
+                return True
+        else:
+            return False
 
 
 role_permission = Table(
