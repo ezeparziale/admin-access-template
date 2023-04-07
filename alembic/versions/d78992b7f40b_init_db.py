@@ -37,7 +37,7 @@ def upgrade() -> None:
             server_default=sa.text("CURRENT_TIMESTAMP"),
             nullable=False,
         ),
-        sa.Column("confirmed", sa.BOOLEAN(), nullable=True),
+        sa.Column("confirmed", sa.BOOLEAN(), nullable=False),
         sa.Column("locale", sa.String(), nullable=False),
         sa.Column("timezone", sa.String(), nullable=True),
         sa.Column(

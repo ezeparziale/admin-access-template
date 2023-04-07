@@ -42,9 +42,9 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
         server_default=text("CURRENT_TIMESTAMP"),
         nullable=False,
     )
-    confirmed: Mapped[bool] = mapped_column(BOOLEAN, default=False)
+    confirmed: Mapped[bool] = mapped_column(BOOLEAN, default=False, nullable=False)
     locale: Mapped[str] = mapped_column(
-        String, nullable=False, default=settings.DEFAULT_LANGUAGE
+        String, default=settings.DEFAULT_LANGUAGE, nullable=False
     )
     timezone: Mapped[str] = mapped_column(String, nullable=True)
     last_seen: Mapped[datetime] = mapped_column(
@@ -198,8 +198,12 @@ class Role(db.Model):  # type: ignore  # noqa
         server_default=text("CURRENT_TIMESTAMP"),
         nullable=False,
     )
-    created_user: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
-    updated_user: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
+    created_user: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), nullable=True
+    )
+    updated_user: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), nullable=True
+    )
     permissions: Mapped[List["Permission"]] = relationship(
         "Permission", secondary=role_permission, backref="roles"
     )
@@ -261,8 +265,12 @@ class Permission(db.Model):  # type: ignore  # noqa
         server_default=text("CURRENT_TIMESTAMP"),
         nullable=False,
     )
-    created_user: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
-    updated_user: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
+    created_user: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), nullable=True
+    )
+    updated_user: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id"), nullable=True
+    )
 
     def __repr__(self) -> str:
         return f"Permission(id={self.id}, name={self.name}, description={self.description}, color={self.color}, created_at={self.created_at})"  # noqa: E501
