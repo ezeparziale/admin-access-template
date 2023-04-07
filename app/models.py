@@ -107,6 +107,7 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
             "email": self.email,
             "created_at": format_datetime(self.created_at, format="long"),
             "roles": [(role.id, role.name) for role in self.roles],
+            "blocked": self.blocked,
         }
 
     def save(self) -> None:
