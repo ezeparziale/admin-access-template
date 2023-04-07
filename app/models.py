@@ -15,12 +15,12 @@ from app.config import settings
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id) -> Optional["User"]:
     return User.query.get(user_id)
 
 
 @login_manager.unauthorized_handler
-def unauthorized():
+def unauthorized() -> redirect:
     return redirect(url_for("auth.login", next=request.path))
 
 
