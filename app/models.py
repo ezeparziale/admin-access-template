@@ -114,6 +114,14 @@ class User(db.Model, UserMixin):  # type: ignore  # noqa
         db.session.delete(self)
         db.session.commit()
 
+    def block_account(self) -> None:
+        self.blocked = True
+        self.update()
+
+    def unblock_account(self) -> None:
+        self.blocked = False
+        self.update()
+
     def add_role(self, role: "Role") -> None:
         self.roles.append(role)
         self.update()
