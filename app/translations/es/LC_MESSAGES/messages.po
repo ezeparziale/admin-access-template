@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-07 16:56-0300\n"
+"POT-Creation-Date: 2023-04-07 17:13-0300\n"
 "PO-Revision-Date: 2022-07-31 15:52-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -209,6 +209,17 @@ msgstr "El permiso ya existe."
 msgid "Update"
 msgstr "Actualizar"
 
+#: app/views/admin/forms.py:83
+#: app/views/admin/templates/permissions/list.html:77
+msgid "Permission"
+msgstr "Permiso"
+
+#: app/views/admin/forms.py:83 app/views/admin/forms.py:149
+#: app/views/admin/forms.py:187 app/views/admin/forms.py:201
+#: app/views/admin/forms.py:239 app/views/admin/forms.py:249
+msgid "already exists."
+msgstr "ya existe."
+
 #: app/views/admin/forms.py:97 app/views/admin/forms.py:129
 #: app/views/admin/forms.py:164 app/views/admin/forms.py:218
 msgid "Choose anything"
@@ -218,7 +229,12 @@ msgstr "Elegir alguna"
 msgid "Role name already exists."
 msgstr "El permiso ya existe."
 
-#: app/views/admin/forms.py:155 app/views/admin/forms.py:206
+#: app/views/admin/forms.py:149 app/views/admin/templates/roles/view.html:28
+msgid "Role"
+msgstr "Rol"
+
+#: app/views/admin/forms.py:155 app/views/admin/forms.py:187
+#: app/views/admin/forms.py:206 app/views/admin/forms.py:239
 #: app/views/admin/templates/roles/add_user_role.html:35
 #: app/views/admin/templates/roles/add_user_role.html:100
 #: app/views/admin/templates/roles/view.html:35
@@ -228,7 +244,8 @@ msgstr "El permiso ya existe."
 msgid "Username"
 msgstr "Usuario"
 
-#: app/views/admin/forms.py:157 app/views/admin/forms.py:208
+#: app/views/admin/forms.py:157 app/views/admin/forms.py:201
+#: app/views/admin/forms.py:208 app/views/admin/forms.py:249
 #: app/views/admin/templates/roles/add_user_role.html:36
 #: app/views/admin/templates/roles/add_user_role.html:109
 #: app/views/admin/templates/roles/view.html:36
@@ -313,10 +330,6 @@ msgstr "Lista permisos"
 #: app/views/admin/templates/permissions/list.html:54
 msgid "Permission detail"
 msgstr "Lista permisos"
-
-#: app/views/admin/templates/permissions/list.html:77
-msgid "Permission"
-msgstr "Permiso"
 
 #: app/views/admin/templates/permissions/list.html:95
 #: app/views/admin/templates/roles/add_user_role.html:37
@@ -465,10 +478,6 @@ msgstr "Ver"
 #: app/views/admin/templates/roles/list.html:153
 msgid "Create role"
 msgstr "Crear rol"
-
-#: app/views/admin/templates/roles/view.html:28
-msgid "Role"
-msgstr "Rol"
 
 #: app/views/admin/templates/roles/view.html:163
 msgid "Add user"

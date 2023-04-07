@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-07 16:56-0300\n"
+"POT-Creation-Date: 2023-04-07 17:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,6 +208,17 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
+#: app/views/admin/forms.py:83
+#: app/views/admin/templates/permissions/list.html:77
+msgid "Permission"
+msgstr ""
+
+#: app/views/admin/forms.py:83 app/views/admin/forms.py:149
+#: app/views/admin/forms.py:187 app/views/admin/forms.py:201
+#: app/views/admin/forms.py:239 app/views/admin/forms.py:249
+msgid "already exists."
+msgstr ""
+
 #: app/views/admin/forms.py:97 app/views/admin/forms.py:129
 #: app/views/admin/forms.py:164 app/views/admin/forms.py:218
 msgid "Choose anything"
@@ -217,7 +228,12 @@ msgstr ""
 msgid "Role name already exists."
 msgstr ""
 
-#: app/views/admin/forms.py:155 app/views/admin/forms.py:206
+#: app/views/admin/forms.py:149 app/views/admin/templates/roles/view.html:28
+msgid "Role"
+msgstr ""
+
+#: app/views/admin/forms.py:155 app/views/admin/forms.py:187
+#: app/views/admin/forms.py:206 app/views/admin/forms.py:239
 #: app/views/admin/templates/roles/add_user_role.html:35
 #: app/views/admin/templates/roles/add_user_role.html:100
 #: app/views/admin/templates/roles/view.html:35
@@ -227,7 +243,8 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: app/views/admin/forms.py:157 app/views/admin/forms.py:208
+#: app/views/admin/forms.py:157 app/views/admin/forms.py:201
+#: app/views/admin/forms.py:208 app/views/admin/forms.py:249
 #: app/views/admin/templates/roles/add_user_role.html:36
 #: app/views/admin/templates/roles/add_user_role.html:109
 #: app/views/admin/templates/roles/view.html:36
@@ -311,10 +328,6 @@ msgstr ""
 
 #: app/views/admin/templates/permissions/list.html:54
 msgid "Permission detail"
-msgstr ""
-
-#: app/views/admin/templates/permissions/list.html:77
-msgid "Permission"
 msgstr ""
 
 #: app/views/admin/templates/permissions/list.html:95
@@ -463,10 +476,6 @@ msgstr ""
 
 #: app/views/admin/templates/roles/list.html:153
 msgid "Create role"
-msgstr ""
-
-#: app/views/admin/templates/roles/view.html:28
-msgid "Role"
 msgstr ""
 
 #: app/views/admin/templates/roles/view.html:163

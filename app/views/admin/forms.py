@@ -80,7 +80,7 @@ class EditPermissionForm(FlaskForm):
         )
 
         if check_permission_exists:
-            raise ValidationError(f"Permission '{field.data}' already exists.")
+            raise ValidationError(lazy_gettext("Permission") + f" {field.data} " +  lazy_gettext("already exists."))
 
 
 class CreateRoleForm(FlaskForm):
@@ -146,7 +146,7 @@ class EditRoleForm(FlaskForm):
         )
 
         if check_role_exists:
-            raise ValidationError(f"Role '{field.data}' already exists.")
+            raise ValidationError(lazy_gettext("Role") + f" {field.data} " +  lazy_gettext("already exists."))
 
 
 class EditUserForm(FlaskForm):
@@ -184,7 +184,7 @@ class EditUserForm(FlaskForm):
         )
 
         if check_username_exists:
-            raise ValidationError(f"Username '{field.data}' already exists.")
+            raise ValidationError(lazy_gettext("Username") + f" {field.data} " + lazy_gettext("already exists."))
 
     def validate_email(self, field):
         check_email_exists = (
@@ -198,7 +198,7 @@ class EditUserForm(FlaskForm):
         )
 
         if check_email_exists:
-            raise ValidationError(f"Email '{field.data}' already exists.")
+            raise ValidationError(lazy_gettext("Email") + f" {field.data} " + lazy_gettext("already exists."))
 
 
 class CreateUserForm(FlaskForm):
@@ -236,7 +236,7 @@ class CreateUserForm(FlaskForm):
         )
 
         if check_username_exists:
-            raise ValidationError(f"_({{'Username'}}) '{field.data}' already exists.")
+            raise ValidationError(lazy_gettext("Username") + f" {field.data} " + lazy_gettext("already exists."))
 
     def validate_email(self, field):
         check_email_exists = (
@@ -246,4 +246,4 @@ class CreateUserForm(FlaskForm):
         )
 
         if check_email_exists:
-            raise ValidationError(f"Email '{field.data}' already exists.")
+            raise ValidationError(lazy_gettext("Email") + f" {field.data} " + lazy_gettext("already exists."))
