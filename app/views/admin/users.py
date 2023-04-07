@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import login_required
-from sqlalchemy import or_, and_, func
+from sqlalchemy import and_, func, or_
 
 from app import bcrypt, db
 from app.decorators import admin_required
-from app.models import User, Role
+from app.models import Role, User
 
 from .forms import CreateUserForm, EditUserForm
 
@@ -39,9 +39,7 @@ def create_user():
             email=form.email.data,
             confirmed=form.confirmed.data,
             password=encrypted_password,
-            roles=Role.query.filter(
-                Role.id.in_(form.roles.data)
-            ).all(),
+            roles=Role.query.filter(Role.id.in_(form.roles.data)).all(),
         )
         user.save()
         return redirect(url_for("admin.users.users_view"))

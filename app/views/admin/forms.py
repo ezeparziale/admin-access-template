@@ -1,8 +1,15 @@
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from sqlalchemy import and_
-from wtforms import HiddenField, SelectMultipleField, StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Length, ValidationError, Email
+from wtforms import (
+    BooleanField,
+    HiddenField,
+    PasswordField,
+    SelectMultipleField,
+    StringField,
+    SubmitField,
+)
+from wtforms.validators import DataRequired, Email, Length, ValidationError
 
 from app import db
 from app.models import Permission, Role, User
