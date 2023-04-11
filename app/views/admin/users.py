@@ -38,7 +38,7 @@ def create_user():
             username=form.username.data,
             email=form.email.data,
             confirmed=form.confirmed.data,
-            blocked = form.blocked.data,
+            blocked=form.blocked.data,
             password=encrypted_password,
             roles=Role.query.filter(Role.id.in_(form.roles.data)).all(),
         )

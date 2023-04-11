@@ -138,6 +138,7 @@ def send_email_reset_password(user):
         subject, sender, recipients, text_body, html_body, attachments=None, sync=False
     )
 
+
 @auth_bp.route("/reset_password/", methods=["GET", "POST"])
 def reset_password():
     form = ResetPasswordRequestForm()

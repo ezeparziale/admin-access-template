@@ -3,13 +3,14 @@ from typing import List, Optional, Union
 
 import jwt
 from flask import redirect, request, url_for
+from flask.typing import ResponseValue
 from flask_babel import format_datetime
 from flask_login import UserMixin, current_user
 from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
-from flask.typing import ResponseValue
+
 from app import bcrypt, cache, db, login_manager
 from app.config import settings
 
