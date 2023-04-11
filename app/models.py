@@ -9,7 +9,7 @@ from sqlalchemy import BOOLEAN, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
-
+from flask.typing import ResponseValue
 from app import bcrypt, cache, db, login_manager
 from app.config import settings
 
@@ -20,7 +20,7 @@ def load_user(user_id) -> Optional["User"]:
 
 
 @login_manager.unauthorized_handler
-def unauthorized() -> redirect:
+def unauthorized() -> ResponseValue:
     return redirect(url_for("auth.login", next=request.path))
 
 
