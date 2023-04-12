@@ -1,7 +1,9 @@
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+
+from app.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -21,6 +23,18 @@ class RegistrationForm(FlaskForm):
         validators=[DataRequired(), EqualTo("password")],
     )
     submit = SubmitField(label=lazy_gettext("Sign up"))
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError(lazy_gettext("This username is already registered"))
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError(
+                lazy_gettext("This email address is already registered")
+            )
 
 
 class LoginForm(FlaskForm):
