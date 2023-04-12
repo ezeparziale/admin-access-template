@@ -44,7 +44,7 @@ def before_request():
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for("home.home_view"))
-    return render_template("unconfirmed.html")
+    return render_template("auth/unconfirmed.html")
 
 
 @auth_bp.route("/login/", methods=["GET", "POST"])
@@ -68,14 +68,14 @@ def login():
             if user:
                 user.handle_failed_login()
             flash(_("Login error"), category="danger")
-    return render_template("login.html", form=form)
+    return render_template("auth/login.html", form=form)
 
 
 def send_email_confirm(user):
     token = user.get_confirm_token()
 
     html_body = render_template(
-        "emails/confirm_account.html", token=token, app_name=settings.SITE_NAME
+        "auth/emails/confirm_account.html", token=token, app_name=settings.SITE_NAME
     )
     text_body = ""
     subject = _("Confirm account")
@@ -111,7 +111,7 @@ def register():
         )
         send_email_confirm(user)
         return redirect(url_for("auth.login"))
-    return render_template("register.html", form=form)
+    return render_template("auth/register.html", form=form)
 
 
 @auth_bp.route("/logout/")
@@ -125,7 +125,7 @@ def send_email_reset_password(user):
     token = user.get_token()
 
     html_body = render_template(
-        "emails/reset_password.html", token=token, app_name=settings.SITE_NAME
+        "auth/emails/reset_password.html", token=token, app_name=settings.SITE_NAME
     )
     text_body = ""
     subject = _("Reset password")
@@ -150,7 +150,7 @@ def reset_password():
             return redirect(url_for("auth.login"))
         else:
             return redirect(url_for("auth.register"))
-    return render_template("reset_password.html", form=form)
+    return render_template("auth/reset_password.html", form=form)
 
 
 @auth_bp.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -167,7 +167,7 @@ def reset_token(token):
         flash(_("Password changed"), category="success")
         return redirect(url_for("auth.login"))
 
-    return render_template("change_password.html", form=form)
+    return render_template("auth/change_password.html", form=form)
 
 
 @auth_bp.route("/confirm/<token>", methods=["GET", "POST"])

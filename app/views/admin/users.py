@@ -21,7 +21,7 @@ users_bp = Blueprint(
 @login_required
 @admin_required
 def users_view():
-    return render_template("users/list_users.html")
+    return render_template("admin/users/list_users.html")
 
 
 @users_bp.route("/create", methods=["GET", "POST"])
@@ -45,7 +45,7 @@ def create_user():
         user.save()
         return redirect(url_for("admin.users.users_view"))
 
-    return render_template("users/create.html", form=form)
+    return render_template("admin/users/create.html", form=form)
 
 
 @users_bp.route("/edit/<int:id>", methods=["GET", "POST"])
@@ -72,7 +72,7 @@ def edit_user(id):
     form.blocked.data = user.blocked
     form.roles.data = [p.id for p in user.roles]
 
-    return render_template("users/edit.html", form=form)
+    return render_template("admin/users/edit.html", form=form)
 
 
 @users_bp.route("/delete/<int:id>", methods=["GET", "POST"])

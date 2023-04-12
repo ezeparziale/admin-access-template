@@ -21,7 +21,7 @@ roles_bp = Blueprint(
 @admin_required
 def roles_view():
     user_roles = Role.query.all()
-    return render_template("roles/list.html", user_roles=user_roles)
+    return render_template("admin/roles/list.html", user_roles=user_roles)
 
 
 @roles_bp.route("/create", methods=["GET", "POST"])
@@ -41,7 +41,7 @@ def create_role():
         role.save()
         return redirect(url_for("admin.roles.roles_view"))
 
-    return render_template("roles/create.html", form=form)
+    return render_template("admin/roles/create.html", form=form)
 
 
 @roles_bp.route("/edit/<int:id>", methods=["GET", "POST"])
@@ -64,7 +64,7 @@ def edit_role(id):
     form.name.data = role.name
     form.description.data = role.description
     form.permissions.data = [p.id for p in role.permissions]
-    return render_template("roles/edit.html", form=form)
+    return render_template("admin/roles/edit.html", form=form)
 
 
 @roles_bp.route("/delete/<int:id>", methods=["GET", "POST"])
@@ -101,7 +101,7 @@ def add_user_to_role(role_id, user_id):
 @admin_required
 def add_user_role(role_id):
     role = Role.query.get_or_404(role_id)
-    return render_template("roles/add_user_role.html", role=role)
+    return render_template("admin/roles/add_user_role.html", role=role)
 
 
 @roles_bp.route("/view/<int:id>", methods=["GET", "POST"])
@@ -109,7 +109,7 @@ def add_user_role(role_id):
 @admin_required
 def view_role(id):
     role = Role.query.get_or_404(id)
-    return render_template("roles/view.html", role=role)
+    return render_template("admin/roles/view.html", role=role)
 
 
 @roles_bp.route("/get_data", methods=["GET"])

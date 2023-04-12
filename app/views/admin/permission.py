@@ -20,7 +20,7 @@ permission_bp = Blueprint(
 @login_required
 @admin_required
 def permissions_view():
-    return render_template("permissions/list.html")
+    return render_template("admin/permissions/list.html")
 
 
 @permission_bp.route("/create", methods=["GET", "POST"])
@@ -38,7 +38,7 @@ def permissions_create():
         permission.save()
         return redirect(url_for("admin.permissions.permissions_view"))
 
-    return render_template("permissions/create.html", form=form)
+    return render_template("admin/permissions/create.html", form=form)
 
 
 @permission_bp.route("/edit/<int:id>", methods=["GET", "POST"])
@@ -59,7 +59,7 @@ def edit_role(id):
     form.name.data = permission.name
     form.description.data = permission.description
     form.color.data = permission.color
-    return render_template("permissions/edit.html", form=form)
+    return render_template("admin/permissions/edit.html", form=form)
 
 
 @permission_bp.route("/delete/<int:id>", methods=["GET", "POST"])
