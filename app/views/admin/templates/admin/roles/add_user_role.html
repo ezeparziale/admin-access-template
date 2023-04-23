@@ -1,177 +1,187 @@
 {% extends "base.html" %}
-{% import "macros/macro_pagination.html" as widget %}
 {% import "macros/macro_modal.html" as modals %}
 {% import "macros/macro_table.html" as table %}
 
 {% block head %}
-    {{ table.table_import_head() }}
+{{ table.table_import_head() }}
 {% endblock %}
 
 {% block navbar %}
-    {% include "navbar.html" %}
+{% include "navbar.html" %}
 {% endblock %}
 
 {% block content %}
 
-    <div class="container">
+<div class="container">
 
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">{{ _("Home") }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('admin.admin_view') }}">{{ _("Admin") }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ url_for('admin.roles.roles_view') }}">{{ _("Roles") }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ _("Add User") }}</li>
-            </ol>
-        </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a class="link-secondary" href="{{ url_for('home.home_view') }}">
+                    {{ _("Home") }}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a class="link-secondary" href="{{ url_for('admin.admin_view') }}">
+                    {{ _("Admin") }}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a class="link-secondary" href="{{ url_for('admin.roles.roles_view') }}">
+                    {{ _("Roles") }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ _("Add User") }}
+            </li>
+        </ol>
+    </nav>
 
-        <h3>{% block title %} {{ _("Add user to role") }}: {{ role.name }} {% endblock %}</h3>
+    <h3>{% block title %} {{ _("Add user to role") }}: {{ role.name }} {% endblock %}</h3>
 
-        <div class="card mt-3 shadow-sm">
-            <div class="card-body">        
-                <table id="data" class="table dt-responsive nowrap" style="width:100%"></table>
-            </div>
+    <div class="card mt-3 shadow-sm">
+        <div class="card-body">
+            <table id="data" class="table dt-responsive nowrap" style="width:100%"></table>
         </div>
     </div>
+</div>
 
-
-    {{ modals.confirm_add_user_role() }}
-    {{ modals.confirm_delete_user_role() }}
-
+{{ modals.confirm_add_user_role() }}
+{{ modals.confirm_delete_user_role() }}
 
 {% endblock %}
 
-
 {% block scripts %}
-    {{ table.table_import_scripts() }}
 
-  <script>
+{{ table.table_import_scripts() }}
+
+<script>
     $(document).ready(function () {
-      $('#data').DataTable({
-        ajax: '/admin/users/get_data',
-        serverSide: true,
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.modal( {
-                    header: function ( row ) {
-                        var data = row.data();
-                        return '{{ _("Rol detail") }}: '+data.name;
+        $('#data').DataTable({
+            ajax: '/admin/users/get_data',
+            serverSide: true,
+            responsive: {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.modal({
+                        header: function (row) {
+                            var data = row.data();
+                            return '{{ _("Rol detail") }}: ' + data.name;
+                        }
+                    }),
+                    renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                        tableClass: 'table'
+                    })
+                }
+            },
+            columns: [
+                { data: "username" },
+                { data: "email" },
+                { data: "created_at" },
+                { data: "roles" },
+                { data: "" },
+            ],
+            columnDefs: [
+                {
+                    "defaultContent": "-",
+                    "targets": "_all"
+                },
+                {
+                    targets: 0,
+                    orderable: true,
+                    searchable: true,
+                    title: '{{ _("Username") }}',
+                    render: function (data, type, row, meta) {
+                        return '<h5><a href="/user/' + data + '"><span class="badge bg-primary">' + data + '</span></a></h5>';
                     }
-                } ),
-                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
-                    tableClass: 'table'
-                } )
-            }
-        },
-        columns: [
-            { data: "username" },
-            { data: "email" },
-            { data: "created_at" },
-            { data: "roles" },
-            { data: "" },
-        ],      
-        columnDefs: [
-            {
-                "defaultContent": "-",
-                "targets": "_all"
-            },
-            {
-                targets: 0,
-                orderable: true,
-                searchable: true,
-                title: '{{ _("Username") }}',
-                render: function (data, type, row, meta) {
-                    return '<h5><a href="/user/' + data + '"><span class="badge bg-primary">' + data + '</span></a></h5>';
-                }
-            },
-            {
-                targets: 1,
-                orderable: true,
-                searchable: true,
-                title: '{{ _("Email") }}',
-                render: function (data, type, row, meta) {
-                    return data;
-                }
-            },
-            {
-                targets: 2,
-                orderable: true,
-                searchable: true,
-                title: '{{ _("Created date") }}',
-                render: function (data, type, row, meta) {
-                    return data;
-                }
-            },
-            {
-                targets: 3,
-                orderable: true,
-                searchable: true,
-                title: '{{ _("Roles") }}',
-                render: function (data, type, row, meta) {
-                    for (var i = 0, r="<h5>"; i < data.length; i++) {
-                        r += '<a href="/admin/roles/view/' + data[i][0] + '">'
-                            
-                        if ("{{ role.name }}" == data[i][1]) {
-                          r += '<span class="badge bg-primary">'
+                },
+                {
+                    targets: 1,
+                    orderable: true,
+                    searchable: true,
+                    title: '{{ _("Email") }}',
+                    render: function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 2,
+                    orderable: true,
+                    searchable: true,
+                    title: '{{ _("Created date") }}',
+                    render: function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 3,
+                    orderable: true,
+                    searchable: true,
+                    title: '{{ _("Roles") }}',
+                    render: function (data, type, row, meta) {
+                        for (var i = 0, r = "<h5>"; i < data.length; i++) {
+                            r += '<a href="/admin/roles/view/' + data[i][0] + '">'
+
+                            if ("{{ role.name }}" == data[i][1]) {
+                                r += '<span class="badge bg-primary">'
+                            } else {
+                                r += '<span class="badge bg-secondary">'
+                            }
+
+                            r += data[i][1] + '</span></a> ';
+                        }
+                        r += '</h5>';
+                        return r;
+                    }
+                },
+                {
+                    targets: -1,
+                    searchable: false,
+                    orderable: false,
+                    title: '{{ _("Actions") }}',
+                    render: function (data, type, row, meta) {
+                        if (row.roles.map(function (e) { return e[1]; }).includes("{{ role.name }}")) {
+                            let url_delete = '/admin/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
+                            return '<span class="text-nowrap">'
+                                + '<button class="btn btn-sm btn-danger ms-1"'
+                                + ' type="button" data-bs-toggle="modal"'
+                                + ' data-bs-target="#modalDeleteUserRole" data-bs-url="' + url_delete + '">'
+                                + '<i class="bi bi-trash"></i>'
+                                + '</button>'
+                                + '</span>'
                         } else {
-                          r += '<span class="badge bg-secondary">'                          
+                            let url_add = '/admin/roles/add_user/' + "{{ role.id }}" + '/' + row.id;
+                            return '<span class="text-nowrap">'
+                                + '<button class="btn btn-sm btn-primary ms-1"'
+                                + ' type="button" data-bs-toggle="modal"'
+                                + ' data-bs-target="#modalAddUserRole" data-bs-url="' + url_add + '">'
+                                + '<i class="bi bi-person-plus-fill"></i>'
+                                + '</button>'
+                                + '</span>'
                         }
 
-                        r += data[i][1] + '</span></a> ';    
                     }
-                    r += '</h5>';
-                    return r;
-                }
+                },
+            ],
+            "language": {
+                "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
+                "zeroRecords": '{{ _("Nothing found - sorry") }}',
+                "info": '{{ _("Showing page _PAGE_ of _PAGES_") }}',
+                "infoEmpty": '{{ _("No records available") }}',
+                "infoFiltered": '{{ _("(filtered from _MAX_ total records)") }}',
+                "search": '{{ _("Search:") }}',
+                "loadingRecords": '{{ _("Loading...") }}',
+                "paginate": {
+                    "first": '{{ _("First") }}',
+                    "last": '{{ _("Last") }}',
+                    "next": '{{ _("Next") }}',
+                    "previous": '{{ _("Previous") }}',
+                },
             },
-            {
-                targets: -1,
-                searchable: false,
-                orderable: false,
-                title: '{{ _("Actions") }}',
-                render: function(data, type, row, meta) {
-                    if (row.roles.map(function(e) { return e[1]; }).includes("{{ role.name }}")) {
-                        let url_delete = '/admin/roles/delete_user/' + "{{ role.id }}" + '/' + row.id;
-                        return '<span class="text-nowrap">'
-                            +'<button class="btn btn-sm btn-danger ms-1"'
-                            +' type="button" data-bs-toggle="modal"'
-                            +' data-bs-target="#modalDeleteUserRole" data-bs-url="'+ url_delete +'">'
-                            +'<i class="bi bi-trash"></i>'
-                            +'</button>'
-                            +'</span>'                    
-                    } else {
-                        let url_add = '/admin/roles/add_user/' + "{{ role.id }}" + '/' + row.id;
-                        return '<span class="text-nowrap">'
-                            +'<button class="btn btn-sm btn-primary ms-1"'
-                            +' type="button" data-bs-toggle="modal"'
-                            +' data-bs-target="#modalAddUserRole" data-bs-url="'+ url_add +'">'
-                            +'<i class="bi bi-person-plus-fill"></i>'
-                            +'</button>'
-                            +'</span>'                    
-                    }
-
-                }
-            },    
-        ],
-        "language": {
-            "lengthMenu": '{{ _("Display _MENU_ records per page") }}',
-            "zeroRecords": '{{ _("Nothing found - sorry") }}',
-            "info": '{{ _("Showing page _PAGE_ of _PAGES_") }}',
-            "infoEmpty": '{{ _("No records available") }}',
-            "infoFiltered": '{{ _("(filtered from _MAX_ total records)") }}',
-            "search": '{{ _("Search:") }}',
-            "loadingRecords": '{{ _("Loading...") }}',
-            "paginate": {
-                "first": '{{ _("First") }}',
-                "last": '{{ _("Last") }}',
-                "next": '{{ _("Next") }}',
-                "previous": '{{ _("Previous") }}',
-            },
-        },
-      });
+        });
     });
-  </script>
+</script>
 
-  <script src="{{ url_for('admin.roles.static', filename='js/add_user_role.js') }}"></script>
-  <script src="{{ url_for('admin.roles.static', filename='js/delete_user_role.js') }}"></script>
-
+<script src="{{ url_for('admin.roles.static', filename='js/add_user_role.js') }}"></script>
+<script src="{{ url_for('admin.roles.static', filename='js/delete_user_role.js') }}"></script>
 
 {% endblock %}
