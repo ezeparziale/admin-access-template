@@ -1,81 +1,50 @@
 {% extends "base.html" %}
+{% from "macros/form.html" import render_field %}
 
-{% block head %} 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('auth.static', filename='css/auth.css') }}">
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('auth.static', filename='css/auth.css') }}">
 {% endblock %}
 
 {% block title %} {{ _("Sign Up") }} {% endblock %}
 
 {% block content %}
-    
-    <div class="d-flex flex-column justify-content-center align-items-center">
-        <form method="post" action="">
-            {{ form.hidden_tag() }}
-            <div class="shadow p-3 mb-1 bg-white rounded">
-                <div class="card-body">
-                    <div class="text-center">
-                        <p class="fs-3 text-uppercase fw-bolder mb-5"><i class="bi bi-stack"></i> APP NAME</p>
-                    </div>
-                    <h4 class="mb-2">{{ _("Welcome to") }} APP NAME! 👋</h4>
-                    <p class="mb-4 muted">{{ _("Create your account") }}</p>
-                    <fieldset>
-                        <div class="form-group mt-2">
-                            {{ form.username.label(class="form-control-label") }}
-                            {% if form.username.errors %}
-                                {{ form.username(class="form-control form-control-lg is-invalid") }}
-                                    {% for error in form.username.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor%}
-                            {% else %}
-                                {{ form.username(class="form-control form-control-lg") }}
-                            {% endif %}
-                        </div>
-                        <div class="form-group mt-2">
-                            {{ form.email.label(class="form-control-label") }}
-                            {% if form.email.errors %}
-                                {{ form.email(class="form-control form-control-lg is-invalid") }}
-                                    {% for error in form.email.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor%}
-                            {% else %}
-                                {{ form.email(class="form-control form-control-lg") }}
-                            {% endif %}
-                        </div>
-                        <div class="form-group mt-2">
-                            {{ form.password.label(class="form-control-label") }}
-                            {% if form.password.errors %}
-                                {{ form.password(class="form-control form-control-lg is-invalid") }}
-                                    {% for error in form.password.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor%}
-                            {% else %}
-                                {{ form.password(class="form-control form-control-lg") }}
-                            {% endif %}
-                        </div>
-                        <div class="form-group mt-2">
-                            {{ form.confirm_password.label(class="form-control-label") }}
-                            {% if form.confirm_password.errors %}
-                                {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                                    {% for error in form.confirm_password.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor%}
-                            {% else %}
-                                {{ form.confirm_password(class="form-control form-control-lg") }}
-                            {% endif %}
-                        </div>
-                    </fieldset>
-                    <div class="form-group mt-3">
-                        {{ form.submit(class="btn btn-primary") }}
-                    </div>
-                    <p class="text-center mt-3">
-                        <span>{{ _("Already have an account?") }}</span>
-                        <a href="{{ url_for('auth.login') }}" class="link-primary">
-                          <span>{{ _("Sign in") }}</span>
-                        </a>
-                    </p>
+
+<form method="post" action="">
+    <div class="d-flex flex-column justify-content-center align-items-center vh-100">
+        {{ form.csrf_token }}
+        <div class="card p-3">
+            <div class="card-body">
+                <div class="text-center">
+                    <p class="fs-3 text-uppercase fw-bolder mb-5"><i class="bi bi-stack"></i> {{ site_name }}</p>
                 </div>
+                <h4 class="text-center mb-2">{{ _("Welcome to") }} APP NAME! 👋</h4>
+                <p class="text-center mb-4 text-body-secondary">{{ _("Create your account") }}</p>
+                <fieldset>
+                    <div class="form-group mt-2">
+                        {{ render_field(form.username) }}
+                    </div>
+                    <div class="form-group mt-2">
+                        {{ render_field(form.email) }}
+                    </div>
+                    <div class="form-group mt-2">
+                        {{ render_field(form.password) }}
+                    </div>
+                    <div class="form-group mt-2">
+                        {{ render_field(form.confirm_password) }}
+                    </div>
+                </fieldset>
+                <div class="d-grid gap-2 mx-auto mt-3">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+                <p class="text-center small mt-3">
+                    <span class="text-body-secondary">{{ _("Already have an account?") }}</span>
+                    <a href="{{ url_for('auth.login') }}" class="link-primary text-decoration-none">
+                        {{ _("Sign in") }}
+                    </a>
+                </p>
             </div>
-        </form>
+        </div>
     </div>
+</form>
 
 {% endblock %}
