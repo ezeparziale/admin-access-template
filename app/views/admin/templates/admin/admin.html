@@ -2,52 +2,64 @@
 {% import "macros/macro_pagination.html" as widget %}
 
 {% block navbar %}
-    {% include "navbar.html" %}
+{% include "navbar.html" %}
 {% endblock %}
 
 {% block content %}
 
-    <div class="container">
+<div class="container">
 
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url_for('home.home_view') }}">{{ _("Home") }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ _("Admin") }}</li>
-            </ol>
-        </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a class="link-secondary" href="{{ url_for('home.home_view') }}">
+                    {{ _("Home") }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ _("Admin") }}
+            </li>
+        </ol>
+    </nav>
 
-        <h3>{% block title %} {{ _("Admin") }} {% endblock %}</h3>
+    <h3>{% block title %} {{ _("Admin") }} {% endblock %}</h3>
 
-        <div class="row">
-            <div class="col-sm-4">
-              <div class="card">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">{{ _("Users") }}</h5>
-                  <p class="card-text">{{ _("All users info.") }}</p>
-                  <a href="{{ url_for('admin.users.users_view') }}" class="btn btn-primary">{{ _("Go to users") }}</a>
+                    <h5 class="card-title">{{ _("Users") }}</h5>
+                    <p class="card-text">{{ _("All users info.") }}</p>
+                    <a href="{{ url_for('admin.users.users_view') }}" class="btn btn-primary">
+                        {{ _("Go to users") }}
+                    </a>
                 </div>
-              </div>
             </div>
-            <div class="col-sm-4">
-              <div class="card">
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">{{ _("Roles") }}</h5>
-                  <p class="card-text">{{ _("All about users roles.") }}</p>
-                  <a href="{{ url_for('admin.roles.roles_view') }}" class="btn btn-primary">{{ _("Go to roles") }}</a>
+                    <h5 class="card-title">{{ _("Roles") }}</h5>
+                    <p class="card-text">{{ _("All about users roles.") }}</p>
+                    <a href="{{ url_for('admin.roles.roles_view') }}" class="btn btn-primary">
+                        {{ _("Go to roles") }}
+                    </a>
                 </div>
-              </div>
             </div>
-            <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-body">
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
                     <h5 class="card-title">{{ _("Permissions") }}</h5>
                     <p class="card-text">{{ _("All about permissions views.") }}</p>
-                    <a href="{{ url_for('admin.permissions.permissions_view') }}" class="btn btn-primary">{{ _("Go to permission") }}</a>
-                  </div>
+                    <a href="{{ url_for('admin.permissions.permissions_view') }}" class="btn btn-primary">
+                        {{ _("Go topermission")}}
+                    </a>
                 </div>
-              </div>
+            </div>
         </div>
-
     </div>
+
+</div>
 
 {% endblock %}
