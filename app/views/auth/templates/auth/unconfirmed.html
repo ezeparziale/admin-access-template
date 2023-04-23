@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
 {% block content %}
-    
-    {% include "navbar.html" %}
 
-    <h1>{% block title %} {{ _("Login") }} {% endblock %}</h1>
+<h1>{% block title %} {{ _("Login") }} {% endblock %}</h1>
 
-    <div class="container w-50">
-        <h1>
-            {{ _("Hello") }}, {{ current_user.username }}!
-        </h1>
-        <h3>{{ _("You have not confirmed your account yet") }}</h3>
-        <p>
-            {{ _("Need another email?") }}
-            <a href="{{ url_for('auth.resend_confirmation') }}">{{ _("Click here") }}</a>
-        </p>
-    </div>
+<div class="container w-50">
+    <h1>
+        {{ _("Hello") }}, {{ current_user.username }}!
+    </h1>
+    <h3>{{ _("You have not confirmed your account yet") }}</h3>
+    <p>
+        {{ _("Need another email?") }}
+        <a href="{{ url_for('auth.resend_confirmation') }}">{{ _("Click here") }}</a>
+    </p>
+</div>
 
 {% endblock %}
