@@ -68,7 +68,7 @@ def login():
             if user:
                 user.handle_failed_login()
             flash(_("Login error"), category="danger")
-    return render_template("auth/login.html", form=form)
+    return render_template("auth/login.html", form=form, site_name=settings.SITE_NAME)
 
 
 def send_email_confirm(user):
@@ -111,7 +111,7 @@ def register():
         )
         send_email_confirm(user)
         return redirect(url_for("auth.login"))
-    return render_template("auth/register.html", form=form)
+    return render_template("auth/register.html", form=form, site_name=settings.SITE_NAME)
 
 
 @auth_bp.route("/logout/")
@@ -150,7 +150,7 @@ def reset_password():
             return redirect(url_for("auth.login"))
         else:
             return redirect(url_for("auth.register"))
-    return render_template("auth/reset_password.html", form=form)
+    return render_template("auth/reset_password.html", form=form, site_name=settings.SITE_NAME)
 
 
 @auth_bp.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -162,12 +162,12 @@ def reset_token(token):
 
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        user.password = User.generate_password_hash(form.password.data)
+        user.password = User.generate_password_hash(form.new_password.data)
         user.update()
         flash(_("Password changed"), category="success")
         return redirect(url_for("auth.login"))
 
-    return render_template("auth/change_password.html", form=form)
+    return render_template("auth/change_password.html", form=form, site_name=settings.SITE_NAME)
 
 
 @auth_bp.route("/confirm/<token>", methods=["GET", "POST"])
