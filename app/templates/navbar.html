@@ -69,9 +69,9 @@
             <div class="dropdown text-end">
                 <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center text-white"
                     id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"
-                    aria-label="Toggle theme (dark)">
+                    aria-label="Toggle theme {{ get_theme() }}">
                     <svg class="bi my-1  theme-icon-active text-white" width="1em" height="1em">
-                        <use href="#moon-stars-fill"></use>
+                        <use href="{{ get_theme_icon() }}"></use>
                     </svg>
                     <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
                 </button>

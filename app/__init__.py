@@ -1,6 +1,6 @@
 from logging.config import dictConfig
 
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request, session
 from flask_babel import Babel, lazy_gettext
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
@@ -109,3 +109,29 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template("errors/500.html"), 500
+
+
+# Dark theme
+@app.route("/set_theme/<string:theme>", methods=["POST"])
+def set_theme(theme: str) -> None:
+    session["theme"] = theme
+    return jsonify({"theme": theme})
+
+
+def get_theme() -> str:
+    theme = session.get("theme", "auto")
+    return theme
+
+
+def get_theme_icon() -> str:
+    theme = session.get("theme", "auto")
+    icon = "#circle-half"
+    if theme == "dark":
+        icon = "#moon-stars-fill"
+    elif theme == "light":
+        icon = "#sun-fill"
+    return icon
+
+
+app.jinja_env.globals.update(get_theme=get_theme)
+app.jinja_env.globals.update(get_theme_icon=get_theme_icon)
