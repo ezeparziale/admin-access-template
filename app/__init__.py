@@ -1,4 +1,5 @@
 from logging.config import dictConfig
+from typing import Any
 
 from flask import Flask, jsonify, render_template, request, session
 from flask_babel import Babel, lazy_gettext
@@ -113,7 +114,7 @@ def internal_server_error(e):
 
 # Dark theme
 @app.route("/set_theme/<string:theme>", methods=["POST"])
-def set_theme(theme: str) -> None:
+def set_theme(theme: str) -> Any:
     session["theme"] = theme
     return jsonify({"theme": theme})
 
