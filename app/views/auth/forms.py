@@ -57,7 +57,7 @@ class ResetPasswordRequestForm(FlaskForm):
 
 
 class ResetPasswordForm(FlaskForm):
-    new_password  = PasswordField(
+    new_password = PasswordField(
         label=lazy_gettext("Password"),
         validators=[DataRequired(), Length(min=6, max=16)],
     )

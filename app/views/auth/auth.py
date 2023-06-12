@@ -111,7 +111,9 @@ def register():
         )
         send_email_confirm(user)
         return redirect(url_for("auth.login"))
-    return render_template("auth/register.html", form=form, site_name=settings.SITE_NAME)
+    return render_template(
+        "auth/register.html", form=form, site_name=settings.SITE_NAME
+    )
 
 
 @auth_bp.route("/logout/")
@@ -150,7 +152,9 @@ def reset_password():
             return redirect(url_for("auth.login"))
         else:
             return redirect(url_for("auth.register"))
-    return render_template("auth/reset_password.html", form=form, site_name=settings.SITE_NAME)
+    return render_template(
+        "auth/reset_password.html", form=form, site_name=settings.SITE_NAME
+    )
 
 
 @auth_bp.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -167,7 +171,9 @@ def reset_token(token):
         flash(_("Password changed"), category="success")
         return redirect(url_for("auth.login"))
 
-    return render_template("auth/change_password.html", form=form, site_name=settings.SITE_NAME)
+    return render_template(
+        "auth/change_password.html", form=form, site_name=settings.SITE_NAME
+    )
 
 
 @auth_bp.route("/confirm/<token>", methods=["GET", "POST"])
